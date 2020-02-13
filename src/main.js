@@ -1,8 +1,8 @@
 let container, w, h, scene, camera, controls, renderer, stats;
 let urls;
 let loop = {};
-let balle, x, y, z, terrain, wall;
-let collidableMeshList = [], obstacles;
+let x, y, z, i;
+let collidableMeshList = [], tab = [], obstacles;
 
 window.addEventListener('load', go);
 window.addEventListener('resize', resize);
@@ -26,21 +26,22 @@ class Balle {
     const geometryBalle = new THREE.BoxBufferGeometry(x,y,z);
     const materialBalle = new THREE.MeshBasicMaterial( { color: 'gold'} );
 
-    balle = new THREE.Mesh( geometryBalle, materialBalle, );
-    scene.add( balle );
-    balle.position.z=0.5; // Pose la balle sur le terrain
-    balle.rays = [
+    this.mesh = new THREE.Mesh( geometryBalle, materialBalle, );
+    scene.add( this.mesh );
+    this.mesh.position.z=0.5; // Pose la balle sur le terrain
+    this.rays = [
         new THREE.Vector3(0, 0, 1),
-        new THREE.Vector3(1, 0, 1),
+    /*    new THREE.Vector3(1, 0, 1),
         new THREE.Vector3(1, 0, 0),
         new THREE.Vector3(1, 0, -1),
         new THREE.Vector3(0, 0, -1),
         new THREE.Vector3(-1, 0, -1),
         new THREE.Vector3(-1, 0, 0),
-        new THREE.Vector3(-1, 0, 1)
+        new THREE.Vector3(-1, 0, 1)*/
       ];
+      tab = this.rays
 
-    balle.caster = new THREE.Raycaster();
+    this.caster = new THREE.Raycaster();
 
   }
 
@@ -49,15 +50,16 @@ class Balle {
     const distance = 32;
     //obstacles = collidableMeshList[];
 
-    for (i = 0; i < balle.rays.length; i += 1) {
+    //for (i = 0; i < this.rays.length; i += 1) {
+    for (i = 0; i < tab.length; i += 1) {
       // We reset the raycaster to this direction
-      balle.caster.set(balle.mesh.position, balle.rays[i]);
+      //this.caster.set(this.mesh.position, this.tab[i]);
       // Test if we intersect with any obstacle mesh
-      collisions = balle.caster.intersectObjects(collidableMeshList);
+      collisions = this.caster.intersectObject(Wall);
       // And disable that direction if we do
       if (collisions.length > 0 && collisions[0].distance <= distance) {
         // Yep, this.rays[i] gives us : 0 => up, 1 => up-left, 2 => left, ...
-        if ((i === 0 || i === 1 || i === 7) && balle.direction.z === 1) {
+        if ((i === 0 || i === 1 || i === 7) && this.mesh.direction.z === 1) {
           //balle.direction.setZ(0);
           console.log("Collision");
         }
@@ -66,14 +68,16 @@ class Balle {
   }
 
   mouvement() {
-    //balle.collision();
-
-    // If we're not static
-  //  if (balle.direction.x !== 0 || balle.direction.z !== 0) {
-      // Rotate the character
-      //balle.rotate();
       // Move the character
-      balle.translateY(0.05);
+      this.collision(); //Active les collisions
+      //if (this.direction.x !== 0 || this.direction.z !== 0) {
+      // Rotate the character
+    //  this.rotate();
+      // Move the character
+      this.mesh.translateY(0.05);
+      //return true;
+    //}
+      //this.mesh.translateY(0.05);
     //  return true;
     //}
   }
@@ -85,8 +89,8 @@ class Terrain {
   initTerrain() {
     const geometryTerrain = new THREE.PlaneBufferGeometry( 15, 20 );
     const materialTerrain = new THREE.MeshBasicMaterial ();
-    terrain = new THREE.Mesh(geometryTerrain, materialTerrain);
-    scene.add( terrain );
+    this.mesh = new THREE.Mesh(geometryTerrain, materialTerrain);
+    scene.add( this.mesh );
   }
 };
 
@@ -94,15 +98,20 @@ class Terrain {
 
 class Mur {
   initMur() {
-    const wallGeometry = new THREE.CubeGeometry( 4, 3, 3, 1, 1, 1 );
+    const wallGeometry = new THREE.BoxGeometry( 4, 3, 3, 1, 1, 1 );
   	const wallMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
   	const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
 
-  	const wall = new THREE.Mesh(wallGeometry, wallMaterial);
-  	wall.position.set(0, 6, 0.5);
-  	scene.add(wall);
+  	this.mesh = new THREE.Mesh(wallGeometry, wallMaterial);
+  	this.mesh.position.set(0, 6, 0.5);
+  	scene.add(this.mesh);
   }
 };
+
+// Variables globales
+var balle = new Balle(1,1,1);
+var terrain = new Terrain();
+var murTest = new Mur();
 
 // Initialisation du monde 3D
 function init() {
@@ -137,15 +146,10 @@ function init() {
 
   // add some geometries
 
-  var ballonTest = new Balle(1,1,1);
-  ballonTest.initBalle();
-
-  var terrain = new Terrain();
+  balle.initBalle();
   terrain.initTerrain();
-
-  var murTest = new Mur();
   murTest.initMur();
-  collidableMeshList.push(wall);
+  //collidableMeshList.push(murTest); // On ajoute le mur au tableau des objets qui admettent des collisions
 
 
 // Stats
@@ -182,10 +186,12 @@ function gameLoop() {
 
 function update(step) {
   //const angleIncr = Math.PI * 2 * step / 5 ; // une rotation complète en 5 secondes
-  balle.translateY(0.05); // Vitesse de la balle. Au départ elle se dirige vers l'adversaire
+//  balle.translateY(0.05); // Vitesse de la balle. Au départ elle se dirige vers l'adversaire
+ balle.mouvement();
+
   const distance = 32;
   //obstacles = collidableMeshList[];
-
+/*
   for (i = 0; i < balle.rays.length; i += 1) {
     // We reset the raycaster to this direction
     balle.caster.set(balle.position, balle.rays[i]);
@@ -202,7 +208,7 @@ function update(step) {
         console.log("Collision");
       }
     }
-  }
+  }*/
   //ballon.mouvement();
   //ballon.translateY(0.05);
   // TEST DE COLLISIONS ******************
