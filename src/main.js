@@ -55,7 +55,7 @@ class Balle {
       // We reset the raycaster to this direction
       //this.caster.set(this.mesh.position, this.tab[i]);
       // Test if we intersect with any obstacle mesh
-      collisions = this.caster.intersectObject(Wall);
+     // collisions = this.caster.intersectObject(Wall);
       // And disable that direction if we do
       if (collisions.length > 0 && collisions[0].distance <= distance) {
         // Yep, this.rays[i] gives us : 0 => up, 1 => up-left, 2 => left, ...
@@ -67,9 +67,37 @@ class Balle {
     }
   }
 
+  coll(b1,b2){
+
+    var hit = false;
+    var dist = (w/2);
+
+    var origin = new THREE.Vector3();
+    origin = b1.mesh.position.set(intersection.x, intersection.y, intersection.z);
+    //origin = b1.mesh.position.copy(b1);
+    //new THREE.Vector3(b1.position.x,b1.position.y,b1.position.z);
+
+    var direction = new THREE.Vector3( 1, 0, 0 );
+    direction.applyQuaternion( b1.quaternion );
+
+    var ray = new THREE.Raycaster(origin, direction,0,dist);
+    var collisionResult = ray.intersectObject(b2);
+
+    if(collisionResult!=0){
+      console.log("Collision");
+      hit = true; b1.translateX( -1 );
+    }
+    else{
+      hit = false;
+    }
+
+    return hit;
+  }
+
   mouvement() {
       // Move the character
-      this.collision(); //Active les collisions
+      //this.collision(); //Active les collisions
+      //this.coll(balle, murTest); // Test collision
       //if (this.direction.x !== 0 || this.direction.z !== 0) {
       // Rotate the character
     //  this.rotate();
