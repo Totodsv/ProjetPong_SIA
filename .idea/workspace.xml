@@ -41,7 +41,7 @@
       <workItem from="1581673242819" duration="21000" />
       <workItem from="1581673482847" duration="4657000" />
       <workItem from="1581678361021" duration="55000" />
-      <workItem from="1581692948177" duration="2436000" />
+      <workItem from="1581692948177" duration="5036000" />
     </task>
     <task id="LOCAL-00001" summary="Test Web Storm">
       <created>1581673514715</created>
@@ -71,7 +71,21 @@
       <option name="project" value="LOCAL" />
       <updated>1581678378645</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Test tnt">
+      <created>1581695398443</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1581695398443</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Test tnt img">
+      <created>1581695456917</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1581695456917</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -82,13 +96,15 @@
     <MESSAGE value="Textures fonctionnelles" />
     <MESSAGE value="Ajout Image sol" />
     <MESSAGE value="Textures OK" />
-    <option name="LAST_COMMIT_MESSAGE" value="Textures OK" />
+    <MESSAGE value="Test tnt" />
+    <MESSAGE value="Test tnt img" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test tnt img" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1581695397196">
+    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1581695455710">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1581695397196" />
+    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1581695455710" />
     <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1581672651017">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -97,10 +113,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1581672701148" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1581695400346">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1581695458440">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1581695400346" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1581695458440" />
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1581673158426">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

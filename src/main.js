@@ -25,7 +25,8 @@ class Balle {
   initBalle() {
     const geometryBalle = new THREE.BoxBufferGeometry(x,y,z);
     //const materialBalle = new THREE.MeshPhongMaterial( { color: 'gold'} );
-    const textureBalle = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png");
+    //const textureBalle = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png");
+    const textureBalle = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/tnt.png");
     const materialBalle = new THREE.MeshBasicMaterial( { map : textureBalle} );
 
 
@@ -118,7 +119,7 @@ class Terrain {
   initTerrain() {
     const geometryTerrain = new THREE.PlaneBufferGeometry( 15, 20 );
     const textureTerrain = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/marche.jpg");
-    const materialTerrain = new THREE.MeshBasicMaterial ({map : textureTerrain});
+    const materialTerrain = new THREE.MeshBasicMaterial ({map : textureTerrain, side : THREE.DoubleSide});
     this.mesh = new THREE.Mesh(geometryTerrain, materialTerrain);
     scene.add( this.mesh );
   }
@@ -138,10 +139,58 @@ class Mur {
   }
 };
 
+/*class Models {
+  initPirateShip() {
+    var objLoader = new THREE.OBJLoader();
+    objLoader.setPath('/medias/images/');
+    objLoader.load('Little_Ship.max', function(this.mesh){
+      this.mesh.position.set(0,6,0.5);
+      scene.add(this.mesh);
+    });
+  }
+}*/
+
+class Skybox {
+  initSkyBox() {
+    const skyGeometry = new THREE.BoxGeometry(1000, 1000, 1000)
+    const skyMaterials = [
+      new THREE.MeshBasicMaterial({
+        map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/arid2_ft.jpg'),
+        side: THREE.DoubleSide
+      }),
+      new THREE.MeshBasicMaterial({
+        map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/arid2_bk.jpg'),
+        side: THREE.DoubleSide
+      }),
+      new THREE.MeshBasicMaterial({
+        map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/arid2_up.jpg'),
+        side: THREE.DoubleSide
+      }),
+      new THREE.MeshBasicMaterial({
+        map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/arid2_dn.jpg'),
+        side: THREE.DoubleSide
+      }),
+      new THREE.MeshBasicMaterial({
+        map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/arid2_rt.jpg'),
+        side: THREE.DoubleSide
+      }),
+      new THREE.MeshBasicMaterial({
+        map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/arid2_lf.jpg'),
+        side: THREE.DoubleSide
+      })
+    ]
+    const skyMaterial = THREE.MeshFaceMaterial(skyMaterials)
+
+    this.mesh = new THREE.Mesh(skyGeometry, skyMaterial)
+    scene.add(this.mesh)
+  }
+}
+
 // Variables globales
 var balle = new Balle(1,1,1);
 var terrain = new Terrain();
 var murTest = new Mur();
+var ciel = new Skybox();
 
 // Initialisation du monde 3D
 function init() {
@@ -150,7 +199,7 @@ function init() {
   h = container.clientHeight;
 
   scene = new THREE.Scene();
-  scene.background = new THREE.Color('cyan');
+  //scene.background = new THREE.Color('cyan');
   //scene.overrideMaterial = new THREE.MeshBasicMaterial( { color: 'green' } );
 
 //Camera
@@ -193,6 +242,14 @@ function init() {
   balle.initBalle();
   terrain.initTerrain();
   murTest.initMur();
+  ciel.initSkyBox();
+
+/*  var objLoader = new THREE.OBJLoader();
+  objLoader.setPath('/medias/images/');
+  objLoader.load('Little_Ship.max', function(object) {
+    object.position.set(0, 6, 0.5);
+    scene.add(object);
+  });*/
   //collidableMeshList.push(murTest); // On ajoute le mur au tableau des objets qui admettent des collisions
 
 
