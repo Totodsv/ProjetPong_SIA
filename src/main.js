@@ -243,13 +243,31 @@ function init() {
   terrain.initTerrain();
   murTest.initMur();
   ciel.initSkyBox();
+  // Ajout Objets
 
+  var mtlLoader = new THREE.MTLLoader();
+  mtlLoader.setTexturePath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+  mtlLoader.load('pirateShip.mtl'), function(materials){
+    materials.preload();
+
+    var objLoader = new THREE.OBJLoader();
+    objLoader.setMaterials(materials);
+    objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    objLoader.load('pirateShip.obj', function(object) {
+      object.position.set(4, 0, -12);
+      object.rotation.y += 1.5;
+      scene.add(object);
+    });
+  }
+
+/*
   var objLoader = new THREE.OBJLoader();
-  objLoader.setPath('/medias/images/');
-  objLoader.load('Little_Ship.max', function(object) {
-    object.position.set(0, 6, 0.5);
+  objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+  objLoader.load('pirateShip.obj', function(object) {
+    object.position.set(4, 0, -12);
+    object.rotation.y += 1.5;
     scene.add(object);
-  });
+  });*/
   //collidableMeshList.push(murTest); // On ajoute le mur au tableau des objets qui admettent des collisions
 
 

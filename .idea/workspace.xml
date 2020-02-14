@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e40b87fb-0349-4446-82f4-92fc1956b093" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pong3D.html" beforeDir="false" afterPath="$PROJECT_DIR$/pong3D.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/medias/images/Little_Ship.max" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +41,7 @@
       <workItem from="1581673242819" duration="21000" />
       <workItem from="1581673482847" duration="4657000" />
       <workItem from="1581678361021" duration="55000" />
-      <workItem from="1581692948177" duration="8635000" />
+      <workItem from="1581692948177" duration="9880000" />
     </task>
     <task id="LOCAL-00001" summary="Test Web Storm">
       <created>1581673514715</created>
@@ -94,7 +92,14 @@
       <option name="project" value="LOCAL" />
       <updated>1581698568879</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Ajout Objet Bateau pirate dans branch">
+      <created>1581702391413</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1581702391413</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -108,13 +113,14 @@
     <MESSAGE value="Test tnt" />
     <MESSAGE value="Test tnt img" />
     <MESSAGE value="Skybox fonctionnel !" />
-    <option name="LAST_COMMIT_MESSAGE" value="Skybox fonctionnel !" />
+    <MESSAGE value="Ajout Objet Bateau pirate dans branch" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajout Objet Bateau pirate dans branch" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1581698567765">
+    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1581702390251">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1581698567765" />
+    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1581702390251" />
     <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1581672651017">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -123,10 +129,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1581672701148" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1581698570899">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1581702393851">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1581698570899" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1581702393851" />
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1581673158426">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
