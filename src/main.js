@@ -32,7 +32,7 @@ class Balle {
 
     this.mesh = new THREE.Mesh( geometryBalle, materialBalle, );
     scene.add( this.mesh );
-    this.mesh.position.z=0.5; // Pose la balle sur le terrain
+    this.mesh.position.y=1; // Pose la balle sur le terrain
     this.rays = [
         new THREE.Vector3(0, 0, 1),
     /*    new THREE.Vector3(1, 0, 1),
@@ -99,11 +99,11 @@ class Balle {
   }
 
   mouvement() {
-    this.mesh.translateY(0.05);
+    this.mesh.translateZ(-0.05);
   }
   // POUR LES TEST DE COLLISIONS
   mouvementBack(){
-    this.mesh.translateY(-0.05);
+    this.mesh.translateZ(0.05);
   }
   mouvementRight(){
     this.mesh.translateX(0.05);
@@ -117,9 +117,9 @@ class Balle {
 //Classe Terrain
 class Terrain {
   initTerrain() {
-    const geometryTerrain = new THREE.PlaneBufferGeometry( 15, 20 );
-    const textureTerrain = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/marche.jpg");
-    const materialTerrain = new THREE.MeshBasicMaterial ({map : textureTerrain, side : THREE.DoubleSide});
+    const geometryTerrain = new THREE.BoxBufferGeometry( 15, 0, 20 );
+    const textureTerrain = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png");
+    const materialTerrain = new THREE.MeshBasicMaterial ({map : textureTerrain});
     this.mesh = new THREE.Mesh(geometryTerrain, materialTerrain);
     scene.add( this.mesh );
   }
@@ -134,7 +134,7 @@ class Mur {
   	const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
 
   	this.mesh = new THREE.Mesh(wallGeometry, wallMaterial);
-  	this.mesh.position.set(0, 6, 0.5);
+  	this.mesh.position.set(0, 2, -8);
   	scene.add(this.mesh);
   }
 };
@@ -152,30 +152,30 @@ class Mur {
 
 class Skybox {
   initSkyBox() {
-    const skyGeometry = new THREE.BoxGeometry(1000, 1000, 1000)
+    const skyGeometry = new THREE.BoxGeometry(500, 500, 500)
     const skyMaterials = [
       new THREE.MeshBasicMaterial({
-        map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/arid2_ft.jpg'),
+        map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/ocean_rt.jpg'), //Right
         side: THREE.DoubleSide
       }),
       new THREE.MeshBasicMaterial({
-        map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/arid2_bk.jpg'),
+        map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/ocean_lf.jpg'), //Left
         side: THREE.DoubleSide
       }),
       new THREE.MeshBasicMaterial({
-        map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/arid2_up.jpg'),
+        map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/ocean_up.jpg'), //Up
         side: THREE.DoubleSide
       }),
       new THREE.MeshBasicMaterial({
-        map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/arid2_dn.jpg'),
+        map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/ocean_dn.jpg'), //Down
         side: THREE.DoubleSide
       }),
       new THREE.MeshBasicMaterial({
-        map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/arid2_rt.jpg'),
+        map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/ocean_bk.jpg'), //Back
         side: THREE.DoubleSide
       }),
       new THREE.MeshBasicMaterial({
-        map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/arid2_lf.jpg'),
+        map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/ocean_ft.jpg'), //Front
         side: THREE.DoubleSide
       })
     ]
@@ -204,7 +204,7 @@ function init() {
 
 //Camera
   camera = new THREE.PerspectiveCamera(75, w/h, 0.1, 1000);
-  camera.position.set(0, -10, 5);
+  camera.position.set(0, 5.5, 12);
   camera.rotation.x=3.14/4;
 
   controls = new THREE.TrackballControls(camera, container);
@@ -244,12 +244,12 @@ function init() {
   murTest.initMur();
   ciel.initSkyBox();
 
-/*  var objLoader = new THREE.OBJLoader();
+  var objLoader = new THREE.OBJLoader();
   objLoader.setPath('/medias/images/');
   objLoader.load('Little_Ship.max', function(object) {
     object.position.set(0, 6, 0.5);
     scene.add(object);
-  });*/
+  });
   //collidableMeshList.push(murTest); // On ajoute le mur au tableau des objets qui admettent des collisions
 
 
