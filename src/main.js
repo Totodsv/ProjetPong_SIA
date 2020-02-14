@@ -24,7 +24,10 @@ class Balle {
 
   initBalle() {
     const geometryBalle = new THREE.BoxBufferGeometry(x,y,z);
-    const materialBalle = new THREE.MeshBasicMaterial( { color: 'gold'} );
+    //const materialBalle = new THREE.MeshPhongMaterial( { color: 'gold'} );
+    const textureBalle = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png");
+    const materialBalle = new THREE.MeshBasicMaterial( { map : textureBalle} );
+
 
     this.mesh = new THREE.Mesh( geometryBalle, materialBalle, );
     scene.add( this.mesh );
@@ -116,7 +119,8 @@ class Balle {
 class Terrain {
   initTerrain() {
     const geometryTerrain = new THREE.PlaneBufferGeometry( 15, 20 );
-    const materialTerrain = new THREE.MeshBasicMaterial ();
+    const textureTerrain = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png");
+    const materialTerrain = new THREE.MeshBasicMaterial ({map : textureTerrain});
     this.mesh = new THREE.Mesh(geometryTerrain, materialTerrain);
     scene.add( this.mesh );
   }
@@ -126,7 +130,7 @@ class Terrain {
 
 class Mur {
   initMur() {
-    const wallGeometry = new THREE.BoxGeometry( 4, 3, 3, 1, 1, 1 );
+    const wallGeometry = new THREE.BoxBufferGeometry( 4, 3, 3, 1, 1, 1 );
   	const wallMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
   	const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
 
@@ -148,6 +152,8 @@ function init() {
   h = container.clientHeight;
 
   scene = new THREE.Scene();
+  scene.background = new THREE.Color('cyan');
+  //scene.overrideMaterial = new THREE.MeshBasicMaterial( { color: 'green' } );
 
 //Camera
   camera = new THREE.PerspectiveCamera(75, w/h, 0.1, 1000);
@@ -158,12 +164,24 @@ function init() {
   controls.target = new THREE.Vector3(0, 0, 0.75);
   controls.panSpeed = 0.4;
 
-//Render
+  //Render
   const renderConfig = {antialias: true, alpha: true};
   renderer = new THREE.WebGLRenderer(renderConfig);
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(w, h);
   container.appendChild(renderer.domElement);
+  renderer.gammaFactor = 2.2;
+  renderer.gammaOutput = true;
+
+
+//lights
+  var light = new THREE.DirectionalLight( 0xdddddd, 0.8 );
+  light.position.set( -80, -80, 80 );
+  //light.castShadow = true;
+  //light = new THREE.AmbientLight( 0x444444 );
+  scene.add(light);
+
+
 
   // add Stats.js - https://github.com/mrdoob/stats.js
   stats = new Stats();
@@ -190,6 +208,8 @@ function init() {
   loop.step     = 1/loop.fps;
   loop.slow     = slow;
   loop.slowStep = loop.slow * loop.step;
+
+
 
 }
 
