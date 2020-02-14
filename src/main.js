@@ -98,19 +98,17 @@ class Balle {
   }
 
   mouvement() {
-      // Move the character
-      //this.collision(); //Active les collisions
-      //this.coll(balle, murTest); // Test collision
-      //if (this.direction.x !== 0 || this.direction.z !== 0) {
-      // Rotate the character
-    //  this.rotate();
-      // Move the character
-      this.mesh.translateY(0.05);
-      //return true;
-    //}
-      //this.mesh.translateY(0.05);
-    //  return true;
-    //}
+    this.mesh.translateY(0.05);
+  }
+  // POUR LES TEST DE COLLISIONS
+  mouvementBack(){
+    this.mesh.translateY(-0.05);
+  }
+  mouvementRight(){
+    this.mesh.translateX(0.05);
+  }
+  mouvementLeft(){
+    this.mesh.translateX(-0.05);
   }
 };
 
@@ -235,45 +233,37 @@ function gameLoop() {
 function update(step) {
   //const angleIncr = Math.PI * 2 * step / 5 ; // une rotation complète en 5 secondes
 //  balle.translateY(0.05); // Vitesse de la balle. Au départ elle se dirige vers l'adversaire
- balle.mouvement();
+ //balle.mouvement();
 
   const distance = 32;
-  //obstacles = collidableMeshList[];
-/*
-  for (i = 0; i < balle.rays.length; i += 1) {
-    // We reset the raycaster to this direction
-    balle.caster.set(balle.position, balle.rays[i]);
 
-    // Test if we intersect with any obstacle mesh
+  var xSpeed = 0.05;
+  var ySpeed = 0.0001;
 
-    collisions = balle.caster.intersectObjects(tab); // Problème ici
-
-    // And disable that direction if we do
-    if (collisions.length > 0 && collisions[0].distance <= distance) {
-      // Yep, this.rays[i] gives us : 0 => up, 1 => up-left, 2 => left, ...
-      if ((i === 0 || i === 1 || i === 7) && balle.direction.z === 1) {
-        //balle.direction.setZ(0);
-        console.log("Collision");
+    var cube = scene.getObjectByName('balle');
+    document.onkeydown = function(e) {
+      switch (e.keyCode) {
+        case 90: //z
+          console.log("J'appuie sur Z");
+          balle.mouvement();
+          break;
+        case 83: //s
+          console.log("J'appuie sur s");
+          balle.mouvementBack();
+          break;
+        case 68: //d
+          console.log("J'appuie sur d");
+          balle.mouvementRight();
+          break;
+        case 81: //q
+          console.log("J'appuie sur q");
+          balle.mouvementLeft();
+          break;
       }
-    }
-  }*/
-  //ballon.mouvement();
-  //ballon.translateY(0.05);
-  // TEST DE COLLISIONS ******************
-  /*
-  var originPoint = balle.position.clone();
-  for (var vertexIndex = 0; vertexIndex < balle.geometry.vertices.length; vertexIndex++)
-  	{
-  		var localVertex = balle.geometry.vertices[vertexIndex].clone();
-  		var globalVertex = localVertex.applyMatrix4( balle.matrix );
-  		var directionVector = globalVertex.sub( balle.position );
+    };
 
-  		var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
-  		var collisionResults = ray.intersectObjects( collidableMeshList );
-  		if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() )
-  		balle.translateY(-1);
-	}*/
-  // *************************************
+
+
 }
 
 function resize() {
