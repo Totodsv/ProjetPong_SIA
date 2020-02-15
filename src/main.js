@@ -2,7 +2,7 @@ let container, w, h, scene, camera, controls, renderer, stats;
 let urls;
 let loop = {};
 let x, y, z, i;
-let collidableMeshList = [], tab = [], obstacles;
+let collidableMeshList = [], tab = [];
 
 window.addEventListener('load', go);
 window.addEventListener('resize', resize);
@@ -12,6 +12,14 @@ function go() {
   init();
   gameLoop();
 }
+
+// Direction et vitesse de la balle au debut de la partie.
+var ballDirX = 0;
+var ballDirZ = -0.05;
+var ballSpeed = 1;
+var paddle1DirX = 0.2;
+var paddleDirNX = -0.2;
+var paddleSpeed = 1;
 
 // Classe Balle
 class Balle {
@@ -35,81 +43,95 @@ class Balle {
     this.mesh.position.y=1; // Pose la balle sur le terrain
     this.rays = [
         new THREE.Vector3(0, 0, 1),
-    /*    new THREE.Vector3(1, 0, 1),
+        new THREE.Vector3(1, 0, 1),
         new THREE.Vector3(1, 0, 0),
         new THREE.Vector3(1, 0, -1),
         new THREE.Vector3(0, 0, -1),
         new THREE.Vector3(-1, 0, -1),
         new THREE.Vector3(-1, 0, 0),
-        new THREE.Vector3(-1, 0, 1)*/
+        new THREE.Vector3(-1, 0, 1)
       ];
       tab = this.rays
 
     this.caster = new THREE.Raycaster();
-
   }
 
-  collision() {
+  /*collision() {
 
-    const distance = 32;
-    //obstacles = collidableMeshList[];
-
+    const distance = 0.5;
+    var obstacles = collidableMeshList;
     //for (i = 0; i < this.rays.length; i += 1) {
     for (i = 0; i < tab.length; i += 1) {
       // We reset the raycaster to this direction
-      //this.caster.set(this.mesh.position, this.tab[i]);
+      this.caster.set(this.mesh.position, this.rays[i]); // On ajoute les raycasters sur la balle
       // Test if we intersect with any obstacle mesh
-     // collisions = this.caster.intersectObject(Wall);
+      var collisions = this.caster.intersectObjects(scene.children); // Collisions -> les rayons de la balle peuvent entrer en contact avec les objets de la scène
       // And disable that direction if we do
-      if (collisions.length > 0 && collisions[0].distance <= distance) {
-        // Yep, this.rays[i] gives us : 0 => up, 1 => up-left, 2 => left, ...
-        if ((i === 0 || i === 1 || i === 7) && this.mesh.direction.z === 1) {
-          //balle.direction.setZ(0);
-          console.log("Collision");
+      if (collisions.length > 0 && collisions[0].distance <= distance) { // si la distance de collision est plus petite que celle définie alors il y a collision
+         // Yep, this.rays[i] gives us : 0 => up, 1 => up-left, 2 => left, ...
+        // if ((i === 0 || i === 1 || i === 7) && this.mesh.direction.z === 1) {
+         if (i === 4 ) {
+           console.log("Collision De Face");
+           //direction = 0.05;
+           this.collisionFront();
+         }
+         else if ((i === 3 || i === 4 || i === 5)) {
+           console.log("Collision2");
+           //this.mouvementRight();
+         }
+         if ((i === 1 || i === 2 || i === 3)) {
+           console.log("Collision3");
+           //this.mouvementLeft();
+         } else if ((i === 5 || i === 6 || i === 7)) {
+           console.log("Collision4");
+         }
+
+         // TEST //
+         /*if (i === 4 || i === 5 || i === 6) {
+           console.log("Il faut reculer");
+           direction = 0.005;
+          // this.mesh.translateZ(direction);
+           //this.mouvementBack();
+         }
+       }
+      else{
+        this.collisionBack();
+      }
+    }
+    //this.mesh.translateZ(direction);
+  }*/
+
+  mouvement() {
+    this.mesh.translateX(ballDirX * ballSpeed); // La balle est en mouvement constant sur l'axe des x
+    this.mesh.translateZ(ballDirZ * ballSpeed); // La balle est en mouvement constant sur l'axe des z
+
+    const distance = 0.5;
+
+    for (i = 0; i < tab.length; i += 1) {
+      this.caster.set(this.mesh.position, this.rays[i]); // On ajoute les raycasters sur la balle
+      var obstacles = this.caster.intersectObjects(scene.children); // Collisions -> les rayons de la balle peuvent entrer en contact avec les objets de la scène
+      if (obstacles.length > 0 && obstacles[0].distance <= distance) { // si la distance de collision est plus petite que celle définie alors il y a collision
+        if (i === 4) {
+          console.log("Collision De Face");
+          ballDirZ = -ballDirZ;
+
+        }
+        else if (i === 0) {
+          console.log("Collision De Dos");
+          ballDirZ = -ballDirZ;
+        }
+        if (i === 1 || i === 2 || i === 3) {
+          console.log("Collision De Droite");
+          ballDirX = 0.05;
+          ballDirX = -ballDirX;
+        }
+        else if (i === 5 || i === 6 || i ===7) {
+          console.log("Collision De Gauche");
+          ballDirX = -0.05;
+          ballDirX = -ballDirX;
         }
       }
     }
-  }
-
-  coll(b1,b2){
-
-    var hit = false;
-    var dist = (w/2);
-
-    var origin = new THREE.Vector3();
-    origin = b1.mesh.position.set(intersection.x, intersection.y, intersection.z);
-    //origin = b1.mesh.position.copy(b1);
-    //new THREE.Vector3(b1.position.x,b1.position.y,b1.position.z);
-
-    var direction = new THREE.Vector3( 1, 0, 0 );
-    direction.applyQuaternion( b1.quaternion );
-
-    var ray = new THREE.Raycaster(origin, direction,0,dist);
-    var collisionResult = ray.intersectObject(b2);
-
-    if(collisionResult!=0){
-      console.log("Collision");
-      hit = true; b1.translateX( -1 );
-    }
-    else{
-      hit = false;
-    }
-
-    return hit;
-  }
-
-  mouvement() {
-    this.mesh.translateZ(-0.05);
-  }
-  // POUR LES TEST DE COLLISIONS
-  mouvementBack(){
-    this.mesh.translateZ(0.05);
-  }
-  mouvementRight(){
-    this.mesh.translateX(0.05);
-  }
-  mouvementLeft(){
-    this.mesh.translateX(-0.05);
   }
 };
 
@@ -125,30 +147,72 @@ class Terrain {
   }
 };
 
-//Classe Mur
-
+// Classe Mur
 class Mur {
   initMur() {
-    const wallGeometry = new THREE.BoxBufferGeometry( 4, 3, 3, 1, 1, 1 );
-  	const wallMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
-  	const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
+    const murGeometry = new THREE.BoxBufferGeometry( 0, 1, 20, 1, 1, 1 );
+    const murMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
+    const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
 
-  	this.mesh = new THREE.Mesh(wallGeometry, wallMaterial);
-  	this.mesh.position.set(0, 2, -8);
-  	scene.add(this.mesh);
+    this.mesh = new THREE.Mesh(murGeometry, murMaterial);
+    this.mesh.position.set(0, 0, 0);
+    scene.add(this.mesh);
+  }
+  positionMur(x,y,z){
+    this.mesh.position.set(x, y, z);
   }
 };
 
-/*class Models {
-  initPirateShip() {
-    var objLoader = new THREE.OBJLoader();
-    objLoader.setPath('/medias/images/');
-    objLoader.load('Little_Ship.max', function(this.mesh){
-      this.mesh.position.set(0,6,0.5);
-      scene.add(this.mesh);
-    });
+//Classe Pad
+class Pad {
+  initPad() {
+    const padGeometry = new THREE.BoxBufferGeometry( 4, 1, 1, 1, 1, 1 );
+  	const padMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
+  	const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
+
+  	this.mesh = new THREE.Mesh(padGeometry, padMaterial);
+  	this.mesh.position.set(0, 0, 0);
+  	scene.add(this.mesh);
   }
-}*/
+  positionPad(x,y,z){
+    this.mesh.position.set(x, y, z);
+  }
+  mouvementRight(){
+    this.mesh.translateX(paddle1DirX * paddleSpeed);
+   /* if (this.mesh.position.x < 8 || this.mesh.position.x > 8) {
+      paddle1DirX = paddleSpeed * 0.5;
+    }
+    else {
+      paddle1DirX = 0;
+      this.mesh.scale.x += (10 - this.mesh.scale.x) * 0.2;
+    }*/
+
+  }
+  mouvementLeft(){
+    this.mesh.translateX(-0.2);
+  }
+};
+
+class Models {
+  initPirateShip() {
+  var mtlLoader = new THREE.MTLLoader();
+  //mtlLoader.setBaseUrl('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+  mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+  var url = 'pirateShip.mtl';
+  mtlLoader.load(url , function(materialsPirate){
+    materialsPirate.preload();
+
+    var objLoader = new THREE.OBJLoader();
+    objLoader.setMaterials(materialsPirate);
+    objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    objLoader.load('pirateShip.obj', function(object) {
+      object.position.set(4, 0, -12);
+      object.rotation.y += 1.5;
+      scene.add(object);
+    });
+  });
+  }
+}
 
 class Skybox {
   initSkyBox() {
@@ -189,8 +253,12 @@ class Skybox {
 // Variables globales
 var balle = new Balle(1,1,1);
 var terrain = new Terrain();
-var murTest = new Mur();
+var padAdverse = new Pad();
+var padJoueur = new Pad();
+var murDroite = new Mur();
+var murGauche = new Mur();
 var ciel = new Skybox();
+var bateauPirate = new Models();
 
 // Initialisation du monde 3D
 function init() {
@@ -199,6 +267,7 @@ function init() {
   h = container.clientHeight;
 
   scene = new THREE.Scene();
+
   //scene.background = new THREE.Color('cyan');
   //scene.overrideMaterial = new THREE.MeshBasicMaterial( { color: 'green' } );
 
@@ -241,15 +310,20 @@ function init() {
 
   balle.initBalle();
   terrain.initTerrain();
-  murTest.initMur();
+  murDroite.initMur();
+  murDroite.positionMur(8,1,1);
+  murGauche.initMur();
+  murGauche.positionMur(-8,1,1);
+  padAdverse.initPad();
+  padAdverse.positionPad(0,1,-8);
+  padJoueur.initPad();
+  padJoueur.positionPad(0,1,8);
   ciel.initSkyBox();
+
+  // add some objects
+  bateauPirate.initPirateShip();
   // Ajout Objets
-
-  var mtlLoader = new THREE.MTLLoader();
-  mtlLoader.setTexturePath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-  mtlLoader.load('pirateShip.mtl'), function(materials){
-    materials.preload();
-
+/*
     var objLoader = new THREE.OBJLoader();
     objLoader.setMaterials(materials);
     objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
@@ -258,8 +332,8 @@ function init() {
       object.rotation.y += 1.5;
       scene.add(object);
     });
-  }
-
+  });
+*/
 /*
   var objLoader = new THREE.OBJLoader();
   objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
@@ -268,7 +342,7 @@ function init() {
     object.rotation.y += 1.5;
     scene.add(object);
   });*/
-  //collidableMeshList.push(murTest); // On ajoute le mur au tableau des objets qui admettent des collisions
+//collidableMeshList.push(murTest); // On ajoute le mur au tableau des objets qui admettent des collisions
 
 
 // Stats
@@ -307,15 +381,9 @@ function gameLoop() {
 
 function update(step) {
   //const angleIncr = Math.PI * 2 * step / 5 ; // une rotation complète en 5 secondes
-//  balle.translateY(0.05); // Vitesse de la balle. Au départ elle se dirige vers l'adversaire
- //balle.mouvement();
 
-  const distance = 32;
+  balle.mouvement();
 
-  var xSpeed = 0.05;
-  var ySpeed = 0.0001;
-
-    var cube = scene.getObjectByName('balle');
     document.onkeydown = function(e) {
       switch (e.keyCode) {
         case 90: //z
@@ -328,11 +396,11 @@ function update(step) {
           break;
         case 68: //d
           console.log("J'appuie sur d");
-          balle.mouvementRight();
+          padJoueur.mouvementRight();
           break;
         case 81: //q
           console.log("J'appuie sur q");
-          balle.mouvementLeft();
+          padJoueur.mouvementLeft();
           break;
       }
     };
