@@ -16,11 +16,12 @@ function go() {
 // Direction et vitesse de la balle au debut de la partie.
 var ballDirX = 0;
 var ballDirZ = -0.05;
-var ballSpeed = 1;
-var paddle1DirX = 0.2;
+var ballSpeed = 2;
+var paddleDirX = 0.05;
 var paddleDirNX = -0.2;
 var paddleSpeed = 1;
-
+var tailleTerrain = 20 * 0.95;
+var level = 5;
 // Classe Balle
 class Balle {
 
@@ -56,51 +57,6 @@ class Balle {
     this.caster = new THREE.Raycaster();
   }
 
-  /*collision() {
-
-    const distance = 0.5;
-    var obstacles = collidableMeshList;
-    //for (i = 0; i < this.rays.length; i += 1) {
-    for (i = 0; i < tab.length; i += 1) {
-      // We reset the raycaster to this direction
-      this.caster.set(this.mesh.position, this.rays[i]); // On ajoute les raycasters sur la balle
-      // Test if we intersect with any obstacle mesh
-      var collisions = this.caster.intersectObjects(scene.children); // Collisions -> les rayons de la balle peuvent entrer en contact avec les objets de la scène
-      // And disable that direction if we do
-      if (collisions.length > 0 && collisions[0].distance <= distance) { // si la distance de collision est plus petite que celle définie alors il y a collision
-         // Yep, this.rays[i] gives us : 0 => up, 1 => up-left, 2 => left, ...
-        // if ((i === 0 || i === 1 || i === 7) && this.mesh.direction.z === 1) {
-         if (i === 4 ) {
-           console.log("Collision De Face");
-           //direction = 0.05;
-           this.collisionFront();
-         }
-         else if ((i === 3 || i === 4 || i === 5)) {
-           console.log("Collision2");
-           //this.mouvementRight();
-         }
-         if ((i === 1 || i === 2 || i === 3)) {
-           console.log("Collision3");
-           //this.mouvementLeft();
-         } else if ((i === 5 || i === 6 || i === 7)) {
-           console.log("Collision4");
-         }
-
-         // TEST //
-         /*if (i === 4 || i === 5 || i === 6) {
-           console.log("Il faut reculer");
-           direction = 0.005;
-          // this.mesh.translateZ(direction);
-           //this.mouvementBack();
-         }
-       }
-      else{
-        this.collisionBack();
-      }
-    }
-    //this.mesh.translateZ(direction);
-  }*/
-
   mouvement() {
     this.mesh.translateX(ballDirX * ballSpeed); // La balle est en mouvement constant sur l'axe des x
     this.mesh.translateZ(ballDirZ * ballSpeed); // La balle est en mouvement constant sur l'axe des z
@@ -132,6 +88,27 @@ class Balle {
         }
       }
     }
+
+    // Si le joueur a marqué un point
+    if (this.mesh.position.z <= -tailleTerrain/2)
+    {
+      console.log("Le joueur a marqué");
+      // update scoreboard
+      this.reset();
+    }
+
+// if ball goes off the 'right' side (CPU's side)
+    if (this.mesh.position.z >= tailleTerrain/2)
+    {
+      console.log("L'IA a marqué");
+      // update scoreboard
+      this.reset();
+    }
+  }
+
+  reset(){
+    this.mesh.position.set(0,1,0);
+    ballDirX = 0;
   }
 };
 
@@ -178,18 +155,24 @@ class Pad {
     this.mesh.position.set(x, y, z);
   }
   mouvementRight(){
-    this.mesh.translateX(paddle1DirX * paddleSpeed);
-   /* if (this.mesh.position.x < 8 || this.mesh.position.x > 8) {
-      paddle1DirX = paddleSpeed * 0.5;
-    }
-    else {
-      paddle1DirX = 0;
-      this.mesh.scale.x += (10 - this.mesh.scale.x) * 0.2;
-    }*/
+    this.mesh.translateX(paddleDirX * paddleSpeed);
+    console.log(this.mesh.position.x);
+   if (this.mesh.position.x < 5.55 || this.mesh.position.x > -5.55) {
 
+      paddleDirX = paddleSpeed * 0.5;
+    }
+    else if (this.mesh.position.x > 5.55 || this.mesh.position.x < -5.55) {
+     console.log("bloqué");
+     paddleDirX = 0;
+      //this.mesh.scale.x += (10 - this.mesh.scale.x) * 0.2;
+    }
   }
   mouvementLeft(){
-    this.mesh.translateX(-0.2);
+    this.mesh.translateX(paddleDirNX * paddleSpeed);
+  }
+
+  mouvementIA(){
+    //this.mesh.translateX(balleIA.position.x * paddleSpeed * level);
   }
 };
 
@@ -383,6 +366,7 @@ function update(step) {
   //const angleIncr = Math.PI * 2 * step / 5 ; // une rotation complète en 5 secondes
 
   balle.mouvement();
+  padAdverse.mouvementIA();
 
     document.onkeydown = function(e) {
       switch (e.keyCode) {

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e40b87fb-0349-4446-82f4-92fc1956b093" name="Default Changelist" comment="Test d'ajout matériel bateau pirate">
+    <list default="true" id="e40b87fb-0349-4446-82f4-92fc1956b093" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pong3D.html" beforeDir="false" afterPath="$PROJECT_DIR$/pong3D.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +42,8 @@
       <workItem from="1581673482847" duration="4657000" />
       <workItem from="1581678361021" duration="55000" />
       <workItem from="1581692948177" duration="16073000" />
-      <workItem from="1581760571549" duration="8066000" />
+      <workItem from="1581760571549" duration="8761000" />
+      <workItem from="1581779966929" duration="3190000" />
     </task>
     <task id="LOCAL-00001" summary="Test Web Storm">
       <created>1581673514715</created>
@@ -108,7 +108,21 @@
       <option name="project" value="LOCAL" />
       <updated>1581703609514</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Collisions presque fonctionnelles&#10;Mur OK&#10;Pads ~ Ok">
+      <created>1581769001279</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1581769001279</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Collisions presque fonctionnelles&#10;Mur OK&#10;Pads ~ Ok">
+      <created>1581769027377</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1581769027377</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -124,13 +138,14 @@
     <MESSAGE value="Skybox fonctionnel !" />
     <MESSAGE value="Ajout Objet Bateau pirate dans branch" />
     <MESSAGE value="Test d'ajout matériel bateau pirate" />
-    <option name="LAST_COMMIT_MESSAGE" value="Test d'ajout matériel bateau pirate" />
+    <MESSAGE value="Collisions presque fonctionnelles&#10;Mur OK&#10;Pads ~ Ok" />
+    <option name="LAST_COMMIT_MESSAGE" value="Collisions presque fonctionnelles&#10;Mur OK&#10;Pads ~ Ok" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1581768999927">
+    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1581769043550">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1581768999927" />
+    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1581769043550" />
     <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1581672651017">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
