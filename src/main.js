@@ -1,7 +1,7 @@
 let container, w, h, scene, camera, controls, renderer, stats;
 let urls;
 let loop = {};
-let x, y, z, i;
+let x, y, z, i, padX;
 let collidableMeshList = [], tab = [];
 
 window.addEventListener('load', go);
@@ -16,12 +16,16 @@ function go() {
 // Direction et vitesse de la balle au debut de la partie.
 var ballDirX = 0;
 var ballDirZ = -0.05;
-var ballSpeed = 2;
-var paddleDirX = 0.05;
+var ballSpeed = 3;
+var paddleDirX = 0.2;
 var paddleDirNX = -0.2;
-var paddleSpeed = 1;
+var paddleSpeedX = 1;
+var paddleSpeedNX = 1;
 var tailleTerrain = 20 * 0.95;
-var level = 5;
+var level = 0;
+var ballePosition = 0;
+var paddleSize = 4
+
 // Classe Balle
 class Balle {
 
@@ -57,11 +61,11 @@ class Balle {
     this.caster = new THREE.Raycaster();
   }
 
-  mouvement() {
+  mouvement(padX) {
     this.mesh.translateX(ballDirX * ballSpeed); // La balle est en mouvement constant sur l'axe des x
     this.mesh.translateZ(ballDirZ * ballSpeed); // La balle est en mouvement constant sur l'axe des z
 
-    const distance = 0.5;
+    const distance = 0.5; // Un pad fait 1 en z donc si on veut que la balle rebondisse de façons réaliste on prend la moitié de cette valeur pour être à la position de la face de notre objet
 
     for (i = 0; i < tab.length; i += 1) {
       this.caster.set(this.mesh.position, this.rays[i]); // On ajoute les raycasters sur la balle
@@ -70,11 +74,31 @@ class Balle {
         if (i === 4) {
           console.log("Collision De Face");
           ballDirZ = -ballDirZ;
-
         }
         else if (i === 0) {
           console.log("Collision De Dos");
+          //ballDirX = 0;
           ballDirZ = -ballDirZ;
+          if (this.mesh.position.x > padX + (paddleSize/3.5)){ //Si la balle entre avec le côté droite du pad alors elle part vers la droite
+            ballDirX = -0.02;
+            ballDirX = -ballDirX;
+            console.log("Je dois partir à droite");
+          }
+          else if (this.mesh.position.x < padX - (paddleSize/3.5)){ //Si la balle entre avec le côté gauche du pad alors elle part vers la gauche
+            ballDirX = 0.02;
+            ballDirX = -ballDirX;
+            console.log("Je dois partir à gauche");
+          }
+          if (this.mesh.position.x > padX + (paddleSize/8) && this.mesh.position.x < padX + (paddleSize/3.5)){ //Si la balle entre avec le côté droite du pad alors elle part vers la droite
+            ballDirX = -0.01;
+            ballDirX = -ballDirX;
+            console.log("Je dois partir légèrement à droite");
+          }
+          else if (this.mesh.position.x < padX - (paddleSize/8) && this.mesh.position.x > padX - (paddleSize/3.5)){ //Si la balle entre avec le côté gauche du pad alors elle part vers la gauche
+            ballDirX = 0.01;
+            ballDirX = -ballDirX;
+            console.log("Je dois partir légèrement à gauche");
+          }
         }
         if (i === 1 || i === 2 || i === 3) {
           console.log("Collision De Droite");
@@ -106,12 +130,17 @@ class Balle {
     }
   }
 
-  reset(){
+  reset() { // Lorsqu'un des deux joueurs marque un point la balle est réinitialisé au centre
     this.mesh.position.set(0,1,0);
     ballDirX = 0;
   }
-};
 
+  positionX() {
+    return this.mesh.position.x
+  }
+
+
+};
 
 //Classe Terrain
 class Terrain {
@@ -155,45 +184,73 @@ class Pad {
     this.mesh.position.set(x, y, z);
   }
   mouvementRight(){
-    this.mesh.translateX(paddleDirX * paddleSpeed);
-    console.log(this.mesh.position.x);
-   if (this.mesh.position.x < 5.55 || this.mesh.position.x > -5.55) {
-
-      paddleDirX = paddleSpeed * 0.5;
-    }
-    else if (this.mesh.position.x > 5.55 || this.mesh.position.x < -5.55) {
-     console.log("bloqué");
-     paddleDirX = 0;
-      //this.mesh.scale.x += (10 - this.mesh.scale.x) * 0.2;
+    for (i=0; i < 100; i+=1) { // Test pour fluidité de mouvement du pad Joueur
+      this.mesh.translateX(paddleDirX * paddleSpeedX);
+      console.log(this.mesh.position.x);
+      if (this.mesh.position.x > tailleTerrain / 4) { // Si le pad dépasse le terrain en x
+        console.log("bloqué");
+        paddleDirX = 0;
+        paddleSpeedX = 0;
+      } else {
+        paddleDirX = 0.002;
+        paddleSpeedX = paddleSpeedX + 0.0025;
+        //this.mesh.scale.x += (10 - this.mesh.scale.x) * 0.2;
+      }
     }
   }
   mouvementLeft(){
-    this.mesh.translateX(paddleDirNX * paddleSpeed);
+    this.mesh.translateX(paddleDirNX * paddleSpeedNX);
+    if (this.mesh.position.x < -tailleTerrain/4) { // Si le pad dépasse le terrain en x
+      console.log("bloqué");
+      paddleDirNX = 0;
+      paddleSpeedNX = 0;
+    }
+    else {
+      paddleDirNX = -0.2;
+      paddleSpeedNX = paddleSpeedNX + 0.25;
+      //this.mesh.scale.x += (10 - this.mesh.scale.x) * 0.2;
+    }
   }
 
-  mouvementIA(){
-    //this.mesh.translateX(balleIA.position.x * paddleSpeed * level);
+  resetX(){
+   // paddleDirX = 0.5;
+    paddleSpeedX = 1;
+  }
+
+  resetNX(){
+    //paddleDirNX = 0;
+    paddleSpeedNX = 1;
+  }
+
+  mouvementIA(x){
+    //this.mesh.translateX(x * paddleSpeed * level);
+    //this.mesh.translateX(x);
+    this.mesh.position.x = x;
+  }
+  positionX(){
+    return this.mesh.position.x
   }
 };
 
 class Models {
   initPirateShip() {
-  var mtlLoader = new THREE.MTLLoader();
-  //mtlLoader.setBaseUrl('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-  mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-  var url = 'pirateShip.mtl';
-  mtlLoader.load(url , function(materialsPirate){
-    materialsPirate.preload();
-
-    var objLoader = new THREE.OBJLoader();
-    objLoader.setMaterials(materialsPirate);
-    objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-    objLoader.load('pirateShip.obj', function(object) {
-      object.position.set(4, 0, -12);
-      object.rotation.y += 1.5;
-      scene.add(object);
+    //Ajout des textures de l'objet
+    var mtlLoader = new THREE.MTLLoader();
+    //mtlLoader.setBaseUrl('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    var url = 'pirateShip.mtl';
+    mtlLoader.load(url , function(materialsPirate){
+      materialsPirate.preload();
+      // Ajout de l'objet
+      var objLoader = new THREE.OBJLoader();
+      objLoader.setMaterials(materialsPirate);
+      objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+      objLoader.load('pirateShip.obj', function(object) {
+        object.position.set(4, 0, -12);
+        object.rotation.y += 1.5;
+        scene.add(object);
+      });
     });
-  });
   }
 }
 
@@ -227,7 +284,6 @@ class Skybox {
       })
     ]
     const skyMaterial = THREE.MeshFaceMaterial(skyMaterials)
-
     this.mesh = new THREE.Mesh(skyGeometry, skyMaterial)
     scene.add(this.mesh)
   }
@@ -251,9 +307,6 @@ function init() {
 
   scene = new THREE.Scene();
 
-  //scene.background = new THREE.Color('cyan');
-  //scene.overrideMaterial = new THREE.MeshBasicMaterial( { color: 'green' } );
-
 //Camera
   camera = new THREE.PerspectiveCamera(75, w/h, 0.1, 1000);
   camera.position.set(0, 5.5, 12);
@@ -272,15 +325,12 @@ function init() {
   renderer.gammaFactor = 2.2;
   renderer.gammaOutput = true;
 
-
-//lights
+  //Lights
   var light = new THREE.DirectionalLight( 0xdddddd, 0.8 );
   light.position.set( -80, -80, 80 );
   //light.castShadow = true;
   //light = new THREE.AmbientLight( 0x444444 );
   scene.add(light);
-
-
 
   // add Stats.js - https://github.com/mrdoob/stats.js
   stats = new Stats();
@@ -288,9 +338,7 @@ function init() {
   stats.domElement.style.bottom	= '0px';
   document.body.appendChild( stats.domElement );
 
-
   // add some geometries
-
   balle.initBalle();
   terrain.initTerrain();
   murDroite.initMur();
@@ -305,30 +353,8 @@ function init() {
 
   // add some objects
   bateauPirate.initPirateShip();
-  // Ajout Objets
-/*
-    var objLoader = new THREE.OBJLoader();
-    objLoader.setMaterials(materials);
-    objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-    objLoader.load('pirateShip.obj', function(object) {
-      object.position.set(4, 0, -12);
-      object.rotation.y += 1.5;
-      scene.add(object);
-    });
-  });
-*/
-/*
-  var objLoader = new THREE.OBJLoader();
-  objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-  objLoader.load('pirateShip.obj', function(object) {
-    object.position.set(4, 0, -12);
-    object.rotation.y += 1.5;
-    scene.add(object);
-  });*/
-//collidableMeshList.push(murTest); // On ajoute le mur au tableau des objets qui admettent des collisions
 
-
-// Stats
+  // Stats
   const fps  = 60;
   const slow = 1; // slow motion! 1: normal speed, 2: half speed...
   loop.dt       = 0,
@@ -338,13 +364,9 @@ function init() {
   loop.step     = 1/loop.fps;
   loop.slow     = slow;
   loop.slowStep = loop.slow * loop.step;
-
-
-
 }
 
 function gameLoop() {
-
   // gestion de l'incrément du temps
   loop.now = timestamp();
   loop.dt = loop.dt + Math.min(1, (loop.now - loop.last) / 1000);
@@ -364,33 +386,37 @@ function gameLoop() {
 
 function update(step) {
   //const angleIncr = Math.PI * 2 * step / 5 ; // une rotation complète en 5 secondes
+  padPosition = padJoueur.positionX(); // Récupère à l'instant t la position x du pad
+  balle.mouvement(padPosition); // La balle entre en mouvement et active les collisions
 
-  balle.mouvement();
-  padAdverse.mouvementIA();
+  ballePosition = balle.positionX(); // Récupère à l'instant t la position x de la balle
+  padAdverse.mouvementIA(ballePosition); // L'IA suit la balle
 
-    document.onkeydown = function(e) {
+    document.onkeydown = function(e) { // Mouvement du pad du Joueur
       switch (e.keyCode) {
-        case 90: //z
-          console.log("J'appuie sur Z");
-          balle.mouvement();
+        case 68: //D
+          console.log("J'appuie sur D");
+          padJoueur.mouvementRight(); // Lorsque le joueur appuie sur D il va vers la droite en prenant de la vitesse
           break;
-        case 83: //s
-          console.log("J'appuie sur s");
-          balle.mouvementBack();
-          break;
-        case 68: //d
-          console.log("J'appuie sur d");
-          padJoueur.mouvementRight();
-          break;
-        case 81: //q
-          console.log("J'appuie sur q");
-          padJoueur.mouvementLeft();
+        case 81: //Q
+          console.log("J'appuie sur Q");
+          padJoueur.mouvementLeft(); // Lorsque le joueur appuie sur Q il va vers la gauche en prenant de la vitesse
           break;
       }
     };
 
-
-
+  document.onkeyup = function(e) { // Mouvement du pad du Joueur
+    switch (e.keyCode) {
+      case 68: //D
+        console.log("Je relâche D");
+        padJoueur.resetX(); // Lorsque le joueur arrête d'appuyer sur D, on réinitialise la vitesse vers la droite
+        break;
+      case 81: //Q
+        console.log("Je relâche Q");
+        padJoueur.resetNX(); // Lorsque le joueur arrête d'appuyer sur D, on réinitialise la vitesse vers la gauche
+        break;
+    }
+  };
 }
 
 function resize() {
