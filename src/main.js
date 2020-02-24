@@ -1,11 +1,13 @@
-let container, w, h, scene, camera, controls, renderer, stats;
+let container, w, h, scene, camera, controls, renderer, stats, keyboard;
 let urls;
 let loop = {};
-let x, y, z, i, padX;
+let x, y, z, i, padX, delta;
 let collidableMeshList = [], tab = [];
 
 window.addEventListener('load', go);
 window.addEventListener('resize', resize);
+//window.addEventListener('keydown', onDocumentKeyPress);
+//window.addEventListener('keyup', onDocumentKeyDown);
 
 function go() {
   console.log("Go!");
@@ -17,14 +19,16 @@ function go() {
 var ballDirX = 0;
 var ballDirZ = -0.05;
 var ballSpeed = 3;
-var paddleDirX = 0.2;
-var paddleDirNX = -0.2;
-var paddleSpeedX = 1;
+var paddleDirX = 0.002;
+var paddleDirNX = -0.002;
+var paddleSpeedX = 2;
 var paddleSpeedNX = 1;
 var tailleTerrain = 20 * 0.95;
 var level = 0;
 var ballePosition = 0;
 var paddleSize = 4
+//var delta = Clock.getDelta();
+//var moveDistance = loop.now;
 
 // Classe Balle
 class Balle {
@@ -175,31 +179,36 @@ class Pad {
     const padGeometry = new THREE.BoxBufferGeometry( 4, 1, 1, 1, 1, 1 );
   	const padMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
   	const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
-
   	this.mesh = new THREE.Mesh(padGeometry, padMaterial);
   	this.mesh.position.set(0, 0, 0);
   	scene.add(this.mesh);
+
+
+    this.clock = new THREE.Clock();
   }
   positionPad(x,y,z){
     this.mesh.position.set(x, y, z);
   }
   mouvementRight(){
-    for (i=0; i < 100; i+=1) { // Test pour fluidité de mouvement du pad Joueur
+  // Test pour fluidité de mouvement du pad Joueur
+      //delta = this.clock.getDelta();
       this.mesh.translateX(paddleDirX * paddleSpeedX);
+      //this.mesh.position.x += delta * paddleSpeedX;
+      //this.mesh.translateX(+delta);
       console.log(this.mesh.position.x);
       if (this.mesh.position.x > tailleTerrain / 4) { // Si le pad dépasse le terrain en x
         console.log("bloqué");
         paddleDirX = 0;
         paddleSpeedX = 0;
       } else {
-        paddleDirX = 0.002;
-        paddleSpeedX = paddleSpeedX + 0.0025;
+        paddleDirX = 0.2;
+        paddleSpeedX = paddleSpeedX + 0.25;
         //this.mesh.scale.x += (10 - this.mesh.scale.x) * 0.2;
       }
-    }
   }
   mouvementLeft(){
     this.mesh.translateX(paddleDirNX * paddleSpeedNX);
+    //this.mesh.position.x -= paddleDirX * paddleSpeedX;
     if (this.mesh.position.x < -tailleTerrain/4) { // Si le pad dépasse le terrain en x
       console.log("bloqué");
       paddleDirNX = 0;
@@ -210,6 +219,34 @@ class Pad {
       paddleSpeedNX = paddleSpeedNX + 0.25;
       //this.mesh.scale.x += (10 - this.mesh.scale.x) * 0.2;
     }
+  }
+
+  mouvement(){
+    document.onkeydown = function(e) { // Mouvement du pad du Joueur
+        switch (e.keyCode) {
+          case 68: //D
+            console.log("J'appuie sur D");
+            padJoueur.mouvementRight(); // Lorsque le joueur appuie sur D il va vers la droite en prenant de la vitesse
+            break;
+          case 81: //Q
+            console.log("J'appuie sur Q");
+            padJoueur.mouvementLeft(); // Lorsque le joueur appuie sur Q il va vers la gauche en prenant de la vitesse
+            break;
+        }
+      };
+
+    document.onkeyup = function(e) { // Mouvement du pad du Joueur
+      switch (e.keyCode) {
+        case 68: //D
+          console.log("Je relâche D");
+          padJoueur.resetX(); // Lorsque le joueur arrête d'appuyer sur D, on réinitialise la vitesse vers la droite
+          break;
+        case 81: //Q
+          console.log("Je relâche Q");
+          padJoueur.resetNX(); // Lorsque le joueur arrête d'appuyer sur D, on réinitialise la vitesse vers la gauche
+          break;
+      }
+    };
   }
 
   resetX(){
@@ -307,6 +344,7 @@ function init() {
 
   scene = new THREE.Scene();
 
+  keyboard = new THREEx.KeyboardState();
 //Camera
   camera = new THREE.PerspectiveCamera(75, w/h, 0.1, 1000);
   camera.position.set(0, 5.5, 12);
@@ -315,6 +353,15 @@ function init() {
   controls = new THREE.TrackballControls(camera, container);
   controls.target = new THREE.Vector3(0, 0, 0.75);
   controls.panSpeed = 0.4;
+
+  //Keyboard
+  controls.keys = {
+  LEFT: 37, //left arrow
+  UP: 38, // up arrow
+  RIGHT: 39, // right arrow
+  BOTTOM: 40, // down arrow
+  Q: 100 // Q
+}
 
   //Render
   const renderConfig = {antialias: true, alpha: true};
@@ -331,6 +378,7 @@ function init() {
   //light.castShadow = true;
   //light = new THREE.AmbientLight( 0x444444 );
   scene.add(light);
+
 
   // add Stats.js - https://github.com/mrdoob/stats.js
   stats = new Stats();
@@ -392,31 +440,15 @@ function update(step) {
   ballePosition = balle.positionX(); // Récupère à l'instant t la position x de la balle
   padAdverse.mouvementIA(ballePosition); // L'IA suit la balle
 
-    document.onkeydown = function(e) { // Mouvement du pad du Joueur
-      switch (e.keyCode) {
-        case 68: //D
-          console.log("J'appuie sur D");
-          padJoueur.mouvementRight(); // Lorsque le joueur appuie sur D il va vers la droite en prenant de la vitesse
-          break;
-        case 81: //Q
-          console.log("J'appuie sur Q");
-          padJoueur.mouvementLeft(); // Lorsque le joueur appuie sur Q il va vers la gauche en prenant de la vitesse
-          break;
-      }
-    };
 
-  document.onkeyup = function(e) { // Mouvement du pad du Joueur
-    switch (e.keyCode) {
-      case 68: //D
-        console.log("Je relâche D");
-        padJoueur.resetX(); // Lorsque le joueur arrête d'appuyer sur D, on réinitialise la vitesse vers la droite
-        break;
-      case 81: //Q
-        console.log("Je relâche Q");
-        padJoueur.resetNX(); // Lorsque le joueur arrête d'appuyer sur D, on réinitialise la vitesse vers la gauche
-        break;
-    }
-  };
+  if(keyboard.pressed("Q")){
+    console.log("ça rentre");
+    padJoueur.mouvementLeft();
+  }
+  if(keyboard.pressed("D")){
+    console.log("ça rentre");
+    padJoueur.mouvementRight();
+  }
 }
 
 function resize() {
@@ -426,6 +458,36 @@ function resize() {
   camera.updateProjectionMatrix();
   renderer.setSize(w, h);
 }
+
+/*function onDocumentKeyPress(e) {
+  //var keyCode = event.wich;
+  console.log("ça marche");
+  //console.log(keyCode);
+
+  switch (e.keyCode) {
+    case 68: //D
+      console.log("J'appuie sur D");
+      padJoueur.mouvementRight();
+      break;
+    case 81: //Q
+      console.log("j'appuie sur Q");
+      padJoueur.mouvementLeft();
+      break;
+    }
+}
+
+function onDocumentKeyDown(e) {
+  switch (e.keyCode) {
+    case 68: //D
+      console.log("Je relâche D");
+      padJoueur.resetX(); // Lorsque le joueur arrête d'appuyer sur D, on réinitialise la vitesse vers la droite
+      break;
+    case 81: //Q
+      console.log("Je relâche Q");
+      padJoueur.resetNX(); // Lorsque le joueur arrête d'appuyer sur D, on réinitialise la vitesse vers la gauche
+      break;
+  }
+}*/
 
 function timestamp() {
   return window.performance.now();
