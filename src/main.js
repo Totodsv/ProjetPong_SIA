@@ -143,8 +143,9 @@ class Balle {
 //Classe Terrain
 class Terrain {
   initTerrain() {
-    const geometryTerrain = new THREE.BoxBufferGeometry( 15, 0, 22 );
-    const textureTerrain = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testSol5.jpg");
+    //const geometryTerrain = new THREE.BoxBufferGeometry( 15, 0, 22 );
+    const geometryTerrain = new THREE.BoxBufferGeometry( 500, 0, 500 );
+    const textureTerrain = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testSol11.png");
     const materialTerrain = new THREE.MeshBasicMaterial ({map : textureTerrain});
     this.mesh = new THREE.Mesh(geometryTerrain, materialTerrain);
     scene.add( this.mesh );
