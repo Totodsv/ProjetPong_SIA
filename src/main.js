@@ -22,8 +22,8 @@ var paddleDirX = 0.0002;
 var paddleDirNX = -0.0002;
 var paddleSpeedX = 1;
 var paddleSpeedNX = 1;
-var tailleTerrain = 20 * 0.95;
-var level = 0;
+var tailleTerrain = 22 * 0.95;
+var level = 3;
 var ballePosition = 0;
 var paddleSize = 4
 
@@ -143,8 +143,8 @@ class Balle {
 //Classe Terrain
 class Terrain {
   initTerrain() {
-    const geometryTerrain = new THREE.BoxBufferGeometry( 15, 0, 20 );
-    const textureTerrain = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testSol3.jpg");
+    const geometryTerrain = new THREE.BoxBufferGeometry( 15, 0, 22 );
+    const textureTerrain = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png");
     const materialTerrain = new THREE.MeshBasicMaterial ({map : textureTerrain});
     this.mesh = new THREE.Mesh(geometryTerrain, materialTerrain);
     scene.add( this.mesh );
@@ -154,9 +154,11 @@ class Terrain {
 // Classe Mur
 class Mur {
   initMur() {
-    const murGeometry = new THREE.BoxBufferGeometry( 0, 1, 20, 1, 1, 1 );
-    const murMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
-    const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
+    const murGeometry = new THREE.BoxBufferGeometry( 0, 1, 22, 1, 1, 1 );
+    //const murMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
+    //const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
+    const textureMur = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png");
+    const murMaterial = new THREE.MeshBasicMaterial ({map : textureMur});
 
     this.mesh = new THREE.Mesh(murGeometry, murMaterial);
     this.mesh.position.set(0, 0, 0);
@@ -171,8 +173,10 @@ class Mur {
 class Pad {
   initPad() {
     const padGeometry = new THREE.BoxBufferGeometry( 4, 1, 1, 1, 1, 1 );
-  	const padMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
-  	const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
+  	//const padMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
+  	//const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
+    const texturePad = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png");
+    const padMaterial = new THREE.MeshBasicMaterial ({map : texturePad});
   	this.mesh = new THREE.Mesh(padGeometry, padMaterial);
   	this.mesh.position.set(0, 0, 0);
   	scene.add(this.mesh);
@@ -222,7 +226,13 @@ class Pad {
       this.mesh.position.x = x;
     }
     if(level ==1){
-      this.mesh.translateX(x * level/2);
+      this.mesh.position.x = x/1.9;
+    }
+    if(level ==2){
+      this.mesh.position.x = x/1.7;
+    }
+    if(level ==3){
+      this.mesh.position.x = x/1.5;
     }
   }
   positionX(){
@@ -243,7 +253,7 @@ class Models {
       objLoader.setMaterials(materialsPirate);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
       objLoader.load('pirateShip.obj', function(object) {
-        object.position.set(4, 0, -12);
+        object.position.set(4, 0, -14);
         object.rotation.y += 1.5;
         scene.add(object);
       });
@@ -308,7 +318,7 @@ function init() {
 
   //Camera
   camera = new THREE.PerspectiveCamera(75, w/h, 0.1, 1000);
-  camera.position.set(0, 5.5, 12);
+  camera.position.set(0, 5.5, 15);
   camera.rotation.x=3.14/4;
 
   controls = new THREE.TrackballControls(camera, container);
@@ -346,9 +356,9 @@ function init() {
   murGauche.initMur();
   murGauche.positionMur(-8,1,1);
   padAdverse.initPad();
-  padAdverse.positionPad(0,1,-8);
+  padAdverse.positionPad(0,1,-10);
   padJoueur.initPad();
-  padJoueur.positionPad(0,1,8);
+  padJoueur.positionPad(0,1,10);
   ciel.initSkyBox();
 
   // add some objects
