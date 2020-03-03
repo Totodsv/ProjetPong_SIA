@@ -6,8 +6,7 @@ let collidableMeshList = [], tab = [];
 
 window.addEventListener('load', go);
 window.addEventListener('resize', resize);
-//window.addEventListener('keydown', onDocumentKeyPress);
-//window.addEventListener('keyup', onDocumentKeyDown);
+window.addEventListener('keyup', onDocumentKeyDown);
 
 function go() {
   console.log("Go!");
@@ -18,17 +17,16 @@ function go() {
 // Direction et vitesse de la balle au debut de la partie.
 var ballDirX = 0;
 var ballDirZ = -0.05;
-var ballSpeed = 3;
-var paddleDirX = 0.002;
-var paddleDirNX = -0.002;
-var paddleSpeedX = 2;
+var ballSpeed = 4;
+var paddleDirX = 0.0002;
+var paddleDirNX = -0.0002;
+var paddleSpeedX = 1;
 var paddleSpeedNX = 1;
 var tailleTerrain = 20 * 0.95;
 var level = 0;
 var ballePosition = 0;
 var paddleSize = 4
-//var delta = Clock.getDelta();
-//var moveDistance = loop.now;
+
 
 // Classe Balle
 class Balle {
@@ -41,11 +39,8 @@ class Balle {
 
   initBalle() {
     const geometryBalle = new THREE.BoxBufferGeometry(x,y,z);
-    //const materialBalle = new THREE.MeshPhongMaterial( { color: 'gold'} );
-    //const textureBalle = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png");
     const textureBalle = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/tnt.png");
     const materialBalle = new THREE.MeshBasicMaterial( { map : textureBalle} );
-
 
     this.mesh = new THREE.Mesh( geometryBalle, materialBalle, );
     scene.add( this.mesh );
@@ -81,7 +76,6 @@ class Balle {
         }
         else if (i === 0) {
           console.log("Collision De Dos");
-          //ballDirX = 0;
           ballDirZ = -ballDirZ;
           if (this.mesh.position.x > padX + (paddleSize/3.5)){ //Si la balle entre avec le côté droite du pad alors elle part vers la droite
             ballDirX = -0.02;
@@ -190,25 +184,19 @@ class Pad {
     this.mesh.position.set(x, y, z);
   }
   mouvementRight(){
-  // Test pour fluidité de mouvement du pad Joueur
-      //delta = this.clock.getDelta();
       this.mesh.translateX(paddleDirX * paddleSpeedX);
-      //this.mesh.position.x += delta * paddleSpeedX;
-      //this.mesh.translateX(+delta);
-      console.log(this.mesh.position.x);
+      //console.log(this.mesh.position.x);
       if (this.mesh.position.x > tailleTerrain / 4) { // Si le pad dépasse le terrain en x
         console.log("bloqué");
         paddleDirX = 0;
         paddleSpeedX = 0;
       } else {
         paddleDirX = 0.2;
-        paddleSpeedX = paddleSpeedX + 0.25;
-        //this.mesh.scale.x += (10 - this.mesh.scale.x) * 0.2;
+        paddleSpeedX = paddleSpeedX + 0.025;
       }
   }
   mouvementLeft(){
     this.mesh.translateX(paddleDirNX * paddleSpeedNX);
-    //this.mesh.position.x -= paddleDirX * paddleSpeedX;
     if (this.mesh.position.x < -tailleTerrain/4) { // Si le pad dépasse le terrain en x
       console.log("bloqué");
       paddleDirNX = 0;
@@ -216,39 +204,9 @@ class Pad {
     }
     else {
       paddleDirNX = -0.2;
-      paddleSpeedNX = paddleSpeedNX + 0.25;
-      //this.mesh.scale.x += (10 - this.mesh.scale.x) * 0.2;
+      paddleSpeedNX = paddleSpeedNX + 0.025;
     }
   }
-
-  mouvement(){
-    document.onkeydown = function(e) { // Mouvement du pad du Joueur
-        switch (e.keyCode) {
-          case 68: //D
-            console.log("J'appuie sur D");
-            padJoueur.mouvementRight(); // Lorsque le joueur appuie sur D il va vers la droite en prenant de la vitesse
-            break;
-          case 81: //Q
-            console.log("J'appuie sur Q");
-            padJoueur.mouvementLeft(); // Lorsque le joueur appuie sur Q il va vers la gauche en prenant de la vitesse
-            break;
-        }
-      };
-
-    document.onkeyup = function(e) { // Mouvement du pad du Joueur
-      switch (e.keyCode) {
-        case 68: //D
-          console.log("Je relâche D");
-          padJoueur.resetX(); // Lorsque le joueur arrête d'appuyer sur D, on réinitialise la vitesse vers la droite
-          break;
-        case 81: //Q
-          console.log("Je relâche Q");
-          padJoueur.resetNX(); // Lorsque le joueur arrête d'appuyer sur D, on réinitialise la vitesse vers la gauche
-          break;
-      }
-    };
-  }
-
   resetX(){
    // paddleDirX = 0.5;
     paddleSpeedX = 1;
@@ -260,9 +218,12 @@ class Pad {
   }
 
   mouvementIA(x){
-    //this.mesh.translateX(x * paddleSpeed * level);
-    //this.mesh.translateX(x);
-    this.mesh.position.x = x;
+    if(level == 0) {
+      this.mesh.position.x = x;
+    }
+    if(level ==1){
+      this.mesh.translateX(x * level/2);
+    }
   }
   positionX(){
     return this.mesh.position.x
@@ -273,7 +234,6 @@ class Models {
   initPirateShip() {
     //Ajout des textures de l'objet
     var mtlLoader = new THREE.MTLLoader();
-    //mtlLoader.setBaseUrl('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
     mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
     var url = 'pirateShip.mtl';
     mtlLoader.load(url , function(materialsPirate){
@@ -345,7 +305,8 @@ function init() {
   scene = new THREE.Scene();
 
   keyboard = new THREEx.KeyboardState();
-//Camera
+
+  //Camera
   camera = new THREE.PerspectiveCamera(75, w/h, 0.1, 1000);
   camera.position.set(0, 5.5, 12);
   camera.rotation.x=3.14/4;
@@ -353,15 +314,6 @@ function init() {
   controls = new THREE.TrackballControls(camera, container);
   controls.target = new THREE.Vector3(0, 0, 0.75);
   controls.panSpeed = 0.4;
-
-  //Keyboard
-  controls.keys = {
-  LEFT: 37, //left arrow
-  UP: 38, // up arrow
-  RIGHT: 39, // right arrow
-  BOTTOM: 40, // down arrow
-  Q: 100 // Q
-}
 
   //Render
   const renderConfig = {antialias: true, alpha: true};
@@ -442,13 +394,17 @@ function update(step) {
 
 
   if(keyboard.pressed("Q")){
-    console.log("ça rentre");
     padJoueur.mouvementLeft();
   }
   if(keyboard.pressed("D")){
-    console.log("ça rentre");
     padJoueur.mouvementRight();
   }
+}
+
+function onDocumentKeyDown(){
+  console.log("je lache le bouton");
+  padJoueur.resetX();
+  padJoueur.resetNX();
 }
 
 function resize() {
@@ -458,36 +414,6 @@ function resize() {
   camera.updateProjectionMatrix();
   renderer.setSize(w, h);
 }
-
-/*function onDocumentKeyPress(e) {
-  //var keyCode = event.wich;
-  console.log("ça marche");
-  //console.log(keyCode);
-
-  switch (e.keyCode) {
-    case 68: //D
-      console.log("J'appuie sur D");
-      padJoueur.mouvementRight();
-      break;
-    case 81: //Q
-      console.log("j'appuie sur Q");
-      padJoueur.mouvementLeft();
-      break;
-    }
-}
-
-function onDocumentKeyDown(e) {
-  switch (e.keyCode) {
-    case 68: //D
-      console.log("Je relâche D");
-      padJoueur.resetX(); // Lorsque le joueur arrête d'appuyer sur D, on réinitialise la vitesse vers la droite
-      break;
-    case 81: //Q
-      console.log("Je relâche Q");
-      padJoueur.resetNX(); // Lorsque le joueur arrête d'appuyer sur D, on réinitialise la vitesse vers la gauche
-      break;
-  }
-}*/
 
 function timestamp() {
   return window.performance.now();
