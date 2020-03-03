@@ -17,34 +17,34 @@ function go() {
 // Direction et vitesse de la balle au debut de la partie.
 var ballDirX = 0;
 var ballDirZ = -0.05;
-var ballSpeed = 4;
-var paddleDirX = 0.0002;
-var paddleDirNX = -0.0002;
-var paddleSpeedX = 1;
-var paddleSpeedNX = 1;
-var tailleTerrain = 22 * 0.95;
+var ballSpeed = 16;
+var paddleDirX = 0.001;
+var paddleDirNX = -0.001;
+var paddleSpeedX = 1.4;
+var paddleSpeedNX = 1.4;
+var tailleTerrain = 88 * 0.95;
 var level = 3;
 var ballePosition = 0;
-var paddleSize = 4
+var paddleSize = 16
 
 
 // Classe Balle
 class Balle {
 
-  Balle(x,y,z){
+  /*Balle(x,y,z){
     this.x = x;
     this.y = y;
     this.z = z;
-  }
+  }*/
 
   initBalle() {
-    const geometryBalle = new THREE.BoxBufferGeometry(x,y,z);
+    const geometryBalle = new THREE.BoxBufferGeometry(4,4,4);
     const textureBalle = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/tnt.png");
     const materialBalle = new THREE.MeshBasicMaterial( { map : textureBalle} );
 
     this.mesh = new THREE.Mesh( geometryBalle, materialBalle, );
     scene.add( this.mesh );
-    this.mesh.position.y=1; // Pose la balle sur le terrain
+    this.mesh.position.set(0,2.5,0); // Pose la balle sur le terrain
     this.rays = [
         new THREE.Vector3(0, 0, 1),
         new THREE.Vector3(1, 0, 1),
@@ -64,7 +64,7 @@ class Balle {
     this.mesh.translateX(ballDirX * ballSpeed); // La balle est en mouvement constant sur l'axe des x
     this.mesh.translateZ(ballDirZ * ballSpeed); // La balle est en mouvement constant sur l'axe des z
 
-    const distance = 0.5; // Un pad fait 1 en z donc si on veut que la balle rebondisse de façons réaliste on prend la moitié de cette valeur pour être à la position de la face de notre objet
+    const distance = 2; // Un pad fait 1 en z donc si on veut que la balle rebondisse de façons réaliste on prend la moitié de cette valeur pour être à la position de la face de notre objet
 
     for (i = 0; i < tab.length; i += 1) {
       this.caster.set(this.mesh.position, this.rays[i]); // On ajoute les raycasters sur la balle
@@ -129,7 +129,7 @@ class Balle {
   }
 
   reset() { // Lorsqu'un des deux joueurs marque un point la balle est réinitialisé au centre
-    this.mesh.position.set(0,1,0);
+    this.mesh.position.set(0,2.5,0);
     ballDirX = 0;
   }
 
@@ -144,7 +144,7 @@ class Balle {
 class Terrain {
   initTerrain() {
     //const geometryTerrain = new THREE.BoxBufferGeometry( 15, 0, 22 );
-    const geometryTerrain = new THREE.BoxBufferGeometry( 500, -0.1, 500 );
+    const geometryTerrain = new THREE.BoxBufferGeometry( 1000, -0.1, 1000 );
     const textureTerrain = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testEau.jpg");
     const materialTerrain = new THREE.MeshBasicMaterial ({map : textureTerrain});
     this.mesh = new THREE.Mesh(geometryTerrain, materialTerrain);
@@ -156,7 +156,7 @@ class Terrain {
 class Stade {
   initStade() {
     //const geometryTerrain = new THREE.BoxBufferGeometry( 15, 0, 22 );
-    const geometryStade = new THREE.BoxBufferGeometry( 15, 0, 24 );
+    const geometryStade = new THREE.BoxBufferGeometry( 60, 0, 96 );
     const textureStade = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testSol8.png");
     const materialStade = new THREE.MeshBasicMaterial ({map : textureStade});
     this.mesh = new THREE.Mesh(geometryStade, materialStade);
@@ -167,7 +167,7 @@ class Stade {
 // Classe Mur
 class Mur {
   initMur() {
-    const murGeometry = new THREE.BoxBufferGeometry( 0, 1, 22, 1, 1, 1 );
+    const murGeometry = new THREE.BoxBufferGeometry( 4, 4, 88, 1, 1, 1 );
     //const murMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
     //const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
     const textureMur = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testSol6.jpg");
@@ -185,7 +185,7 @@ class Mur {
 //Classe Pad
 class Pad {
   initPad() {
-    const padGeometry = new THREE.BoxBufferGeometry( 4, 1, 1, 1, 1, 1 );
+    const padGeometry = new THREE.BoxBufferGeometry( 16, 4, 4, 1, 1, 1 );
   	//const padMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
   	//const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
     const texturePad = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png");
@@ -209,7 +209,7 @@ class Pad {
         paddleSpeedX = 0;
       } else {
         paddleDirX = 0.2;
-        paddleSpeedX = paddleSpeedX + 0.025;
+        paddleSpeedX = paddleSpeedX + 0.15;
       }
   }
   mouvementLeft(){
@@ -221,7 +221,7 @@ class Pad {
     }
     else {
       paddleDirNX = -0.2;
-      paddleSpeedNX = paddleSpeedNX + 0.025;
+      paddleSpeedNX = paddleSpeedNX + 0.15;
     }
   }
   resetX(){
@@ -268,7 +268,7 @@ class Models {
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
       //objLoader.load('pirateShip.obj', function(object) {
       objLoader.load('shipDark.obj', function(object) {
-        object.position.set(4, 0, -14);
+        object.position.set(4, 0, -55);
         object.rotation.y += 1.5;
         scene.add(object);
       });
@@ -286,8 +286,8 @@ class Models {
       objLoader.setMaterials(materialsCaptain);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
       objLoader.load('captain.obj', function(objectC) {
-        objectC.position.set(1, 0, 1);
-        objectC.rotation.y += 1.5;
+        objectC.position.set(1, 13, -50);
+        objectC.rotation.y += 3;
         scene.add(objectC);
       });
     });
@@ -296,7 +296,7 @@ class Models {
 
 class Skybox {
   initSkyBox() {
-    const skyGeometry = new THREE.BoxGeometry(500, 500, 500)
+    const skyGeometry = new THREE.BoxGeometry(1000, 1000, 1000)
     const skyMaterials = [
       new THREE.MeshBasicMaterial({
         map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/ocean_rt.jpg'), //Right
@@ -330,7 +330,8 @@ class Skybox {
 }
 
 // Variables globales
-var balle = new Balle(1,1,1);
+//var balle = new Balle(10,10,10);
+var balle = new Balle();
 var terrain = new Terrain();
 var stade = new Stade();
 var padAdverse = new Pad();
@@ -353,7 +354,7 @@ function init() {
 
   //Camera
   camera = new THREE.PerspectiveCamera(75, w/h, 0.1, 1000);
-  camera.position.set(0, 5.5, 15);
+  camera.position.set(0, 27.5, 60);
   camera.rotation.x=3.14/4;
 
   controls = new THREE.TrackballControls(camera, container);
@@ -388,13 +389,15 @@ function init() {
   terrain.initTerrain();
   stade.initStade();
   murDroite.initMur();
-  murDroite.positionMur(8,1,1);
+  //murDroite.positionMur(8,1,1);
+  murDroite.positionMur(32,1,1);
   murGauche.initMur();
-  murGauche.positionMur(-8,1,1);
+  //murGauche.positionMur(-8,1,1);
+  murGauche.positionMur(-32,1,1);
   padAdverse.initPad();
-  padAdverse.positionPad(0,1,-10);
+  padAdverse.positionPad(0,2.5,-40);
   padJoueur.initPad();
-  padJoueur.positionPad(0,1,10);
+  padJoueur.positionPad(0,2.5,40);
   ciel.initSkyBox();
 
   // add some objects
