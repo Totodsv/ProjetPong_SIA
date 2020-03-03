@@ -258,14 +258,16 @@ class Models {
     //Ajout des textures de l'objet
     var mtlLoader = new THREE.MTLLoader();
     mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-    var url = 'pirateShip.mtl';
+    //var url = 'pirateShip.mtl';
+    var url = 'shipDark.mtl';
     mtlLoader.load(url , function(materialsPirate){
       materialsPirate.preload();
       // Ajout de l'objet
       var objLoader = new THREE.OBJLoader();
       objLoader.setMaterials(materialsPirate);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-      objLoader.load('pirateShip.obj', function(object) {
+      //objLoader.load('pirateShip.obj', function(object) {
+      objLoader.load('shipDark.obj', function(object) {
         object.position.set(4, 0, -14);
         object.rotation.y += 1.5;
         scene.add(object);
