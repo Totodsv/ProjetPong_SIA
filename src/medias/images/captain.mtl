@@ -1,61 +1,32 @@
-# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# File Created: 20.03.2012 16:01:28
+# Exported using Kenney Suite 1.2 
 
-newmtl 14051_Pirate_Captain_body
-	Ns 21.0000
-	Ni 1.5000
-	d 1.0000
-	Tr 0.0000
-	Tf 1.0000 1.0000 1.0000 
-	illum 2
-	Ka 1.0000 1.0000 1.0000
-	Kd 1.0000 1.0000 1.0000
-	Ks 0.0000 0.0000 0.0000
-	Ke 0.0000 0.0000 0.0000
-	map_Ka 14051_Pirate_Captain_body_diff.jpg
-	map_Kd 14051_Pirate_Captain_body_diff.jpg
-	map_Ks 14051_Pirate_Captain_body_spec.jpg
+newmtl textile
+Ka 0.000000 0.000000 0.000000 
+Kd 0.8196079 0.7529412 0.6705883 
+Ks 0.330000 0.330000 0.330000 
 
-newmtl 14051_Pirate_Captain_hat
-	Ns 21.0000
-	Ni 1.5000
-	d 1.0000
-	Tr 0.0000
-	Tf 1.0000 1.0000 1.0000 
-	illum 2
-	Ka 1.0000 1.0000 1.0000
-	Kd 1.0000 1.0000 1.0000
-	Ks 0.0000 0.0000 0.0000
-	Ke 0.0000 0.0000 0.0000
-	map_Ka 14051_Pirate_Captain_hat_diff.jpg
-	map_Kd 14051_Pirate_Captain_hat_diff.jpg
-	map_Ks 14051_Pirate_Captain_hat_spec.jpg
+newmtl wood
+Ka 0.000000 0.000000 0.000000 
+Kd 0.7294118 0.4627451 0.2784314 
+Ks 0.330000 0.330000 0.330000 
 
-newmtl 14051_Pirate_Captain_sabre
-	Ns 21.0000
-	Ni 1.5000
-	d 1.0000
-	Tr 0.0000
-	Tf 1.0000 1.0000 1.0000 
-	illum 2
-	Ka 1.0000 1.0000 1.0000
-	Kd 1.0000 1.0000 1.0000
-	Ks 0.5400 0.5400 0.5400
-	Ke 0.0000 0.0000 0.0000
-	map_Ka 14051_Pirate_Captain_sabre_diff.jpg
-	map_Kd 14051_Pirate_Captain_sabre_diff.jpg
-	map_Ks 14051_Pirate_Captain_sabre_cpec.jpg
+newmtl textileRed
+Ka 0.000000 0.000000 0.000000 
+Kd 0.827451 0.4352941 0.3176471 
+Ks 0.330000 0.330000 0.330000 
 
-newmtl 14051_Pirate_Captain_parrot
-	Ns 10.0000
-	Ni 1.5000
-	d 1.0000
-	Tr 0.0000
-	Tf 1.0000 1.0000 1.0000 
-	illum 2
-	Ka 1.0000 1.0000 1.0000
-	Kd 1.0000 1.0000 1.0000
-	Ks 0.0000 0.0000 0.0000
-	Ke 0.0000 0.0000 0.0000
-	map_Ka 14051_Pirate_Captain_parrot_diff.jpg
-	map_Kd 14051_Pirate_Captain_parrot_diff.jpg
+newmtl _defaultMat
+Ka 0.000000 0.000000 0.000000 
+Kd 1 1 1 
+Ks 0.330000 0.330000 0.330000 
+
+newmtl sand
+Ka 0.000000 0.000000 0.000000 
+Kd 0.8470588 0.7607843 0.6078432 
+Ks 0.330000 0.330000 0.330000 
+
+newmtl iron
+Ka 0.000000 0.000000 0.000000 
+Kd 0.3764706 0.3764706 0.3764706 
+Ks 0.330000 0.330000 0.330000 
+
