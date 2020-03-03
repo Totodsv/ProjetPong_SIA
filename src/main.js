@@ -144,10 +144,22 @@ class Balle {
 class Terrain {
   initTerrain() {
     //const geometryTerrain = new THREE.BoxBufferGeometry( 15, 0, 22 );
-    const geometryTerrain = new THREE.BoxBufferGeometry( 500, 0, 500 );
-    const textureTerrain = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testSol11.png");
+    const geometryTerrain = new THREE.BoxBufferGeometry( 500, -0.1, 500 );
+    const textureTerrain = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testEau.jpg");
     const materialTerrain = new THREE.MeshBasicMaterial ({map : textureTerrain});
     this.mesh = new THREE.Mesh(geometryTerrain, materialTerrain);
+    scene.add( this.mesh );
+  }
+};
+
+//Classe Terrain
+class Stade {
+  initStade() {
+    //const geometryTerrain = new THREE.BoxBufferGeometry( 15, 0, 22 );
+    const geometryStade = new THREE.BoxBufferGeometry( 15, 0, 24 );
+    const textureStade = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testSol8.png");
+    const materialStade = new THREE.MeshBasicMaterial ({map : textureStade});
+    this.mesh = new THREE.Mesh(geometryStade, materialStade);
     scene.add( this.mesh );
   }
 };
@@ -158,7 +170,7 @@ class Mur {
     const murGeometry = new THREE.BoxBufferGeometry( 0, 1, 22, 1, 1, 1 );
     //const murMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
     //const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
-    const textureMur = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png");
+    const textureMur = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testSol6.jpg");
     const murMaterial = new THREE.MeshBasicMaterial ({map : textureMur});
 
     this.mesh = new THREE.Mesh(murGeometry, murMaterial);
@@ -260,6 +272,24 @@ class Models {
       });
     });
   }
+  initCaptain() {
+    //Ajout des textures de l'objet
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    var url = 'captain.mtl';
+    mtlLoader.load(url , function(materialsCaptain){
+      materialsCaptain.preload();
+      // Ajout de l'objet
+      var objLoader = new THREE.OBJLoader();
+      objLoader.setMaterials(materialsCaptain);
+      objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+      objLoader.load('captain.obj', function(objectC) {
+        objectC.position.set(1, 0, 1);
+        objectC.rotation.y += 1.5;
+        scene.add(objectC);
+      });
+    });
+  }
 }
 
 class Skybox {
@@ -300,12 +330,14 @@ class Skybox {
 // Variables globales
 var balle = new Balle(1,1,1);
 var terrain = new Terrain();
+var stade = new Stade();
 var padAdverse = new Pad();
 var padJoueur = new Pad();
 var murDroite = new Mur();
 var murGauche = new Mur();
 var ciel = new Skybox();
 var bateauPirate = new Models();
+var captain = new Models();
 
 // Initialisation du monde 3D
 function init() {
@@ -352,6 +384,7 @@ function init() {
   // add some geometries
   balle.initBalle();
   terrain.initTerrain();
+  stade.initStade();
   murDroite.initMur();
   murDroite.positionMur(8,1,1);
   murGauche.initMur();
@@ -364,6 +397,7 @@ function init() {
 
   // add some objects
   bateauPirate.initPirateShip();
+  captain.initCaptain();
 
   // Stats
   const fps  = 60;
@@ -410,6 +444,9 @@ function update(step) {
   if(keyboard.pressed("D")){
     padJoueur.mouvementRight();
   }
+
+  //Environnement
+ // bateauPirate.mouvementModels();
 }
 
 function onDocumentKeyDown(){
