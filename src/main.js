@@ -27,6 +27,8 @@ var level = 3;
 var ballePosition = 0;
 var paddleSize = 16
 var textureScore = [];
+var player = 0;
+var ia = 0;
 
 
 // Classe Balle
@@ -115,18 +117,23 @@ class Balle {
     // Si le joueur a marqué un point
     if (this.mesh.position.z <= -tailleTerrain/2)
     {
-      console.log("Le joueur a marqué");
-      // update scoreboard
+      if (player < 3) { // Si le score du joueur est plus petit que 3
+        console.log("Le joueur a marqué");
+        scorePlayer.playerScore(); // Le joueur marque un point
+        this.reset();// On remet la balle et les pads au centre
+      }
       this.reset();
     }
 
 // if ball goes off the 'right' side (CPU's side)
     if (this.mesh.position.z >= tailleTerrain/2)
     {
-      console.log("L'IA a marqué");
-      // update scoreboard
-      score.iaScore();
-      this.reset();
+      if (ia < 3) { // Si le score de l'IA est plus petit que 3
+        console.log("L'IA a marqué");
+        scoreIA.iaScore(); // L'IA marque un point
+        this.reset(); // On remet la balle et les pads au centre
+      }
+      this.reset(); // On remet la balle et les pads au centre
     }
   }
 
@@ -262,30 +269,31 @@ class Score {
     //const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
     textureScore =
     [
+      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/score0.jpg")}),
+      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/score2.jpg")}),
       new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
-      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testSol8.png")}),
-      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testEau.jpg")}),
       new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
-      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
-      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")})
+      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/score3.jpg")}),
+      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/score1.jpg")})
     ];
     var scoreMaterial = new THREE.MeshFaceMaterial (textureScore);
-    //scoreMaterial.needsUpdate = true;
     this.mesh = new THREE.Mesh(scoreGeometry, scoreMaterial);
     this.mesh.position.set(50, 5, 0);
     this.mesh.rotation.y += 3.7;
     scene.add(this.mesh);
 
   }
-
+  positionScore(x,y,z){
+    this.mesh.position.set(x, y, z);
+  }
   playerScore(){
-
+    this.mesh.rotation.y += -1.6;
+    player += 1;
   }
 
   iaScore(){
-    textureScore = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/tnt.png");
-    console.log("iciiiiiiiiiiiiiiiiiiii");
-    //scoreMaterial.needsUpdate = true;
+      this.mesh.rotation.y += -1.6;
+      ia += 1;
   }
 }
 
@@ -374,7 +382,8 @@ var padAdverse = new Pad();
 var padJoueur = new Pad();
 var murDroite = new Mur();
 var murGauche = new Mur();
-var score = new Score();
+var scoreIA = new Score();
+var scorePlayer = new Score();
 var ciel = new Skybox();
 var bateauPirate = new Models();
 var captain = new Models();
@@ -435,7 +444,10 @@ function init() {
   padAdverse.positionPad(0,2.5,-40);
   padJoueur.initPad();
   padJoueur.positionPad(0,2.5,40);
-  score.initScore();
+  scoreIA.initScore();
+  scoreIA.positionScore(50,5,0);
+  scorePlayer.initScore();
+  scorePlayer.positionScore(58,5,16);
   ciel.initSkyBox();
 
   // add some objects
