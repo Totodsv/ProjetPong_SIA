@@ -2,7 +2,7 @@ let container, w, h, scene, camera, controls, renderer, stats, keyboard;
 let urls;
 let loop = {};
 let x, y, z, i, padX, delta;
-let collidableMeshList = [], tab = [];
+let tab = [];
 
 window.addEventListener('load', go);
 window.addEventListener('resize', resize);
@@ -18,14 +18,15 @@ function go() {
 var ballDirX = 0;
 var ballDirZ = -0.05;
 var ballSpeed = 16;
-var paddleDirX = 0.001;
-var paddleDirNX = -0.001;
+var paddleDirX = 0.4;
+var paddleDirNX = -0.4;
 var paddleSpeedX = 1.4;
 var paddleSpeedNX = 1.4;
 var tailleTerrain = 88 * 0.95;
 var level = 3;
 var ballePosition = 0;
 var paddleSize = 16
+var textureScore = [];
 
 
 // Classe Balle
@@ -124,6 +125,7 @@ class Balle {
     {
       console.log("L'IA a marqué");
       // update scoreboard
+      score.iaScore();
       this.reset();
     }
   }
@@ -208,7 +210,7 @@ class Pad {
         paddleDirX = 0;
         paddleSpeedX = 0;
       } else {
-        paddleDirX = 0.2;
+        paddleDirX = 0.4;
         paddleSpeedX = paddleSpeedX + 0.15;
       }
   }
@@ -220,7 +222,7 @@ class Pad {
       paddleSpeedNX = 0;
     }
     else {
-      paddleDirNX = -0.2;
+      paddleDirNX = -0.4;
       paddleSpeedNX = paddleSpeedNX + 0.15;
     }
   }
@@ -252,6 +254,40 @@ class Pad {
     return this.mesh.position.x
   }
 };
+
+class Score {
+  initScore() {
+    const scoreGeometry = new THREE.BoxBufferGeometry( 16, 16, 16, 1, 1, 1 );
+    //const padMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
+    //const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
+    textureScore =
+    [
+      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testSol8.png")}),
+      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testEau.jpg")}),
+      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")})
+    ];
+    var scoreMaterial = new THREE.MeshFaceMaterial (textureScore);
+    //scoreMaterial.needsUpdate = true;
+    this.mesh = new THREE.Mesh(scoreGeometry, scoreMaterial);
+    this.mesh.position.set(50, 5, 0);
+    this.mesh.rotation.y += 3.7;
+    scene.add(this.mesh);
+
+  }
+
+  playerScore(){
+
+  }
+
+  iaScore(){
+    textureScore = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/tnt.png");
+    console.log("iciiiiiiiiiiiiiiiiiiii");
+    //scoreMaterial.needsUpdate = true;
+  }
+}
 
 class Models {
   initPirateShip() {
@@ -338,6 +374,7 @@ var padAdverse = new Pad();
 var padJoueur = new Pad();
 var murDroite = new Mur();
 var murGauche = new Mur();
+var score = new Score();
 var ciel = new Skybox();
 var bateauPirate = new Models();
 var captain = new Models();
@@ -398,6 +435,7 @@ function init() {
   padAdverse.positionPad(0,2.5,-40);
   padJoueur.initPad();
   padJoueur.positionPad(0,2.5,40);
+  score.initScore();
   ciel.initSkyBox();
 
   // add some objects
@@ -454,8 +492,7 @@ function update(step) {
  // bateauPirate.mouvementModels();
 }
 
-function onDocumentKeyDown(){
-  console.log("je lache le bouton");
+function onDocumentKeyDown(){ // Une fois qu'on relâche le bouton permettant d'aller à droite ou à gauche, on réinitialise la vitesse du pad
   padJoueur.resetX();
   padJoueur.resetNX();
 }
