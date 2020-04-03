@@ -344,14 +344,14 @@ class Models {
     //Ajout des textures de l'objet
     var mtlLoader = new THREE.MTLLoader();
     mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-    var url = 'stone.mtl';
+    var url = 'largeStone.mtl';
     mtlLoader.load(url , function(materialsStone){
       materialsStone.preload();
       // Ajout de l'objet
       var objLoader = new THREE.OBJLoader();
       objLoader.setMaterials(materialsStone);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-      objLoader.load('stone.obj', function(objectC) {
+      objLoader.load('largeStone.obj', function(objectC) {
         objectC.position.set(-50, 0, 0);
         objectC.rotation.y += 3;
         scene.add(objectC);
