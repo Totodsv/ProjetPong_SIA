@@ -465,6 +465,24 @@ class Models {
       });
     });
   }
+  initShipLight() {
+    //Ajout des textures de l'objet
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    var url = 'shipLight.mtl';
+    mtlLoader.load(url , function(materialsShipLight){
+      materialsShipLight.preload();
+      // Ajout de l'objet
+      var objLoader = new THREE.OBJLoader();
+      objLoader.setMaterials(materialsShipLight);
+      objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+      objLoader.load('shipLight.obj', function(objectT) {
+        objectT.position.set(4, -2, 72.2);
+        objectT.rotation.y -= 1.6;
+        scene.add(objectT);
+      });
+    });
+  }
 }
 
 class Skybox {
@@ -524,6 +542,7 @@ var plant = new Models();
 var chest = new Models();
 var shovel = new Models();
 var palmShort = new Models();
+var shipLight = new Models();
 
 // Initialisation du monde 3D
 function init() {
@@ -554,9 +573,11 @@ function init() {
   renderer.gammaOutput = true;
 
   //Lights
-  var light = new THREE.DirectionalLight( 0xdddddd, 0.8 );
-  light.position.set( -80, -80, 80 );
-  //light.castShadow = true;
+  //var light = new THREE.DirectionalLight( 0xdddddd, 0.8 );
+  //var light = new THREE.DirectionalLight(0xb4e7f2, 0.8);
+  var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 );
+ // light.position.set( -80, -80, 80 );
+  light.castShadow = true;
   //light = new THREE.AmbientLight( 0x444444 );
   scene.add(light);
 
@@ -598,6 +619,7 @@ function init() {
   chest.initChest();
   shovel.initShovel();
   palmShort.initPalmShort();
+  shipLight.initShipLight();
 
   // Stats
   const fps  = 60;
