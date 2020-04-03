@@ -153,11 +153,15 @@ class Balle {
 class Terrain {
   initTerrain() {
     //const geometryTerrain = new THREE.BoxBufferGeometry( 15, 0, 22 );
+    //const geometryTerrain = new THREE.BoxBufferGeometry( 1000, -0.1, 1000 );
     const geometryTerrain = new THREE.BoxBufferGeometry( 1000, -0.1, 1000 );
     const textureTerrain = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testEau3.jpg");
     const materialTerrain = new THREE.MeshBasicMaterial ({map : textureTerrain});
     this.mesh = new THREE.Mesh(geometryTerrain, materialTerrain);
     scene.add( this.mesh );
+  }
+  positionTerrain(x,y,z){
+    this.mesh.position.set(x, y, z);
   }
 };
 
@@ -312,7 +316,7 @@ class Models {
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
       //objLoader.load('pirateShip.obj', function(object) {
       objLoader.load('shipDark.obj', function(object) {
-        object.position.set(4, 0, -55);
+        object.position.set(4, -2, -55);
         object.rotation.y += 1.5;
         scene.add(object);
       });
@@ -330,7 +334,25 @@ class Models {
       objLoader.setMaterials(materialsCaptain);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
       objLoader.load('captain.obj', function(objectC) {
-        objectC.position.set(1, 13, -50);
+        objectC.position.set(1, 12, -50);
+        objectC.rotation.y += 3;
+        scene.add(objectC);
+      });
+    });
+  }
+  initStone() {
+    //Ajout des textures de l'objet
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    var url = 'stone.mtl';
+    mtlLoader.load(url , function(materialsStone){
+      materialsStone.preload();
+      // Ajout de l'objet
+      var objLoader = new THREE.OBJLoader();
+      objLoader.setMaterials(materialsStone);
+      objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+      objLoader.load('stone.obj', function(objectC) {
+        objectC.position.set(-10, 0, -50);
         objectC.rotation.y += 3;
         scene.add(objectC);
       });
@@ -341,6 +363,7 @@ class Models {
 class Skybox {
   initSkyBox() {
     const skyGeometry = new THREE.BoxGeometry(1000, 1000, 1000)
+    //const skyGeometry = new THREE.BoxGeometry(500, 500, 500)
     const skyMaterials = [
       new THREE.MeshBasicMaterial({
         map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/ocean_rt.jpg'), //Right
