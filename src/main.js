@@ -154,7 +154,7 @@ class Terrain {
   initTerrain() {
     //const geometryTerrain = new THREE.BoxBufferGeometry( 15, 0, 22 );
     const geometryTerrain = new THREE.BoxBufferGeometry( 1000, -0.1, 1000 );
-    const textureTerrain = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testEau3.jpg");
+    const textureTerrain = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testEau5.jpg");
     const materialTerrain = new THREE.MeshBasicMaterial ({map : textureTerrain});
     this.mesh = new THREE.Mesh(geometryTerrain, materialTerrain);
     scene.add( this.mesh );
