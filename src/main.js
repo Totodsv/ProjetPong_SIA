@@ -181,13 +181,13 @@ class Stade {
 class Ile {
   initIle() {
     //const geometryTerrain = new THREE.BoxBufferGeometry( 15, 0, 22 );
-    const geometryIle = new THREE.SphereGeometry(100, 10, 30);
+    const geometryIle = new THREE.CircleBufferGeometry(100, 10, 20);
     const textureIle = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/sand.jpg");
     const materialIle = new THREE.MeshBasicMaterial({map: textureIle});
     this.mesh = new THREE.Mesh(geometryIle, materialIle);
     scene.add(this.mesh);
-    this.mesh.rotation.y=5;
-    this.mesh.rotation.x=-1.5;
+    this.mesh.rotation.x=-1.57;
+    this.mesh.rotation.y=-0.01;
   }
   positionIle(x,y,z){
     this.mesh.position.set(x, y, z);
@@ -343,14 +343,14 @@ class Models {
     //Ajout des textures de l'objet
     var mtlLoader = new THREE.MTLLoader();
     mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-    var url = 'captain.mtl';
+    var url = 'pirateLvl3.mtl';
     mtlLoader.load(url , function(materialsCaptain){
       materialsCaptain.preload();
       // Ajout de l'objet
       var objLoader = new THREE.OBJLoader();
       objLoader.setMaterials(materialsCaptain);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-      objLoader.load('captain.obj', function(objectC) {
+      objLoader.load('pirateLvl3.obj', function(objectC) {
         objectC.position.set(1, 12, -50);
         objectC.rotation.y += 3;
         scene.add(objectC);
@@ -387,7 +387,7 @@ class Models {
       objLoader.setMaterials(materialsTower);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
       objLoader.load('tower.obj', function(objectT) {
-        objectT.position.set(-50, 0, 0);
+        objectT.position.set(50, 0, 0);
         objectT.rotation.y += 3.5;
         scene.add(objectT);
       });
@@ -496,7 +496,7 @@ function init() {
   terrain.initTerrain();
   stade.initStade();
   ile.initIle();
-  ile.positionIle(-100,-70,5)
+  ile.positionIle(88,0.5,30)
   murDroite.initMur();
   //murDroite.positionMur(8,1,1);
   murDroite.positionMur(32,1,1);
@@ -508,9 +508,9 @@ function init() {
   padJoueur.initPad();
   padJoueur.positionPad(0,2.5,40);
   scoreIA.initScore();
-  scoreIA.positionScore(50,5,0);
+  scoreIA.positionScore(-50,5,0);
   scorePlayer.initScore();
-  scorePlayer.positionScore(58,5,16);
+  scorePlayer.positionScore(-58,5,16);
   ciel.initSkyBox();
 
   // add some models
