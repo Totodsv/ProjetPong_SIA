@@ -181,11 +181,16 @@ class Stade {
 class Ile {
   initIle() {
     //const geometryTerrain = new THREE.BoxBufferGeometry( 15, 0, 22 );
-    const geometryIle = new THREE.CircleGeometry(60, 0, 96);
+    const geometryIle = new THREE.SphereGeometry(100, 10, 30);
     const textureIle = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/sand.jpg");
     const materialIle = new THREE.MeshBasicMaterial({map: textureIle});
     this.mesh = new THREE.Mesh(geometryIle, materialIle);
     scene.add(this.mesh);
+    this.mesh.rotation.y=5;
+    this.mesh.rotation.x=-1.5;
+  }
+  positionIle(x,y,z){
+    this.mesh.position.set(x, y, z);
   }
 };
 
@@ -370,6 +375,24 @@ class Models {
       });
     });
   }
+  initTower() {
+    //Ajout des textures de l'objet
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    var url = 'tower.mtl';
+    mtlLoader.load(url , function(materialsTower){
+      materialsTower.preload();
+      // Ajout de l'objet
+      var objLoader = new THREE.OBJLoader();
+      objLoader.setMaterials(materialsTower);
+      objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+      objLoader.load('tower.obj', function(objectT) {
+        objectT.position.set(-50, 0, 0);
+        objectT.rotation.y += 3.5;
+        scene.add(objectT);
+      });
+    });
+  }
 }
 
 class Skybox {
@@ -424,6 +447,7 @@ var ciel = new Skybox();
 var bateauPirate = new Models();
 var captain = new Models();
 var stone = new Models();
+var tower = new Models();
 
 // Initialisation du monde 3D
 function init() {
@@ -472,6 +496,7 @@ function init() {
   terrain.initTerrain();
   stade.initStade();
   ile.initIle();
+  ile.positionIle(-100,-70,5)
   murDroite.initMur();
   //murDroite.positionMur(8,1,1);
   murDroite.positionMur(32,1,1);
@@ -492,6 +517,7 @@ function init() {
   bateauPirate.initPirateShip();
   captain.initCaptain();
   stone.initStone();
+  tower.initTower();
 
   // Stats
   const fps  = 60;
