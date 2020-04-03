@@ -165,7 +165,7 @@ class Terrain {
   }
 };
 
-//Classe Terrain
+//Classe Stade
 class Stade {
   initStade() {
     //const geometryTerrain = new THREE.BoxBufferGeometry( 15, 0, 22 );
@@ -173,6 +173,18 @@ class Stade {
     const textureStade = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testSol8.png");
     const materialStade = new THREE.MeshBasicMaterial({map: textureStade});
     this.mesh = new THREE.Mesh(geometryStade, materialStade);
+    scene.add(this.mesh);
+  }
+};
+
+//Classe Ile
+class Ile {
+  initIle() {
+    //const geometryTerrain = new THREE.BoxBufferGeometry( 15, 0, 22 );
+    const geometryIle = new THREE.CircleGeometry(60, 0, 96);
+    const textureIle = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/sand.jpg");
+    const materialIle = new THREE.MeshBasicMaterial({map: textureIle});
+    this.mesh = new THREE.Mesh(geometryIle, materialIle);
     scene.add(this.mesh);
   }
 };
@@ -351,10 +363,10 @@ class Models {
       var objLoader = new THREE.OBJLoader();
       objLoader.setMaterials(materialsStone);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-      objLoader.load('largeStone.obj', function(objectC) {
-        objectC.position.set(-50, 0, 0);
-        objectC.rotation.y += 3;
-        scene.add(objectC);
+      objLoader.load('largeStone.obj', function(objectS) {
+        objectS.position.set(-50, 0, 0);
+        objectS.rotation.y += 3.5;
+        scene.add(objectS);
       });
     });
   }
@@ -401,6 +413,7 @@ class Skybox {
 var balle = new Balle();
 var terrain = new Terrain();
 var stade = new Stade();
+var ile = new Ile();
 var padAdverse = new Pad();
 var padJoueur = new Pad();
 var murDroite = new Mur();
@@ -458,6 +471,7 @@ function init() {
   balle.initBalle();
   terrain.initTerrain();
   stade.initStade();
+  ile.initIle();
   murDroite.initMur();
   //murDroite.positionMur(8,1,1);
   murDroite.positionMur(32,1,1);
