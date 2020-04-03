@@ -352,7 +352,7 @@ class Models {
       objLoader.setMaterials(materialsStone);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
       objLoader.load('stone.obj', function(objectC) {
-        objectC.position.set(-10, 0, -50);
+        objectC.position.set(-50, 0, 0);
         objectC.rotation.y += 3;
         scene.add(objectC);
       });
@@ -410,6 +410,7 @@ var scorePlayer = new Score();
 var ciel = new Skybox();
 var bateauPirate = new Models();
 var captain = new Models();
+var stone = new Models();
 
 // Initialisation du monde 3D
 function init() {
@@ -473,9 +474,10 @@ function init() {
   scorePlayer.positionScore(58,5,16);
   ciel.initSkyBox();
 
-  // add some objects
+  // add some models
   bateauPirate.initPirateShip();
   captain.initCaptain();
+  stone.initStone();
 
   // Stats
   const fps  = 60;
