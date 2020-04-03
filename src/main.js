@@ -387,8 +387,80 @@ class Models {
       objLoader.setMaterials(materialsTower);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
       objLoader.load('tower.obj', function(objectT) {
-        objectT.position.set(50, 0, 0);
+        objectT.position.set(50, 0, -20);
         objectT.rotation.y += 3.5;
+        scene.add(objectT);
+      });
+    });
+  }
+  initPlant() {
+    //Ajout des textures de l'objet
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    var url = 'plant.mtl';
+    mtlLoader.load(url , function(materialsPlant){
+      materialsPlant.preload();
+      // Ajout de l'objet
+      var objLoader = new THREE.OBJLoader();
+      objLoader.setMaterials(materialsPlant);
+      objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+      objLoader.load('plant.obj', function(objectT) {
+        objectT.position.set(50, 0, 30);
+        objectT.rotation.y += 3.5;
+        scene.add(objectT);
+      });
+    });
+  }
+  initChest() {
+    //Ajout des textures de l'objet
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    var url = 'chest.mtl';
+    mtlLoader.load(url , function(materialsChest){
+      materialsChest.preload();
+      // Ajout de l'objet
+      var objLoader = new THREE.OBJLoader();
+      objLoader.setMaterials(materialsChest);
+      objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+      objLoader.load('chest.obj', function(objectT) {
+        objectT.position.set(50, 0, 20);
+        objectT.rotation.y += 2;
+        scene.add(objectT);
+      });
+    });
+  }
+  initShovel() {
+    //Ajout des textures de l'objet
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    var url = 'shovel.mtl';
+    mtlLoader.load(url , function(materialsShovel){
+      materialsShovel.preload();
+      // Ajout de l'objet
+      var objLoader = new THREE.OBJLoader();
+      objLoader.setMaterials(materialsShovel);
+      objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+      objLoader.load('shovel.obj', function(objectT) {
+        objectT.position.set(50, 0, 25);
+        objectT.rotation.x += -2;
+        scene.add(objectT);
+      });
+    });
+  }
+  initPalmShort() {
+    //Ajout des textures de l'objet
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    var url = 'palmShort.mtl';
+    mtlLoader.load(url , function(materialsPalmShort){
+      materialsPalmShort.preload();
+      // Ajout de l'objet
+      var objLoader = new THREE.OBJLoader();
+      objLoader.setMaterials(materialsPalmShort);
+      objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+      objLoader.load('palmShort.obj', function(objectT) {
+        objectT.position.set(75, 0, -10);
+        //objectT.rotation.x += -2;
         scene.add(objectT);
       });
     });
@@ -448,6 +520,10 @@ var bateauPirate = new Models();
 var captain = new Models();
 var stone = new Models();
 var tower = new Models();
+var plant = new Models();
+var chest = new Models();
+var shovel = new Models();
+var palmShort = new Models();
 
 // Initialisation du monde 3D
 function init() {
@@ -518,6 +594,10 @@ function init() {
   captain.initCaptain();
   stone.initStone();
   tower.initTower();
+  plant.initPlant();
+  chest.initChest();
+  shovel.initShovel();
+  palmShort.initPalmShort();
 
   // Stats
   const fps  = 60;
