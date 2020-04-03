@@ -165,11 +165,11 @@ class Terrain {
 class Stade {
   initStade() {
     //const geometryTerrain = new THREE.BoxBufferGeometry( 15, 0, 22 );
-    const geometryStade = new THREE.BoxBufferGeometry( 60, 0, 96 );
+    const geometryStade = new THREE.BoxBufferGeometry(60, 0, 96);
     const textureStade = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testSol8.png");
-    const materialStade = new THREE.MeshBasicMaterial ({map : textureStade});
+    const materialStade = new THREE.MeshBasicMaterial({map: textureStade});
     this.mesh = new THREE.Mesh(geometryStade, materialStade);
-    scene.add( this.mesh );
+    scene.add(this.mesh);
   }
 };
 
@@ -432,7 +432,7 @@ function init() {
 
   // add some geometries
   balle.initBalle();
-  terrain.initTerrain();
+  //terrain.initTerrain();
   stade.initStade();
   murDroite.initMur();
   //murDroite.positionMur(8,1,1);
