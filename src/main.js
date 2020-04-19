@@ -31,6 +31,7 @@ var player = 0;
 var ia = 0;
 
 
+
 // Classe Balle
 class Balle {
 
@@ -69,14 +70,16 @@ class Balle {
 
     const distance = 2; // Un pad fait 1 en z donc si on veut que la balle rebondisse de façons réaliste on prend la moitié de cette valeur pour être à la position de la face de notre objet
 
-    //console.log(scene.children[4]);
+    //console.log(scene.children);
 
     for (i = 0; i < tab.length; i += 1) {
       this.caster.set(this.mesh.position, this.rays[i]); // On ajoute les raycasters sur la balle
-      var obstacles = this.caster.intersectObjects(scene.children); // Collisions -> les rayons de la balle peuvent entrer en contact avec les objets de la scène
+      var collisionGroup = [scene.children[4], scene.children[5], scene.children[8], scene.children[9], scene.children[10], scene.children[11]]; // On ajouter les objets avec lesquels on souhaite une collision
+      //var obstacles = this.caster.intersectObjects(scene.children); // Collisions -> les rayons de la balle peuvent entrer en contact avec les objets de la scène
+      var obstacles = this.caster.intersectObjects(collisionGroup);
+      //Collision avec les boucliers
       var bouclierJoueur = scene.children[4];
       var bouclierAdverse = scene.children[5];
-
 
 
 
@@ -91,6 +94,7 @@ class Balle {
           console.log("Bouclier Adverse");
           bouclierAdverse.position.set(0,-2.5,-45);
         }
+        //Gestion des collisions
         if (i === 4) {
           console.log("Collision De Face");
           ballDirZ = -ballDirZ;
@@ -139,8 +143,8 @@ class Balle {
         console.log("Le joueur a marqué");
         scorePlayer.playerScore(); // Le joueur marque un point
         this.reset();// On remet la balle et les pads au centre
-        bouclierJoueur.position.set(0,2.5,45);//On remet le shield du Joueur
-        bouclierAdverse.position.set(0,2.5,-45);//On remet le shield de l'adversaire
+        bouclierJoueur.position.set(0,2.5,43.5);//On remet le shield du Joueur
+        bouclierAdverse.position.set(0,2.5,-43.5);//On remet le shield de l'adversaire
       }
       this.reset();
     }
@@ -152,8 +156,8 @@ class Balle {
         console.log("L'IA a marqué");
         scoreIA.iaScore(); // L'IA marque un point
         this.reset(); // On remet la balle et les pads au centre
-        bouclierJoueur.position.set(0,2.5,45);//On remet le shield du Joueur
-        bouclierAdverse.position.set(0,2.5,-45);//On remet le shield de l'adversaire
+        bouclierJoueur.position.set(0,2.5,43.5);//On remet le shield du Joueur
+        bouclierAdverse.position.set(0,2.5,-43.5);//On remet le shield de l'adversaire
       }
       this.reset(); // On remet la balle et les pads au centre
     }
@@ -172,30 +176,26 @@ class Balle {
 };
 
 class Bouclier {
-  initShield() {
-    const shieldGeometry = new THREE.BoxBufferGeometry( tailleTerrain*0.72, 4, 4, 1, 1, 1 );
-    //const murMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
-    //const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
+  initShield(nom) {
+    const shieldGeometry = new THREE.BoxBufferGeometry( tailleTerrain*0.72, 4, 0.5, 1, 1, 1 );
     //const textureMur = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testSol6.jpg");
     //const murMaterial = new THREE.MeshBasicMaterial ({map : textureMur});
-    const shieldMaterial =  new THREE.MeshPhongMaterial( {color: 0x737373} );
+    const shieldMaterial =  new THREE.MeshStandardMaterial({transparent:true, opacity:0.5});
 
     this.mesh = new THREE.Mesh(shieldGeometry, shieldMaterial);
     this.mesh.position.set(0, 0, 0);
     //this.mesh.name = "Bouclier";
     scene.add(this.mesh);
+    this.mesh.name=nom;
   }
   positionShield(x,y,z){
     this.mesh.position.set(x, y, z);
-  }
-  nameShield(nom){
-    this.mesh.name = nom;
   }
 }
 
 //Classe Terrain
 class Terrain {
-  initTerrain() {
+  initTerrain(nom) {
     //const geometryTerrain = new THREE.BoxBufferGeometry( 15, 0, 22 );
     //const geometryTerrain = new THREE.BoxBufferGeometry( 1000, -0.1, 1000 );
     const geometryTerrain = new THREE.BoxBufferGeometry( 1000, -0.1, 1000 );
@@ -203,6 +203,7 @@ class Terrain {
     const materialTerrain = new THREE.MeshBasicMaterial ({map : textureTerrain});
     this.mesh = new THREE.Mesh(geometryTerrain, materialTerrain);
     scene.add( this.mesh );
+    this.mesh.name=nom;
   }
   positionTerrain(x,y,z){
     this.mesh.position.set(x, y, z);
@@ -211,19 +212,20 @@ class Terrain {
 
 //Classe Stade
 class Stade {
-  initStade() {
+  initStade(nom) {
     //const geometryTerrain = new THREE.BoxBufferGeometry( 15, 0, 22 );
     const geometryStade = new THREE.BoxBufferGeometry(60, 0, 96);
     const textureStade = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testSol8.png");
     const materialStade = new THREE.MeshBasicMaterial({map: textureStade});
     this.mesh = new THREE.Mesh(geometryStade, materialStade);
     scene.add(this.mesh);
+    this.mesh.name=nom;
   }
 };
 
 //Classe Ile
 class Ile {
-  initIle() {
+  initIle(nom) {
     //const geometryTerrain = new THREE.BoxBufferGeometry( 15, 0, 22 );
     const geometryIle = new THREE.CircleBufferGeometry(100, 10, 20);
     const textureIle = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/sand.jpg");
@@ -232,6 +234,7 @@ class Ile {
     scene.add(this.mesh);
     this.mesh.rotation.x=-1.57;
     this.mesh.rotation.y=-0.01;
+    this.mesh.name=nom;
   }
   positionIle(x,y,z){
     this.mesh.position.set(x, y, z);
@@ -240,7 +243,7 @@ class Ile {
 
 // Classe Mur
 class Mur {
-  initMur() {
+  initMur(nom) {
     const murGeometry = new THREE.BoxBufferGeometry( 4, 4, 88, 1, 1, 1 );
     //const murMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
     //const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
@@ -250,6 +253,7 @@ class Mur {
     this.mesh = new THREE.Mesh(murGeometry, murMaterial);
     this.mesh.position.set(0, 0, 0);
     scene.add(this.mesh);
+    this.mesh.name=nom;
   }
   positionMur(x,y,z){
     this.mesh.position.set(x, y, z);
@@ -258,7 +262,7 @@ class Mur {
 
 //Classe Pad
 class Pad {
-  initPad() {
+  initPad(nom) {
     const padGeometry = new THREE.BoxBufferGeometry( 16, 4, 4, 1, 1, 1 );
   	//const padMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
   	//const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
@@ -267,7 +271,7 @@ class Pad {
   	this.mesh = new THREE.Mesh(padGeometry, padMaterial);
   	this.mesh.position.set(0, 0, 0);
   	scene.add(this.mesh);
-
+    this.mesh.name=nom;
 
     this.clock = new THREE.Clock();
   }
@@ -328,7 +332,7 @@ class Pad {
 };
 
 class Score {
-  initScore() {
+  initScore(nom) {
     const scoreGeometry = new THREE.BoxBufferGeometry( 16, 16, 16, 1, 1, 1 );
     //const padMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
     //const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
@@ -346,6 +350,7 @@ class Score {
     this.mesh.position.set(50, 5, 0);
     this.mesh.rotation.y += 3.7;
     scene.add(this.mesh);
+    this.mesh.name=nom;
 
   }
   positionScore(x,y,z){
@@ -363,7 +368,7 @@ class Score {
 }
 
 class Requin {
-  initRequin(){
+  initRequin(nom){
 
     const requinGeometry = new THREE.CircleBufferGeometry( 10, 3, 3 );
     //const padMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
@@ -374,6 +379,7 @@ class Requin {
     this.mesh = new THREE.Mesh(requinGeometry, requinMaterial);
     this.mesh.position.set(500, -1, -200);
     scene.add(this.mesh);
+    this.mesh.name=nom;
     //this.mesh.rotation.z=5;
   }
   mouvementRequin(){
@@ -427,7 +433,13 @@ class Models {
       });
     });
   }
-  initStone() {
+  moveObject(){
+   console.log(testGroup);
+  }
+  nameObject(name){
+    this.group.name = name;
+  }
+  /*initStone() {
     //Ajout des textures de l'objet
     var mtlLoader = new THREE.MTLLoader();
     mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
@@ -435,6 +447,7 @@ class Models {
     mtlLoader.load(url , function(materialsStone){
       materialsStone.preload();
       // Ajout de l'objet
+
       var objLoader = new THREE.OBJLoader();
       objLoader.setMaterials(materialsStone);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
@@ -444,7 +457,7 @@ class Models {
         scene.add(objectS);
       });
     });
-  }
+  }*/
   initTower() {
     //Ajout des textures de l'objet
     var mtlLoader = new THREE.MTLLoader();
@@ -609,7 +622,7 @@ var scorePlayer = new Score();
 var ciel = new Skybox();
 var bateauPirate = new Models();
 var captain = new Models();
-var stone = new Models();
+//var stone = new Models();
 var tower = new Models();
 var plant = new Models();
 var chest = new Models();
@@ -662,38 +675,37 @@ function init() {
   document.body.appendChild( stats.domElement );
 
   // add some geometries
-  balle.initBalle();
-  terrain.initTerrain();
-  stade.initStade();
-  shieldJoueur.initShield();
-  shieldJoueur.positionShield(0,2.5,45);
-  shieldJoueur.nameShield("BouclierJoueur");
-  shieldAdverse.initShield();
-  shieldAdverse.positionShield(0,2.5,-45);
-  shieldAdverse.nameShield("BouclierAdverse");
-  ile.initIle();
+  balle.initBalle("Balle");
+  terrain.initTerrain("Terrain");
+  stade.initStade("Stade");
+  shieldJoueur.initShield("BouclierJoueur");
+  shieldJoueur.positionShield(0,2.5,43.5);
+  shieldAdverse.initShield("BouclierAdverse");
+  shieldAdverse.positionShield(0,2.5,-43.5);
+  ile.initIle("Ile");
   ile.positionIle(88,0.5,30)
-  requin.initRequin();
-  murDroite.initMur();
+  requin.initRequin("Requin");
+  murDroite.initMur("MurDroite");
   //murDroite.positionMur(8,1,1);
   murDroite.positionMur(32,1,1);
-  murGauche.initMur();
+  murGauche.initMur("MurGauche");
   //murGauche.positionMur(-8,1,1);
   murGauche.positionMur(-32,1,1);
-  padAdverse.initPad();
+  padAdverse.initPad("PadAdverse");
   padAdverse.positionPad(0,2.5,-40);
-  padJoueur.initPad();
+  padJoueur.initPad("PadJoueur");
   padJoueur.positionPad(0,2.5,40);
-  scoreIA.initScore();
+  scoreIA.initScore("ScoreIA");
   scoreIA.positionScore(-50,5,0);
-  scorePlayer.initScore();
+  scorePlayer.initScore("ScoreJoueur");
   scorePlayer.positionScore(-58,5,16);
   ciel.initSkyBox();
 
   // add some models
   bateauPirate.initPirateShip();
+  //bateauPirate.nameObject("pirateShip");
   captain.initCaptain();
-  stone.initStone();
+  //stone.initStone();
   tower.initTower();
   plant.initPlant();
   chest.initChest();
@@ -740,6 +752,7 @@ function update(step) {
   padAdverse.mouvementIA(ballePosition); // L'IA suit la balle
 
   requin.mouvementRequin();
+  //console.log(testGroup);
 
   if(keyboard.pressed("Q")){
     padJoueur.mouvementLeft();
