@@ -57,7 +57,10 @@
       <workItem from="1586872105869" duration="394000" />
       <workItem from="1586946111057" duration="3256000" />
       <workItem from="1587215100234" duration="14045000" />
-      <workItem from="1587297496642" duration="8104000" />
+      <workItem from="1587297496642" duration="8402000" />
+      <workItem from="1587367847890" duration="2049000" />
+      <workItem from="1587389515174" duration="3847000" />
+      <workItem from="1587541221495" duration="3471000" />
     </task>
     <task id="LOCAL-00001" summary="Test Web Storm">
       <created>1581673514715</created>
@@ -353,14 +356,20 @@
       <option name="project" value="LOCAL" />
       <updated>1587230978751</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="Jeu : Boucliers terminés&#10;Tableau pour choisir quels objets font partis des collisions">
+      <created>1587312237788</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1587312237788</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Collisions presque fonctionnelles&#10;Mur OK&#10;Pads ~ Ok" />
     <MESSAGE value="Test bloquer pads" />
     <MESSAGE value="OK : Pads bloqué hors terrain. Première IA 0. Collisions pads côté.&#10;Problème : fluidité du pad Joueur. Vitesse balle" />
     <MESSAGE value="Test sol" />
@@ -385,13 +394,14 @@
     <MESSAGE value="Environnement : Ship Light" />
     <MESSAGE value="Environnement : ile avancée" />
     <MESSAGE value="Environnement : Requin Ok&#10;Jeu : Boucliers ok" />
-    <option name="LAST_COMMIT_MESSAGE" value="Environnement : Requin Ok&#10;Jeu : Boucliers ok" />
+    <MESSAGE value="Jeu : Boucliers terminés&#10;Tableau pour choisir quels objets font partis des collisions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Jeu : Boucliers terminés&#10;Tableau pour choisir quels objets font partis des collisions" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1587230977317">
+    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1587312236503">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587230977317" />
+    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587312236503" />
     <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1581672651017">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -400,10 +410,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1581672701148" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1587230980805">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1587312241268">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1587230980805" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1587312241268" />
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586263898043">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

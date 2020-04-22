@@ -1,12 +1,13 @@
 let container, w, h, scene, camera, controls, renderer, stats, keyboard;
 let urls;
 let loop = {};
-let x, y, z, i, padX, delta;
+let x, y, z, i, padX, delta, changement;
 let tab = [];
 
 window.addEventListener('load', go);
 window.addEventListener('resize', resize);
 window.addEventListener('keyup', onDocumentKeyDown);
+window.addEventListener('keypress', fullScreen);
 
 function go() {
   console.log("Go!");
@@ -29,17 +30,13 @@ var paddleSize = 16
 var textureScore = [];
 var player = 0;
 var ia = 0;
+var elem = document.documentElement;
+var full = false;
 
 
 
 // Classe Balle
 class Balle {
-
-  /*Balle(x,y,z){
-    this.x = x;
-    this.y = y;
-    this.z = z;
-  }*/
 
   initBalle() {
     const geometryBalle = new THREE.BoxBufferGeometry(4,4,4);
@@ -70,7 +67,7 @@ class Balle {
 
     const distance = 2; // Un pad fait 1 en z donc si on veut que la balle rebondisse de façons réaliste on prend la moitié de cette valeur pour être à la position de la face de notre objet
 
-    //console.log(scene.children);
+    //console.log(elem);
 
     for (i = 0; i < tab.length; i += 1) {
       this.caster.set(this.mesh.position, this.rays[i]); // On ajoute les raycasters sur la balle
@@ -81,9 +78,9 @@ class Balle {
       var bouclierJoueur = scene.children[4];
       var bouclierAdverse = scene.children[5];
 
-
-
       if (obstacles.length > 0 && obstacles[0].distance <= distance) {// si la distance de collision est plus petite que celle définie alors il y a collision
+        //Test vitesse balle
+        ballSpeed+=0.1;
 
         //Gestion des boucliers
         if(obstacles[0].object.name=="BouclierJoueur"){
@@ -145,6 +142,7 @@ class Balle {
         this.reset();// On remet la balle et les pads au centre
         bouclierJoueur.position.set(0,2.5,43.5);//On remet le shield du Joueur
         bouclierAdverse.position.set(0,2.5,-43.5);//On remet le shield de l'adversaire
+        ballSpeed=16; //On réinitialise la vitesse de la balle
       }
       this.reset();
     }
@@ -158,6 +156,7 @@ class Balle {
         this.reset(); // On remet la balle et les pads au centre
         bouclierJoueur.position.set(0,2.5,43.5);//On remet le shield du Joueur
         bouclierAdverse.position.set(0,2.5,-43.5);//On remet le shield de l'adversaire
+        ballSpeed=16; //On réinitialise la vitesse de la balle
       }
       this.reset(); // On remet la balle et les pads au centre
     }
@@ -645,6 +644,12 @@ function init() {
   camera.position.set(0, 27.5, 60);
   camera.rotation.x=3.14/4;
 
+  camera2 = new THREE.PerspectiveCamera(10, w/h, 0.1, 1000);
+  camera2.position.set(0, 40, 60);
+  //camera2.lookAt(padJoueur.position);
+
+
+
   controls = new THREE.TrackballControls(camera, container);
   controls.target = new THREE.Vector3(0, 0, 0.75);
   controls.panSpeed = 0.4;
@@ -658,6 +663,7 @@ function init() {
   renderer.gammaFactor = 2.2;
   renderer.gammaOutput = true;
 
+
   //Lights
   //var light = new THREE.DirectionalLight( 0xdddddd, 0.8 );
   //var light = new THREE.DirectionalLight(0xb4e7f2, 0.8);
@@ -666,6 +672,20 @@ function init() {
   light.castShadow = true;
   //light = new THREE.AmbientLight( 0x444444 );
   scene.add(light);
+
+  // AudioListener
+  var listener = new THREE.AudioListener();
+  camera.add( listener );
+  // create a global audio source
+  var sound = new THREE.Audio( listener );
+  // load a sound and set it as the Audio object's buffer
+  var audioLoader = new THREE.AudioLoader();
+  audioLoader.load( 'sounds/ambient.ogg', function( buffer ) {
+    sound.setBuffer( buffer );
+    sound.setLoop( true );
+    sound.setVolume( 0.5 );
+    sound.play();
+  });
 
 
   // add Stats.js - https://github.com/mrdoob/stats.js
@@ -734,8 +754,29 @@ function gameLoop() {
     loop.dt = loop.dt - loop.slowStep;
     update(loop.step); // déplace les objets d'une fraction de seconde
   }
-  renderer.render(scene, camera);  // rendu de la scène
-  loop.last = loop.now;
+  if(keyboard.pressed("1") || keyboard.pressed("&")){
+    //if (changement){
+      //changement=false;
+    //}
+    //else {
+      changement = true;
+    //}
+  }
+  if(keyboard.pressed("0") || keyboard.pressed("à")){
+    changement=false;
+  }
+
+  if(changement) {
+    camera2.fov = 100;
+    camera2.position.set(scene.children[11].position.x, scene.children[11].position.y, scene.children[11].position.z - 1);
+    renderer.render(scene, camera2);
+  }
+  else {
+    renderer.render(scene, camera);  // rendu de la scène
+  }
+
+
+    loop.last = loop.now;
 
   requestAnimationFrame(gameLoop); // relance la boucle du jeu
 
@@ -761,6 +802,8 @@ function update(step) {
     padJoueur.mouvementRight();
   }
 
+
+
   //Environnement
  // bateauPirate.mouvementModels();
 }
@@ -768,6 +811,22 @@ function update(step) {
 function onDocumentKeyDown(){ // Une fois qu'on relâche le bouton permettant d'aller à droite ou à gauche, on réinitialise la vitesse du pad
   padJoueur.resetX();
   padJoueur.resetNX();
+}
+
+function fullScreen(){
+  /* View in fullscreen */
+  if(keyboard.pressed("F")) {
+    console.log("pas full");
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) { /* Firefox */
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+      elem.msRequestFullscreen();
+    }
+  }
 }
 
 function resize() {
