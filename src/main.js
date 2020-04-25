@@ -24,7 +24,7 @@ var paddleDirNX = -0.4;
 var paddleSpeedX = 1.4;
 var paddleSpeedNX = 1.4;
 var tailleTerrain = 88 * 0.95;
-var level = 3;
+var level = 1;
 var ballePosition = 0;
 var paddleSize = 16
 var textureScore = [];
@@ -32,6 +32,7 @@ var player = 0;
 var ia = 0;
 var elem = document.documentElement;
 var full = false;
+var perdu = false;
 
 
 
@@ -67,7 +68,7 @@ class Balle {
 
     const distance = 2; // Un pad fait 1 en z donc si on veut que la balle rebondisse de façons réaliste on prend la moitié de cette valeur pour être à la position de la face de notre objet
 
-    //console.log(elem);
+    //console.log(scene.children[22]);
 
     for (i = 0; i < tab.length; i += 1) {
       this.caster.set(this.mesh.position, this.rays[i]); // On ajoute les raycasters sur la balle
@@ -133,7 +134,7 @@ class Balle {
       }
     }
 
-    // Si le joueur a marqué un point
+    // Si le joueur marque un point
     if (this.mesh.position.z <= -tailleTerrain/2)
     {
       if (player < 3) { // Si le score du joueur est plus petit que 3
@@ -147,7 +148,7 @@ class Balle {
       this.reset();
     }
 
-// if ball goes off the 'right' side (CPU's side)
+// Si l'IA marque un point
     if (this.mesh.position.z >= tailleTerrain/2)
     {
       if (ia < 3) { // Si le score de l'IA est plus petit que 3
@@ -338,31 +339,147 @@ class Score {
     textureScore =
     [
       new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/score0.jpg")}),
-      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/score2.jpg")}),
       new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
       new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
-      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/score3.jpg")}),
-      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/score1.jpg")})
+      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+      new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")})
     ];
     var scoreMaterial = new THREE.MeshFaceMaterial (textureScore);
     this.mesh = new THREE.Mesh(scoreGeometry, scoreMaterial);
     this.mesh.position.set(50, 5, 0);
-    this.mesh.rotation.y += 3.7;
+    this.mesh.rotation.y += 5.4999999;
     scene.add(this.mesh);
     this.mesh.name=nom;
 
+  }
+  initScore1(nom) {
+    const scoreGeometry = new THREE.BoxBufferGeometry( 16, 16, 16, 1, 1, 1 );
+    //const padMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
+    //const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
+    textureScore =
+        [
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/score1.jpg")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")})
+        ];
+    var scoreMaterial = new THREE.MeshFaceMaterial (textureScore);
+    this.mesh = new THREE.Mesh(scoreGeometry, scoreMaterial);
+    this.mesh.position.set(50, 5, 0);
+    this.mesh.rotation.y += 5.4999999;
+    scene.add(this.mesh);
+    this.mesh.name=nom;
+  }
+  initScore2(nom) {
+    const scoreGeometry = new THREE.BoxBufferGeometry( 16, 16, 16, 1, 1, 1 );
+    //const padMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
+    //const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
+    textureScore =
+        [
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/score2.jpg")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")})
+        ];
+    var scoreMaterial = new THREE.MeshFaceMaterial (textureScore);
+    this.mesh = new THREE.Mesh(scoreGeometry, scoreMaterial);
+    this.mesh.position.set(50, 5, 0);
+    this.mesh.rotation.y += 5.4999999;
+    scene.add(this.mesh);
+    this.mesh.name=nom;
+  }
+  initScore3(nom) {
+    const scoreGeometry = new THREE.BoxBufferGeometry( 16, 16, 16, 1, 1, 1 );
+    //const padMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
+    //const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
+    textureScore =
+        [
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/score3.jpg")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")})
+        ];
+    var scoreMaterial = new THREE.MeshFaceMaterial (textureScore);
+    this.mesh = new THREE.Mesh(scoreGeometry, scoreMaterial);
+    this.mesh.position.set(50, 5, 0);
+    this.mesh.rotation.y += 5.4999999;
+    scene.add(this.mesh);
+    this.mesh.name=nom;
   }
   positionScore(x,y,z){
     this.mesh.position.set(x, y, z);
   }
   playerScore(){
-    this.mesh.rotation.y += -1.6;
-    player += 1;
+    //this.mesh.rotation.y += -1.4;
+    if(player < 3) {
+      player += 1;
+      if (player == 1) {
+        console.log("Player : 1");
+        removeEntity(this.mesh);
+        scorePlayer.initScore1("ScoreJoueur");
+        scorePlayer.positionScore(-58, 5, 16);
+      }
+      if (player == 2) {
+        console.log("Player : 2");
+        removeEntity(this.mesh);
+        scorePlayer.initScore2("ScoreJoueur");
+        scorePlayer.positionScore(-58, 5, 16);
+      }
+      if (player == 3) {
+        console.log("Player : 3");
+        removeEntity(this.mesh);
+        scorePlayer.initScore3("ScoreJoueur");
+        scorePlayer.positionScore(-58, 5, 16);
+        //getModel("BateauPirate");
+        //removeModel(scene.children[21]);
+        //bateauPirate.initShipWreck();
+        //scene.children[21].moveObject();
+      }
+      /*else {
+        console.log("bienvenue au niveau"&level);
+        level += 1;
+        player = 0
+        ia = 0
+        removeEntity(this.mesh);
+        scorePlayer.initScore("ScoreIA");
+        scorePlayer.positionScore(-58, 5, 16);
+        scoreIA.initScore1("ScoreIA");
+        scoreIA.positionScore(-50,5,0);
+      }*/
+    }
   }
 
   iaScore(){
-      this.mesh.rotation.y += -1.6;
+    if(ia < 3) {
       ia += 1;
+      if (ia == 1) {
+        console.log("IA : 1");
+        removeEntity(this.mesh);
+        scoreIA.initScore1("ScoreIA");
+        scoreIA.positionScore(-50,5,0);
+      }
+      if (ia == 2) {
+        console.log("IA : 2");
+        removeEntity(this.mesh);
+        scoreIA.initScore2("ScoreIA");
+        scoreIA.positionScore(-50,5,0);
+      }
+      if (ia == 3) {
+        console.log("IA : 3");
+        removeEntity(this.mesh);
+        scoreIA.initScore3("ScoreIA");
+        scoreIA.positionScore(-50,5,0);
+        console.log("Vous avez perdu, voulez-vous recommencer?");
+        perdu=true;
+      }
+    }
   }
 }
 
@@ -394,7 +511,7 @@ class Requin {
 }
 
 class Models {
-  initPirateShip() {
+  initPirateShip(nom) {
     //Ajout des textures de l'objet
     var mtlLoader = new THREE.MTLLoader();
     mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
@@ -407,14 +524,15 @@ class Models {
       objLoader.setMaterials(materialsPirate);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
       //objLoader.load('pirateShip.obj', function(object) {
-      objLoader.load('shipDark.obj', function(object) {
-        object.position.set(4, -2, -60);
-        object.rotation.y += 1.5;
-        scene.add(object);
+      objLoader.load('shipDark.obj', function(bateauPiratetest) {
+        bateauPiratetest.position.set(4, -2, -60);
+        bateauPiratetest.rotation.y += 1.5;
+        scene.add(bateauPiratetest);
+        bateauPiratetest.name=nom;
       });
     });
   }
-  initCaptain() {
+  initCaptain(nom) {
     //Ajout des textures de l'objet
     var mtlLoader = new THREE.MTLLoader();
     mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
@@ -425,39 +543,62 @@ class Models {
       var objLoader = new THREE.OBJLoader();
       objLoader.setMaterials(materialsCaptain);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-      objLoader.load('pirateLvl3.obj', function(objectC) {
-        objectC.position.set(1, 12, -50);
-        objectC.rotation.y += 3;
-        scene.add(objectC);
+      objLoader.load('pirateLvl3.obj', function(capitainePirate) {
+        capitainePirate.position.set(1, 12, -50);
+        capitainePirate.rotation.y += 3;
+        scene.add(capitainePirate);
+        capitainePirate.name=nom;
       });
     });
   }
-  moveObject(){
-   console.log(testGroup);
-  }
-  nameObject(name){
-    this.group.name = name;
-  }
-  /*initStone() {
+  initPirate1(nom) {
     //Ajout des textures de l'objet
     var mtlLoader = new THREE.MTLLoader();
     mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-    var url = 'largeStone.mtl';
-    mtlLoader.load(url , function(materialsStone){
-      materialsStone.preload();
+    var url = 'pirateLvl1.mtl';
+    mtlLoader.load(url , function(materialsCaptain){
+      materialsCaptain.preload();
       // Ajout de l'objet
-
       var objLoader = new THREE.OBJLoader();
-      objLoader.setMaterials(materialsStone);
+      objLoader.setMaterials(materialsCaptain);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-      objLoader.load('largeStone.obj', function(objectS) {
-        objectS.position.set(0, 0, 0);
-        objectS.rotation.y += 3.5;
-        scene.add(objectS);
+      objLoader.load('pirateLvl1.obj', function(pirate1) {
+        pirate1.position.set(1, 12, -50);
+        pirate1.rotation.y += 3;
+        scene.add(pirate1);
+        pirate1.name=nom;
       });
     });
+  }
+  initPirate2(nom) {
+    //Ajout des textures de l'objet
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    var url = 'pirateLvl2.mtl';
+    mtlLoader.load(url , function(materialsCaptain){
+      materialsCaptain.preload();
+      // Ajout de l'objet
+      var objLoader = new THREE.OBJLoader();
+      objLoader.setMaterials(materialsCaptain);
+      objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+      objLoader.load('pirateLvl2.obj', function(pirate2) {
+        pirate2.position.set(1, 12, -50);
+        pirate2.rotation.y += 3;
+        scene.add(pirate2);
+        pirate2.name=nom;
+      });
+    });
+  }
+  /*moveObject(id){
+    var i;
+    console.log(bateauPirate.);
+    for ( i = id.children.length - 1; i >= 0 ; i -- ) {
+      scene.mesh(id).position.set(0,-20,0);
+      console.log("En dessous");
+    }
   }*/
-  initTower() {
+
+  initTower(nom) {
     //Ajout des textures de l'objet
     var mtlLoader = new THREE.MTLLoader();
     mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
@@ -468,14 +609,15 @@ class Models {
       var objLoader = new THREE.OBJLoader();
       objLoader.setMaterials(materialsTower);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-      objLoader.load('tower.obj', function(objectT) {
-        objectT.position.set(50, 0, -20);
-        objectT.rotation.y += 3.5;
-        scene.add(objectT);
+      objLoader.load('tower.obj', function(tour) {
+        tour.position.set(50, 0, -20);
+        tour.rotation.y += 3.5;
+        scene.add(tour);
+        tour.name=nom;
       });
     });
   }
-  initPlant() {
+  initPlant(nom) {
     //Ajout des textures de l'objet
     var mtlLoader = new THREE.MTLLoader();
     mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
@@ -486,14 +628,15 @@ class Models {
       var objLoader = new THREE.OBJLoader();
       objLoader.setMaterials(materialsPlant);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-      objLoader.load('plant.obj', function(objectT) {
-        objectT.position.set(50, 0, 30);
-        objectT.rotation.y += 3.5;
-        scene.add(objectT);
+      objLoader.load('plant.obj', function(plante) {
+        plante.position.set(50, 0, 30);
+        plante.rotation.y += 3.5;
+        scene.add(plante);
+        plante.name=nom;
       });
     });
   }
-  initChest() {
+  initChest(nom) {
     //Ajout des textures de l'objet
     var mtlLoader = new THREE.MTLLoader();
     mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
@@ -504,14 +647,15 @@ class Models {
       var objLoader = new THREE.OBJLoader();
       objLoader.setMaterials(materialsChest);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-      objLoader.load('chest.obj', function(objectT) {
-        objectT.position.set(50, 0, 20);
-        objectT.rotation.y += 2;
-        scene.add(objectT);
+      objLoader.load('chest.obj', function(coffre) {
+        coffre.position.set(50, 0, 20);
+        coffre.rotation.y += 2;
+        scene.add(coffre);
+        coffre.name=nom;
       });
     });
   }
-  initShovel() {
+  initShovel(nom) {
     //Ajout des textures de l'objet
     var mtlLoader = new THREE.MTLLoader();
     mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
@@ -522,14 +666,15 @@ class Models {
       var objLoader = new THREE.OBJLoader();
       objLoader.setMaterials(materialsShovel);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-      objLoader.load('shovel.obj', function(objectT) {
-        objectT.position.set(50, 0, 25);
-        objectT.rotation.x += -2;
-        scene.add(objectT);
+      objLoader.load('shovel.obj', function(pelle) {
+        pelle.position.set(50, 0, 25);
+        pelle.rotation.x += -2;
+        scene.add(pelle);
+        pelle.name=nom;
       });
     });
   }
-  initPalmShort() {
+  initPalmShort(nom) {
     //Ajout des textures de l'objet
     var mtlLoader = new THREE.MTLLoader();
     mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
@@ -540,14 +685,15 @@ class Models {
       var objLoader = new THREE.OBJLoader();
       objLoader.setMaterials(materialsPalmShort);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-      objLoader.load('palmShort.obj', function(objectT) {
-        objectT.position.set(75, 0, -10);
+      objLoader.load('palmShort.obj', function(palmier) {
+        palmier.position.set(75, 0, -10);
         //objectT.rotation.x += -2;
-        scene.add(objectT);
+        scene.add(palmier);
+        palmier.name=nom;
       });
     });
   }
-  initShipLight() {
+  initShipLight(nom) {
     //Ajout des textures de l'objet
     var mtlLoader = new THREE.MTLLoader();
     mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
@@ -558,10 +704,30 @@ class Models {
       var objLoader = new THREE.OBJLoader();
       objLoader.setMaterials(materialsShipLight);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-      objLoader.load('shipLight.obj', function(objectT) {
-        objectT.position.set(4, -2, 72.2);
-        objectT.rotation.y -= 1.6;
-        scene.add(objectT);
+      objLoader.load('shipLight.obj', function(bateauJoueur) {
+        bateauJoueur.position.set(4, -2, 72.2);
+        bateauJoueur.rotation.y -= 1.6;
+        scene.add(bateauJoueur);
+        bateauJoueur.name=nom;
+      });
+    });
+  }
+  initShipWreck(nom) {
+    //Ajout des textures de l'objet
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    var url = 'shipWreck.mtl';
+    mtlLoader.load(url , function(materialsShipLight){
+      materialsShipLight.preload();
+      // Ajout de l'objet
+      var objLoader = new THREE.OBJLoader();
+      objLoader.setMaterials(materialsShipLight);
+      objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+      objLoader.load('shipWreck.obj', function(bateauBroken) {
+        bateauBroken.position.set(4, -2, -60);
+        bateauBroken.rotation.y += 1.5;
+        scene.add(bateauBroken);
+        bateauBroken.name=nom;
       });
     });
   }
@@ -604,7 +770,6 @@ class Skybox {
 }
 
 // Variables globales
-//var balle = new Balle(10,10,10);
 var balle = new Balle();
 var terrain = new Terrain();
 var stade = new Stade();
@@ -621,7 +786,8 @@ var scorePlayer = new Score();
 var ciel = new Skybox();
 var bateauPirate = new Models();
 var captain = new Models();
-//var stone = new Models();
+var pirate1 = new Models();
+var pirate2 = new Models();
 var tower = new Models();
 var plant = new Models();
 var chest = new Models();
@@ -673,19 +839,19 @@ function init() {
   //light = new THREE.AmbientLight( 0x444444 );
   scene.add(light);
 
-  // AudioListener
+/*  // AudioListener
   var listener = new THREE.AudioListener();
   camera.add( listener );
   // create a global audio source
   var sound = new THREE.Audio( listener );
   // load a sound and set it as the Audio object's buffer
   var audioLoader = new THREE.AudioLoader();
-  audioLoader.load( 'sounds/ambient.ogg', function( buffer ) {
+  audioLoader.load( 'https://github.com/Thomcarena/ProjetPong_SIA/blob/Projet_DASILVA_Thomas/src/medias/musiques/pirateCaraibes.mp3', function( buffer ) {
     sound.setBuffer( buffer );
     sound.setLoop( true );
     sound.setVolume( 0.5 );
     sound.play();
-  });
+  });*/
 
 
   // add Stats.js - https://github.com/mrdoob/stats.js
@@ -695,6 +861,8 @@ function init() {
   document.body.appendChild( stats.domElement );
 
   // add some geometries
+
+
   balle.initBalle("Balle");
   terrain.initTerrain("Terrain");
   stade.initStade("Stade");
@@ -721,17 +889,30 @@ function init() {
   scorePlayer.positionScore(-58,5,16);
   ciel.initSkyBox();
 
+
+
   // add some models
-  bateauPirate.initPirateShip();
+  //bateauPirate.initPirateShip();
   //bateauPirate.nameObject("pirateShip");
-  captain.initCaptain();
+  //captain.initCaptain();
   //stone.initStone();
-  tower.initTower();
-  plant.initPlant();
-  chest.initChest();
-  shovel.initShovel();
-  palmShort.initPalmShort();
-  shipLight.initShipLight();
+  tower.initTower("Tour");
+  plant.initPlant("Plante");
+  chest.initChest("Coffre");
+  shovel.initShovel("Pelle");
+  palmShort.initPalmShort("Palmier");
+  shipLight.initShipLight("BateauJoueur");
+
+
+  //Levels
+  if(level==1){
+    bateauPirate.initPirateShip("BateauPirate");
+    pirate1.initPirate1("Pirate1");
+  }
+  if(level==2){
+    bateauPirate.initPirateShip("BateauPirate");
+    pirate1.initPirate1("Pirate1");
+  }
 
   // Stats
   const fps  = 60;
@@ -743,6 +924,30 @@ function init() {
   loop.step     = 1/loop.fps;
   loop.slow     = slow;
   loop.slowStep = loop.slow * loop.step;
+}
+
+function removeEntity(object) {
+  var selectedObject = scene.getObjectByName(object.name);
+  scene.remove( selectedObject );
+  //animate();
+}
+
+function removeModel(id) {
+  var i;
+  console.log(id.children.length);
+  for ( i = id.children.length - 1; i >= 0 ; i -- ) {
+      scene.remove(id);
+  }
+}
+
+function getModel(nom) {
+  var i, mod;
+  for (i=1; i <=30; i++) {
+    if (scene.children[i].name == nom) {
+      mod = scene.children[i];
+    }
+  }
+  return mod;
 }
 
 function gameLoop() {
@@ -800,6 +1005,10 @@ function update(step) {
   }
   if(keyboard.pressed("D")){
     padJoueur.mouvementRight();
+  }
+
+  if(keyboard.pressed("K")){
+    scorePlayer.playerScore();
   }
 
 
