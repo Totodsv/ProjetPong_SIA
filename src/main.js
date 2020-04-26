@@ -39,13 +39,14 @@ var perdu = false;
 // Classe Balle
 class Balle {
 
-  initBalle() {
+  initBalle(nom) {
     const geometryBalle = new THREE.BoxBufferGeometry(4,4,4);
     const textureBalle = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/tnt.png");
     const materialBalle = new THREE.MeshBasicMaterial( { map : textureBalle} );
 
     this.mesh = new THREE.Mesh( geometryBalle, materialBalle, );
     scene.add( this.mesh );
+    this.mesh.name = nom;
     this.mesh.position.set(0,2.5,0); // Pose la balle sur le terrain
     this.rays = [
         new THREE.Vector3(0, 0, 1),
@@ -317,10 +318,10 @@ class Pad {
       this.mesh.position.x = x;
     }
     if(level ==1){
-      this.mesh.position.x = x/1.9;
+      this.mesh.position.x = x/2.3;
     }
     if(level ==2){
-      this.mesh.position.x = x/1.7;
+      this.mesh.position.x = x/1.9;
     }
     if(level ==3){
       this.mesh.position.x = x/1.5;
@@ -422,37 +423,54 @@ class Score {
       player += 1;
       if (player == 1) {
         console.log("Player : 1");
-        removeEntity(this.mesh);
+        removeEntity(scorePlayer);
         scorePlayer.initScore1("ScoreJoueur");
         scorePlayer.positionScore(-58, 5, 16);
       }
       if (player == 2) {
         console.log("Player : 2");
-        removeEntity(this.mesh);
+        removeEntity(scorePlayer);
         scorePlayer.initScore2("ScoreJoueur");
         scorePlayer.positionScore(-58, 5, 16);
       }
       if (player == 3) {
         console.log("Player : 3");
-        removeEntity(this.mesh);
+        removeEntity(scorePlayer);
+        //removeEntity(balle);
         scorePlayer.initScore3("ScoreJoueur");
         scorePlayer.positionScore(-58, 5, 16);
-        //getModel("BateauPirate");
-        //removeModel(scene.children[21]);
-        //bateauPirate.initShipWreck();
-        //scene.children[21].moveObject();
-      }
-      /*else {
-        console.log("bienvenue au niveau"&level);
+
+        for (i=0; i<=scene.children.length-1; i++) {
+          if (scene.children[i].name == "BateauPirate") { // on enlève le bateau pirate
+            removeModel(scene.children[i]);
+          }
+        }
+        brokenShip.initShipWreck("BrokenShip"); // On ajoute le bateau cassé
         level += 1;
-        player = 0
-        ia = 0
-        removeEntity(this.mesh);
-        scorePlayer.initScore("ScoreIA");
-        scorePlayer.positionScore(-58, 5, 16);
-        scoreIA.initScore1("ScoreIA");
-        scoreIA.positionScore(-50,5,0);
-      }*/
+        console.log("Bienvenue au niveau: "+level);
+        setTimeout(Intermediaire, 2000); // Enlève le bateau cassé et le pirate du niveau correspondant
+        if (level == 2) {
+          setTimeout(Niveau2, 5000); // Ajoute les éléments du niveau 2 dont le bateau et le pirates
+          removeEntity(scorePlayer); // On réinitialise les scores
+          removeEntity(scoreIA);
+          scorePlayer.initScore("ScoreJoueur");
+          scorePlayer.positionScore(-58, 5, 16);
+
+          scoreIA.initScore("ScoreIA");
+          scoreIA.positionScore(-50,5,0);
+
+        }
+        if (level==3) {
+          setTimeout(Niveau3, 5000); // Ajoute les éléments du niveau 2 dont le bateau et le pirates
+          removeEntity(scorePlayer); // On réinitialise les scores
+          removeEntity(scoreIA);
+          scorePlayer.initScore("ScoreJoueur");
+          scorePlayer.positionScore(-58, 5, 16);
+
+          scoreIA.initScore("ScoreIA");
+          scoreIA.positionScore(-50,5,0);
+        }
+      }
     }
   }
 
@@ -461,19 +479,19 @@ class Score {
       ia += 1;
       if (ia == 1) {
         console.log("IA : 1");
-        removeEntity(this.mesh);
+        removeEntity(scoreIA);
         scoreIA.initScore1("ScoreIA");
         scoreIA.positionScore(-50,5,0);
       }
       if (ia == 2) {
         console.log("IA : 2");
-        removeEntity(this.mesh);
+        removeEntity(scoreIA);
         scoreIA.initScore2("ScoreIA");
         scoreIA.positionScore(-50,5,0);
       }
       if (ia == 3) {
         console.log("IA : 3");
-        removeEntity(this.mesh);
+        removeEntity(scoreIA);
         scoreIA.initScore3("ScoreIA");
         scoreIA.positionScore(-50,5,0);
         console.log("Vous avez perdu, voulez-vous recommencer?");
@@ -794,6 +812,7 @@ var chest = new Models();
 var shovel = new Models();
 var palmShort = new Models();
 var shipLight = new Models();
+var brokenShip = new Models();
 
 // Initialisation du monde 3D
 function init() {
@@ -911,7 +930,11 @@ function init() {
   }
   if(level==2){
     bateauPirate.initPirateShip("BateauPirate");
-    pirate1.initPirate1("Pirate1");
+    pirate2.initPirate2("Pirate2");
+  }
+  if(level==3){
+    bateauPirate.initPirateShip("BateauPirate");
+    captain.initCaptain("Captain");
   }
 
   // Stats
@@ -926,6 +949,38 @@ function init() {
   loop.slowStep = loop.slow * loop.step;
 }
 
+function Intermediaire() {
+  for (i=0; i<=scene.children.length-1; i++) {
+    if (scene.children[i].name == "BrokenShip") { // On enlève le bateau cassé
+      console.log(scene.children[i].name);
+      removeModel(scene.children[i]);
+    }
+    if (scene.children[i].name == "Pirate1") { // On enlève le pirate du niveau 1 pour laisser le place à celui du niveau 2
+      console.log(scene.children[i].name);
+      removeModel(scene.children[i]);
+    }
+    if (scene.children[i].name == "Pirate2") { // On enlève le pirate du niveau 1 pour laisser le place à celui du niveau 2
+      console.log(scene.children[i].name);
+      removeModel(scene.children[i]);
+    }
+  }
+}
+function Niveau2() {
+  bateauPirate.initPirateShip("BateauPirate");
+  pirate2.initPirate2("Pirate2");
+  player = 0;
+  ia = 0;
+  //balle.initBalle("Balle");
+}
+
+function Niveau3() {
+  bateauPirate.initPirateShip("BateauPirate");
+  captain.initCaptain("Captain");
+  player = 0;
+  ia = 0;
+  //balle.initBalle("Balle");
+}
+
 function removeEntity(object) {
   var selectedObject = scene.getObjectByName(object.name);
   scene.remove( selectedObject );
@@ -934,20 +989,9 @@ function removeEntity(object) {
 
 function removeModel(id) {
   var i;
-  console.log(id.children.length);
   for ( i = id.children.length - 1; i >= 0 ; i -- ) {
       scene.remove(id);
   }
-}
-
-function getModel(nom) {
-  var i, mod;
-  for (i=1; i <=30; i++) {
-    if (scene.children[i].name == nom) {
-      mod = scene.children[i];
-    }
-  }
-  return mod;
 }
 
 function gameLoop() {
@@ -1048,4 +1092,12 @@ function resize() {
 
 function timestamp() {
   return window.performance.now();
+}
+
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
 }

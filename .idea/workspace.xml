@@ -61,7 +61,8 @@
       <workItem from="1587367847890" duration="2049000" />
       <workItem from="1587389515174" duration="3847000" />
       <workItem from="1587541221495" duration="3674000" />
-      <workItem from="1587803838433" duration="9684000" />
+      <workItem from="1587803838433" duration="9720000" />
+      <workItem from="1587886407047" duration="8026000" />
     </task>
     <task id="LOCAL-00001" summary="Test Web Storm">
       <created>1581673514715</created>
@@ -371,14 +372,20 @@
       <option name="project" value="LOCAL" />
       <updated>1587544880576</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="Début level&#10;Début mouvement models">
+      <created>1587816379156</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1587816379156</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="OK : Pads bloqué hors terrain. Première IA 0. Collisions pads côté.&#10;Problème : fluidité du pad Joueur. Vitesse balle" />
     <MESSAGE value="Test sol" />
     <MESSAGE value="Test sol 2" />
     <MESSAGE value="Test sol 3" />
@@ -403,13 +410,14 @@
     <MESSAGE value="Environnement : Requin Ok&#10;Jeu : Boucliers ok" />
     <MESSAGE value="Jeu : Boucliers terminés&#10;Tableau pour choisir quels objets font partis des collisions" />
     <MESSAGE value="Plusieurs caméras Ok&#10;FullScreen Ok&#10;Vitesse balle Ok" />
-    <option name="LAST_COMMIT_MESSAGE" value="Plusieurs caméras Ok&#10;FullScreen Ok&#10;Vitesse balle Ok" />
+    <MESSAGE value="Début level&#10;Début mouvement models" />
+    <option name="LAST_COMMIT_MESSAGE" value="Début level&#10;Début mouvement models" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1587544879031">
+    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1587816377806">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587544879031" />
+    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587816377806" />
     <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1581672651017">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -418,10 +426,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1581672701148" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1587544883797">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1587816380901">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1587544883797" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1587816380901" />
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586263898043">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
