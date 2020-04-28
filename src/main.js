@@ -40,6 +40,12 @@ var coulerZ = -60;
 var pirateX = 1;
 var pirateY = 12;
 var pirateZ = -50;
+//Animation dans les niveaux
+var tir = false;
+var tirX = -19;
+var tirY = 3.3;
+var tirZ = -0.3;
+var compteurTir = 0;
 
 
 //Affichage des dialogues
@@ -56,8 +62,6 @@ textToDisplay.style.backgroundColor = "blue";*/
 //affichage.removeChild(textToDisplay); // Pour supprimer
 //var full = false;
 var perdu = false;
-
-
 
 // Classe Balle
 class Balle {
@@ -116,11 +120,18 @@ class Balle {
       if (scene.children[i].name == "PadJoueur") {
         collisionGroup.push(scene.children[i]);
       }
-      if (scene.children[i].name == "Coffre"){ // Pour ajouter un model
+      if (scene.children[i].name == "Cannon"){ // Pour ajouter un model
         //console.log(scene.children[i].children.length);
         for (j = scene.children[i].children.length - 1; j >= 0 ; j -- ) {
           //console.log(scene.children[i].length);
             collisionGroup.push(scene.children[i].children[j]);
+        }
+      }
+      if (scene.children[i].name == "CannonBall"){ // Pour ajouter un model
+        //console.log(scene.children[i].children.length);
+        for (j = scene.children[i].children.length - 1; j >= 0 ; j -- ) {
+          //console.log(scene.children[i].length);
+          collisionGroup.push(scene.children[i].children[j]);
         }
       }
     }
@@ -137,7 +148,12 @@ class Balle {
 
       if (obstacles.length > 0 && obstacles[0].distance <= distance) {// si la distance de collision est plus petite que celle définie alors il y a collision
         //Test vitesse balle
-        ballSpeed+=0.1;
+        if(ballSpeed < 30){ // On bloque la vitesse de la balle pour que ça reste jouable pour un humain
+          ballSpeed+=0.1;
+        }
+        else {
+          ballSpeed = 25;
+        }
 
         //Gestion des boucliers
         if(obstacles[0].object.name=="BouclierJoueur"){
@@ -816,6 +832,46 @@ class Models {
       });
     });
   }
+  initCannon(nom, x, y, z, rotate) {
+    //Ajout des textures de l'objet
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    var url = 'cannon.mtl';
+    mtlLoader.load(url , function(materialsShipLight){
+      materialsShipLight.preload();
+      // Ajout de l'objet
+      var objLoader = new THREE.OBJLoader();
+      objLoader.setMaterials(materialsShipLight);
+      objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+      objLoader.load('cannon.obj', function(cannon) {
+        cannon.position.set(x, y, z);
+        cannon.scale.set(1.4, 1.4, 1.4)
+        cannon.rotation.y += rotate;
+        scene.add(cannon);
+        cannon.name=nom;
+      });
+    });
+  }
+  initCannonBall(nom, x, y, z,) {
+    //Ajout des textures de l'objet
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    var url = 'cannonBall.mtl';
+    mtlLoader.load(url , function(materialsShipLight){
+      materialsShipLight.preload();
+      // Ajout de l'objet
+      var objLoader = new THREE.OBJLoader();
+      objLoader.setMaterials(materialsShipLight);
+      objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+      objLoader.load('cannonBall.obj', function(cannonBall) {
+        cannonBall.position.set(x, y, z);
+        cannonBall.scale.set(2.5,2.5,2.5);
+        //cannon.rotation.y += 1.5;
+        scene.add(cannonBall);
+        cannonBall.name=nom;
+      });
+    });
+  }
 }
 
 class Skybox {
@@ -880,6 +936,9 @@ var shovel = new Models();
 var palmShort = new Models();
 var shipLight = new Models();
 var brokenShip = new Models();
+var cannonDroite = new Models();
+var cannonGauche = new Models();
+var cannonBall = new Models();
 
 // Initialisation du monde 3D
 function init() {
@@ -1043,6 +1102,10 @@ function Niveau2() {
   pirate2.initPirate2("Pirate2");
   player = 0;
   ia = 0;
+  cannonDroite.initCannon("Cannon", 25, -0.5, 0, 1.55); // Ajoute des canons à droite et à gauche du terrain
+  cannonGauche.initCannon("Cannon", -25, -0.5, 0, -1.55);
+  cannonBall.initCannonBall("CannonBall", -19, 3.3, -0.3);
+  tir=true;
 
 }
 
@@ -1053,6 +1116,11 @@ function Niveau3() {
   captain.initCaptain("Captain");
   player = 0;
   ia = 0;
+}
+
+function TirCanon() {
+  tir = true;
+  compteurTir +=1;
 }
 
 function removeEntity(object) {
@@ -1109,7 +1177,6 @@ function gameLoop() {
     renderer.render(scene, camera);  // rendu de la scène
   }
 
-
     loop.last = loop.now;
 
   requestAnimationFrame(gameLoop); // relance la boucle du jeu
@@ -1136,7 +1203,6 @@ function update(step) {
 
   //Animation entre les niveaux
   if(couler) {
-
     for (i=0; i<=scene.children.length-1; i++) {
       if (scene.children[i].name == "BrokenShip") { // On simule le bâteau qui coule
         moveModel(scene.children[i], coulerX, coulerY, coulerZ);
@@ -1171,6 +1237,34 @@ function update(step) {
     pirateX = 1;
     pirateY = 12;
     pirateZ = -50;
+  }
+
+  if (tir) {
+    for (i = 0; i <= scene.children.length - 1; i++) {
+      if (scene.children[i].name == "CannonBall") { // On enlève le bateau cassé
+        console.log(scene.children[i].position.x);
+        console.log(scene.children[i].name);
+        moveModel(scene.children[i], tirX, tirY, tirZ);
+        if(compteurTir%2 != 0) { // Le boulet est dans le cannon de droite
+          tirX -= 0.2;
+          tirY += 0;
+          tirZ += 0;
+          if(scene.children[i].position.x < -25 ) {
+            tir = false;
+            setTimeout(TirCanon, 5000);
+          }
+        }
+        else{ // Le boulet est dans le cannon de gauche
+          tirX += 0.2;
+          tirY += 0;
+          tirZ += 0;
+          if (scene.children[i].position.x > 25){
+            tir = false;
+            setTimeout(TirCanon, 5000);
+          }
+        }
+      }
+    }
   }
 
   if(keyboard.pressed("Q")){
