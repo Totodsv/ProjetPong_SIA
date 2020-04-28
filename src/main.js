@@ -1,7 +1,7 @@
 let container, w, h, scene, camera, controls, renderer, stats, keyboard;
 let urls;
 let loop = {};
-let x, y, z, i, padX, delta, changement;
+let x, y, z, i, padX, delta, changement, j;
 let tab = [];
 
 window.addEventListener('load', go);
@@ -23,7 +23,7 @@ var paddleDirX = 0.4;
 var paddleDirNX = -0.4;
 var paddleSpeedX = 1.4;
 var paddleSpeedNX = 1.4;
-var tailleTerrain = 88 * 0.95;
+var tailleTerrain = 88 * 0.98;
 var level = 1;
 var ballePosition = 0;
 var paddleSize = 16
@@ -31,7 +31,30 @@ var textureScore = [];
 var player = 0;
 var ia = 0;
 var elem = document.documentElement;
-var full = false;
+//Animation entre les niveaux
+var ballePause = false;
+var couler = false;
+var coulerX = 4;
+var coulerY = -2;
+var coulerZ = -60;
+var pirateX = 1;
+var pirateY = 12;
+var pirateZ = -50;
+
+
+//Affichage des dialogues
+var affichage = document.querySelector('#affichage');
+var textToDisplay = document.createElement('div');
+/*var textToDisplay = document.createElement('div');
+textToDisplay.style.position = 'absolute';
+textToDisplay.style.zIndex = 1;    // if you still don't see the label, try uncommenting this
+textToDisplay.style.width = 100;
+textToDisplay.style.height = 100;
+textToDisplay.style.backgroundColor = "blue";*/
+
+
+//affichage.removeChild(textToDisplay); // Pour supprimer
+//var full = false;
 var perdu = false;
 
 
@@ -47,7 +70,6 @@ class Balle {
     this.mesh = new THREE.Mesh( geometryBalle, materialBalle, );
     scene.add( this.mesh );
     this.mesh.name = nom;
-    this.mesh.position.set(0,2.5,0); // Pose la balle sur le terrain
     this.rays = [
         new THREE.Vector3(0, 0, 1),
         new THREE.Vector3(1, 0, 1),
@@ -63,18 +85,51 @@ class Balle {
     this.caster = new THREE.Raycaster();
   }
 
+  positionBalle(x,y,z) {
+    this.mesh.position.set(x,y,z); // Pose la balle sur le terrain
+  }
+
   mouvement(padX) {
     this.mesh.translateX(ballDirX * ballSpeed); // La balle est en mouvement constant sur l'axe des x
     this.mesh.translateZ(ballDirZ * ballSpeed); // La balle est en mouvement constant sur l'axe des z
 
     const distance = 2; // Un pad fait 1 en z donc si on veut que la balle rebondisse de façons réaliste on prend la moitié de cette valeur pour être à la position de la face de notre objet
 
-    //console.log(scene.children[22]);
-
+    //console.log(scene.children);
+    var collisionGroup = [];
+    for (i=0; i<=scene.children.length-1; i++) { // On ajoute dans ce tableau les objets avec lesquels on souhaite une collision
+      if (scene.children[i].name == "BouclierJoueur") {
+        collisionGroup.push(scene.children[i]);
+      }
+      if (scene.children[i].name == "BouclierAdverse") {
+        collisionGroup.push(scene.children[i]);
+      }
+      if (scene.children[i].name == "MurDroite") {
+        collisionGroup.push(scene.children[i]);
+      }
+      if (scene.children[i].name == "MurGauche") {
+        collisionGroup.push(scene.children[i]);
+      }
+      if (scene.children[i].name == "PadAdverse") {
+        collisionGroup.push(scene.children[i]);
+      }
+      if (scene.children[i].name == "PadJoueur") {
+        collisionGroup.push(scene.children[i]);
+      }
+      if (scene.children[i].name == "Coffre"){ // Pour ajouter un model
+        //console.log(scene.children[i].children.length);
+        for (j = scene.children[i].children.length - 1; j >= 0 ; j -- ) {
+          //console.log(scene.children[i].length);
+            collisionGroup.push(scene.children[i].children[j]);
+        }
+      }
+    }
     for (i = 0; i < tab.length; i += 1) {
       this.caster.set(this.mesh.position, this.rays[i]); // On ajoute les raycasters sur la balle
-      var collisionGroup = [scene.children[4], scene.children[5], scene.children[8], scene.children[9], scene.children[10], scene.children[11]]; // On ajouter les objets avec lesquels on souhaite une collision
+      //var collisionGroup = [scene.children[4], scene.children[5], scene.children[8], scene.children[9], scene.children[10], scene.children[11]]; // On ajouter les objets avec lesquels on souhaite une collision
       //var obstacles = this.caster.intersectObjects(scene.children); // Collisions -> les rayons de la balle peuvent entrer en contact avec les objets de la scène
+
+      //console.log(collisionGroup);
       var obstacles = this.caster.intersectObjects(collisionGroup);
       //Collision avec les boucliers
       var bouclierJoueur = scene.children[4];
@@ -145,8 +200,10 @@ class Balle {
         bouclierJoueur.position.set(0,2.5,43.5);//On remet le shield du Joueur
         bouclierAdverse.position.set(0,2.5,-43.5);//On remet le shield de l'adversaire
         ballSpeed=16; //On réinitialise la vitesse de la balle
+        if (player == 3) {
+          this.pause();
+        }
       }
-      this.reset();
     }
 
 // Si l'IA marque un point
@@ -169,6 +226,11 @@ class Balle {
     ballDirX = 0;
   }
 
+  pause() {
+    ballePause = true;
+    this.mesh.position.set(0,-5,0);
+  }
+
   positionX() {
     return this.mesh.position.x
   }
@@ -178,7 +240,8 @@ class Balle {
 
 class Bouclier {
   initShield(nom) {
-    const shieldGeometry = new THREE.BoxBufferGeometry( tailleTerrain*0.72, 4, 0.5, 1, 1, 1 );
+    //const shieldGeometry = new THREE.BoxBufferGeometry( tailleTerrain*0.72, 4, 0.5, 1, 1, 1 );
+    const shieldGeometry = new THREE.BoxBufferGeometry( tailleTerrain*0.695, 4, 0.5, 1, 1, 1 );
     //const textureMur = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testSol6.jpg");
     //const murMaterial = new THREE.MeshBasicMaterial ({map : textureMur});
     const shieldMaterial =  new THREE.MeshStandardMaterial({transparent:true, opacity:0.5});
@@ -436,19 +499,22 @@ class Score {
       if (player == 3) {
         console.log("Player : 3");
         removeEntity(scorePlayer);
-        //removeEntity(balle);
         scorePlayer.initScore3("ScoreJoueur");
         scorePlayer.positionScore(-58, 5, 16);
-
+        textToDisplay.textContent = "Félicitation vous avez détruit le bateau adverse !";
+        console.log(textToDisplay);
+        //affichage.appendChild(textToDisplay);
+        document.body.appendChild(textToDisplay);
         for (i=0; i<=scene.children.length-1; i++) {
           if (scene.children[i].name == "BateauPirate") { // on enlève le bateau pirate
             removeModel(scene.children[i]);
           }
         }
         brokenShip.initShipWreck("BrokenShip"); // On ajoute le bateau cassé
+        couler = true;
         level += 1;
         console.log("Bienvenue au niveau: "+level);
-        setTimeout(Intermediaire, 2000); // Enlève le bateau cassé et le pirate du niveau correspondant
+        setTimeout(Intermediaire, 5000); // Enlève le bateau cassé et le pirate du niveau correspondant
         if (level == 2) {
           setTimeout(Niveau2, 5000); // Ajoute les éléments du niveau 2 dont le bateau et le pirates
           removeEntity(scorePlayer); // On réinitialise les scores
@@ -667,6 +733,7 @@ class Models {
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
       objLoader.load('chest.obj', function(coffre) {
         coffre.position.set(50, 0, 20);
+        //coffre.position.set(0, 0, 6); // Test
         coffre.rotation.y += 2;
         scene.add(coffre);
         coffre.name=nom;
@@ -883,6 +950,7 @@ function init() {
 
 
   balle.initBalle("Balle");
+  balle.positionBalle(0,2.5,0);
   terrain.initTerrain("Terrain");
   stade.initStade("Stade");
   shieldJoueur.initShield("BouclierJoueur");
@@ -911,10 +979,7 @@ function init() {
 
 
   // add some models
-  //bateauPirate.initPirateShip();
-  //bateauPirate.nameObject("pirateShip");
-  //captain.initCaptain();
-  //stone.initStone();
+
   tower.initTower("Tour");
   plant.initPlant("Plante");
   chest.initChest("Coffre");
@@ -929,7 +994,7 @@ function init() {
     pirate1.initPirate1("Pirate1");
   }
   if(level==2){
-    bateauPirate.initPirateShip("BateauPirate");
+    bateauPirate.initShipLight("BateauPirate");
     pirate2.initPirate2("Pirate2");
   }
   if(level==3){
@@ -954,43 +1019,63 @@ function Intermediaire() {
     if (scene.children[i].name == "BrokenShip") { // On enlève le bateau cassé
       console.log(scene.children[i].name);
       removeModel(scene.children[i]);
+      couler = false;
     }
     if (scene.children[i].name == "Pirate1") { // On enlève le pirate du niveau 1 pour laisser le place à celui du niveau 2
       console.log(scene.children[i].name);
       removeModel(scene.children[i]);
     }
-    if (scene.children[i].name == "Pirate2") { // On enlève le pirate du niveau 1 pour laisser le place à celui du niveau 2
+    if (scene.children[i].name == "Pirate2") { // On enlève le pirate du niveau 2 pour laisser le place à celui du niveau 3
+      console.log(scene.children[i].name);
+      removeModel(scene.children[i]);
+    }
+    if (scene.children[i].name == "Captain") { // On enlève le pirate du niveau 3 pour laisser le place à l'écran de victoire
       console.log(scene.children[i].name);
       removeModel(scene.children[i]);
     }
   }
 }
+
 function Niveau2() {
+  ballePause = false
+  balle.positionBalle(0, 2.5, 0);
   bateauPirate.initPirateShip("BateauPirate");
   pirate2.initPirate2("Pirate2");
   player = 0;
   ia = 0;
-  //balle.initBalle("Balle");
+
 }
 
 function Niveau3() {
+  ballePause = false
+  balle.positionBalle(0, 2.5, 0);
   bateauPirate.initPirateShip("BateauPirate");
   captain.initCaptain("Captain");
   player = 0;
   ia = 0;
-  //balle.initBalle("Balle");
 }
 
 function removeEntity(object) {
   var selectedObject = scene.getObjectByName(object.name);
   scene.remove( selectedObject );
-  //animate();
+}
+
+function moveEntity(object, x, y, z) {
+  var selectedObject = scene.getObjectByName(object.name);
+  object.position.set(x,y,z);
 }
 
 function removeModel(id) {
   var i;
   for ( i = id.children.length - 1; i >= 0 ; i -- ) {
       scene.remove(id);
+  }
+}
+
+function moveModel(id, x, y, z) {
+  var i;
+  for ( i = id.children.length - 1; i >= 0 ; i -- ) {
+    id.position.set(x,y,z);
   }
 }
 
@@ -1017,7 +1102,7 @@ function gameLoop() {
 
   if(changement) {
     camera2.fov = 100;
-    camera2.position.set(scene.children[11].position.x, scene.children[11].position.y, scene.children[11].position.z - 1);
+    camera2.position.set(scene.children[11].position.x, scene.children[11].position.y, scene.children[11].position.z - 0.1);
     renderer.render(scene, camera2);
   }
   else {
@@ -1036,13 +1121,57 @@ function gameLoop() {
 function update(step) {
   //const angleIncr = Math.PI * 2 * step / 5 ; // une rotation complète en 5 secondes
   padPosition = padJoueur.positionX(); // Récupère à l'instant t la position x du pad
-  balle.mouvement(padPosition); // La balle entre en mouvement et active les collisions
+
+  if (ballePause){
+    //la balle ne bouge plus.
+  }
+  else {
+    balle.mouvement(padPosition); // La balle entre en mouvement et active les collisions
+  }
 
   ballePosition = balle.positionX(); // Récupère à l'instant t la position x de la balle
   padAdverse.mouvementIA(ballePosition); // L'IA suit la balle
 
   requin.mouvementRequin();
-  //console.log(testGroup);
+
+  //Animation entre les niveaux
+  if(couler) {
+
+    for (i=0; i<=scene.children.length-1; i++) {
+      if (scene.children[i].name == "BrokenShip") { // On simule le bâteau qui coule
+        moveModel(scene.children[i], coulerX, coulerY, coulerZ);
+        coulerX += 0;
+        coulerY -= 0.17;
+        coulerZ += 0;
+      }
+      if (scene.children[i].name == "Pirate1") { // On enlève le bateau cassé
+        moveModel(scene.children[i], pirateX, pirateY, pirateZ);
+        pirateX += 0;
+        pirateY -= 0.17;
+        pirateZ += 0;
+      }
+      if (scene.children[i].name == "Pirate2") { // On enlève le bateau cassé
+        moveModel(scene.children[i], pirateX, pirateY, pirateZ);
+        pirateX += 0;
+        pirateY -= 0.17;
+        pirateZ += 0;
+      }
+      if (scene.children[i].name == "Captain") { // On enlève le bateau cassé
+        moveModel(scene.children[i], pirateX, pirateY, pirateZ);
+        pirateX += 0;
+        pirateY -= 0.17;
+        pirateZ += 0;
+      }
+    }
+  }
+  else {
+    coulerX = 4;
+    coulerY = -2;
+    coulerZ = -60;
+    pirateX = 1;
+    pirateY = 12;
+    pirateZ = -50;
+  }
 
   if(keyboard.pressed("Q")){
     padJoueur.mouvementLeft();
@@ -1054,11 +1183,6 @@ function update(step) {
   if(keyboard.pressed("K")){
     scorePlayer.playerScore();
   }
-
-
-
-  //Environnement
- // bateauPirate.mouvementModels();
 }
 
 function onDocumentKeyDown(){ // Une fois qu'on relâche le bouton permettant d'aller à droite ou à gauche, on réinitialise la vitesse du pad

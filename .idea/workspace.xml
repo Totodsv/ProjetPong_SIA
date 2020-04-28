@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e40b87fb-0349-4446-82f4-92fc1956b093" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pong3D.html" beforeDir="false" afterPath="$PROJECT_DIR$/pong3D.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pong.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pong.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +64,10 @@
       <workItem from="1587389515174" duration="3847000" />
       <workItem from="1587541221495" duration="3674000" />
       <workItem from="1587803838433" duration="9720000" />
-      <workItem from="1587886407047" duration="8026000" />
+      <workItem from="1587886407047" duration="8111000" />
+      <workItem from="1587977632999" duration="6281000" />
+      <workItem from="1588060939731" duration="6052000" />
+      <workItem from="1588075222833" duration="9589000" />
     </task>
     <task id="LOCAL-00001" summary="Test Web Storm">
       <created>1581673514715</created>
@@ -379,14 +384,20 @@
       <option name="project" value="LOCAL" />
       <updated>1587816379156</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="Niveau OK, manque transition (messages)">
+      <created>1587895109445</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1587895109445</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Test sol" />
     <MESSAGE value="Test sol 2" />
     <MESSAGE value="Test sol 3" />
     <MESSAGE value="Test sol 4" />
@@ -411,13 +422,14 @@
     <MESSAGE value="Jeu : Boucliers terminés&#10;Tableau pour choisir quels objets font partis des collisions" />
     <MESSAGE value="Plusieurs caméras Ok&#10;FullScreen Ok&#10;Vitesse balle Ok" />
     <MESSAGE value="Début level&#10;Début mouvement models" />
-    <option name="LAST_COMMIT_MESSAGE" value="Début level&#10;Début mouvement models" />
+    <MESSAGE value="Niveau OK, manque transition (messages)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Niveau OK, manque transition (messages)" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1587816377806">
+    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1587895108086">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587816377806" />
+    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587895108086" />
     <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1581672651017">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -426,13 +438,17 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1581672701148" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1587816380901">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1587895111367">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1587816380901" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1587895111367" />
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586263898043">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1586263898043" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1588077433192">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1588077433192" />
   </component>
 </project>
