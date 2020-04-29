@@ -46,17 +46,36 @@ var tirX = -19;
 var tirY = 3.3;
 var tirZ = -0.3;
 var compteurTir = 0;
+//Jokers
+var plusieursBalle = false;
 
 
-//Affichage des dialogues
-var affichage = document.querySelector('#affichage');
+//Paramètres de l'affichage des dialogues (police, couleur etc...)
 var textToDisplay = document.createElement('div');
-/*var textToDisplay = document.createElement('div');
 textToDisplay.style.position = 'absolute';
-textToDisplay.style.zIndex = 1;    // if you still don't see the label, try uncommenting this
-textToDisplay.style.width = 100;
-textToDisplay.style.height = 100;
-textToDisplay.style.backgroundColor = "blue";*/
+//textToDisplay.style.top = '100px';
+textToDisplay.style.top = '45%';
+textToDisplay.style.width = '100%';
+textToDisplay.style.textAlign = 'center';
+textToDisplay.style.zIndex = '1';
+textToDisplay.style.display = 'none';
+textToDisplay.style.color = '#439DE1';
+//textToDisplay.style.color = '77AED8';
+textToDisplay.style.fontWeight = 'bold';
+//textToDisplay.style.backgroundColor='#F1F1F1';
+textToDisplay.style.backgroundColor='rgba(250,250,250,.7)';
+textToDisplay.style.padding = '20px';
+textToDisplay.style.letterSpacing = '5px';
+textToDisplay.style.fontSize = '80px';
+textToDisplay.style.fontFamily = 'Luminari', 'Helvetica', 'Arial', 'Times New Roman';
+textToDisplay.style.textShadow = '-1px -1px 0px $clr-blue,\n' +
+    '    3px 3px 0px $clr-blue,\n' +
+    '    6px 6px 0px $clr-blue-900';
+//textToDisplay.style.opacity = '0.8';
+textToDisplay.style.back
+
+
+
 
 
 //affichage.removeChild(textToDisplay); // Pour supprimer
@@ -244,7 +263,11 @@ class Balle {
 
   pause() {
     ballePause = true;
-    this.mesh.position.set(0,-5,0);
+    this.mesh.position.set(0,2.5,0);
+  }
+
+  go() {
+    ballePause = false;
   }
 
   positionX() {
@@ -513,14 +536,13 @@ class Score {
         scorePlayer.positionScore(-58, 5, 16);
       }
       if (player == 3) {
+        balle.pause();
         console.log("Player : 3");
         removeEntity(scorePlayer);
         scorePlayer.initScore3("ScoreJoueur");
         scorePlayer.positionScore(-58, 5, 16);
-        textToDisplay.textContent = "Félicitation vous avez détruit le bateau adverse !";
-        console.log(textToDisplay);
-        //affichage.appendChild(textToDisplay);
-        document.body.appendChild(textToDisplay);
+        textToDisplay.textContent = "Félicitations vous avez détruit le bateau adverse !";
+        Afficher(); // affiche le texte
         for (i=0; i<=scene.children.length-1; i++) {
           if (scene.children[i].name == "BateauPirate") { // on enlève le bateau pirate
             removeModel(scene.children[i]);
@@ -528,29 +550,17 @@ class Score {
         }
         brokenShip.initShipWreck("BrokenShip"); // On ajoute le bateau cassé
         couler = true;
+        //BonusBalle();
         level += 1;
         console.log("Bienvenue au niveau: "+level);
         setTimeout(Intermediaire, 5000); // Enlève le bateau cassé et le pirate du niveau correspondant
+        setTimeout(Cacher, 5000);
         if (level == 2) {
           setTimeout(Niveau2, 5000); // Ajoute les éléments du niveau 2 dont le bateau et le pirates
-          removeEntity(scorePlayer); // On réinitialise les scores
-          removeEntity(scoreIA);
-          scorePlayer.initScore("ScoreJoueur");
-          scorePlayer.positionScore(-58, 5, 16);
-
-          scoreIA.initScore("ScoreIA");
-          scoreIA.positionScore(-50,5,0);
 
         }
         if (level==3) {
           setTimeout(Niveau3, 5000); // Ajoute les éléments du niveau 2 dont le bateau et le pirates
-          removeEntity(scorePlayer); // On réinitialise les scores
-          removeEntity(scoreIA);
-          scorePlayer.initScore("ScoreJoueur");
-          scorePlayer.positionScore(-58, 5, 16);
-
-          scoreIA.initScore("ScoreIA");
-          scoreIA.positionScore(-50,5,0);
         }
       }
     }
@@ -689,14 +699,6 @@ class Models {
       });
     });
   }
-  /*moveObject(id){
-    var i;
-    console.log(bateauPirate.);
-    for ( i = id.children.length - 1; i >= 0 ; i -- ) {
-      scene.mesh(id).position.set(0,-20,0);
-      console.log("En dessous");
-    }
-  }*/
 
   initTower(nom) {
     //Ajout des textures de l'objet
@@ -912,6 +914,7 @@ class Skybox {
 
 // Variables globales
 var balle = new Balle();
+var balleBonus = new Balle();
 var terrain = new Terrain();
 var stade = new Stade();
 var shieldJoueur = new Bouclier();
@@ -1049,8 +1052,17 @@ function init() {
 
   //Levels
   if(level==1){
+    document.body.appendChild(textToDisplay); // Affiche le texte sur la page
+    //textToDisplay.textContent = "Bievenue Pirate ! Marquez 3 points pour détruire le bateau";
+    //textToDisplay.textContent = "Venez à bout des 3 pirates pour obtenir le trésor légendaire !";
+    textToDisplay.textContent = "~ NIVEAU 1 ~";
+    Afficher();
+    setTimeout(Cacher, 2500);
+
+    balle.pause();
     bateauPirate.initPirateShip("BateauPirate");
     pirate1.initPirate1("Pirate1");
+    setTimeout(Niveau1, 2500);
   }
   if(level==2){
     bateauPirate.initShipLight("BateauPirate");
@@ -1074,6 +1086,8 @@ function init() {
 }
 
 function Intermediaire() {
+
+  console.log(textToDisplay);
   for (i=0; i<=scene.children.length-1; i++) {
     if (scene.children[i].name == "BrokenShip") { // On enlève le bateau cassé
       console.log(scene.children[i].name);
@@ -1095,9 +1109,25 @@ function Intermediaire() {
   }
 }
 
+function Niveau1 () {
+  balle.go();
+}
+
 function Niveau2() {
-  ballePause = false
+  textToDisplay.textContent = "~ NIVEAU 2 ~";
+  Afficher(); // affiche le texte
+  setTimeout(Cacher, 2500);
+  setTimeout(balleGo,2500);
+
+  removeEntity(scorePlayer); // On réinitialise les scores
+  removeEntity(scoreIA);
+  scorePlayer.initScore("ScoreJoueur");
+  scorePlayer.positionScore(-58, 5, 16);
+  scoreIA.initScore("ScoreIA");
+  scoreIA.positionScore(-50,5,0);
+
   balle.positionBalle(0, 2.5, 0);
+  ballSpeed = 18;
   bateauPirate.initPirateShip("BateauPirate");
   pirate2.initPirate2("Pirate2");
   player = 0;
@@ -1110,8 +1140,20 @@ function Niveau2() {
 }
 
 function Niveau3() {
-  ballePause = false
+  textToDisplay.textContent = "~ NIVEAU 3 ~";
+  Afficher(); // affiche le texte
+  setTimeout(Cacher, 2500);
+  setTimeout(balleGo,2500);
+
+  removeEntity(scorePlayer); // On réinitialise les scores
+  removeEntity(scoreIA);
+  scorePlayer.initScore("ScoreJoueur");
+  scorePlayer.positionScore(-58, 5, 16);
+  scoreIA.initScore("ScoreIA");
+  scoreIA.positionScore(-50,5,0);
+
   balle.positionBalle(0, 2.5, 0);
+  ballSpeed = 20;
   bateauPirate.initPirateShip("BateauPirate");
   captain.initCaptain("Captain");
   player = 0;
@@ -1121,6 +1163,32 @@ function Niveau3() {
 function TirCanon() {
   tir = true;
   compteurTir +=1;
+}
+
+function Afficher() {
+    textToDisplay.style.display = 'block';
+    console.log(textToDisplay.textContent);
+}
+
+function Cacher() {
+  textToDisplay.style.display='none';
+}
+
+function balleGo() {
+  balle.go();
+}
+
+function BonusBalle(){
+  console.log("test");
+  for (i=0; i<=scene.children.length-1; i++) {
+    if (scene.children[i].name == "Balle") {
+      console.log("AJOUT DE BALLE");
+      //var balleBonus = scene.children[i].clone();
+      balleBonus.initBalle("BalleTest");
+      //balleBonus.position.set(0;2.5;0);
+      plusieursBalle = true;
+    }
+  }
 }
 
 function removeEntity(object) {
@@ -1242,8 +1310,6 @@ function update(step) {
   if (tir) {
     for (i = 0; i <= scene.children.length - 1; i++) {
       if (scene.children[i].name == "CannonBall") { // On enlève le bateau cassé
-        console.log(scene.children[i].position.x);
-        console.log(scene.children[i].name);
         moveModel(scene.children[i], tirX, tirY, tirZ);
         if(compteurTir%2 != 0) { // Le boulet est dans le cannon de droite
           tirX -= 0.2;
@@ -1265,6 +1331,12 @@ function update(step) {
         }
       }
     }
+  }
+
+  //Animations Jokers
+
+  if(plusieursBalle){
+    balleBonus.mouvement(padPosition);
   }
 
   if(keyboard.pressed("Q")){

@@ -1,8 +1,12 @@
 #affichage{
     position : absolute;
-    top: 2%;
+    top: 10px;
     width: 100%;
-    padding: 10px;
     text-align: center;
-    color: #ffff00
+    z-index: 100;
+    display: block;
+}
+
+#SIApp{
+    display: none;
 }

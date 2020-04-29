@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e40b87fb-0349-4446-82f4-92fc1956b093" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pong3D.html" beforeDir="false" afterPath="$PROJECT_DIR$/pong3D.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pong.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pong.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +67,9 @@
       <workItem from="1587886407047" duration="8111000" />
       <workItem from="1587977632999" duration="6281000" />
       <workItem from="1588060939731" duration="6052000" />
-      <workItem from="1588075222833" duration="19600000" />
+      <workItem from="1588075222833" duration="19671000" />
+      <workItem from="1588146658650" duration="4222000" />
+      <workItem from="1588162728332" duration="11666000" />
     </task>
     <task id="LOCAL-00001" summary="Test Web Storm">
       <created>1581673514715</created>
@@ -396,14 +400,20 @@
       <option name="project" value="LOCAL" />
       <updated>1588084894434</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="Niveaux (ajout cannons et boulets) OK&#10;Vitesse balle cappé pour la jouabilité&#10;Vitesse balle changeante tout le temps pour éviter les blocages">
+      <created>1588095401396</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1588095401396</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Test sol 3" />
     <MESSAGE value="Test sol 4" />
     <MESSAGE value="Test sol 5" />
     <MESSAGE value="Test sol 6 - 13" />
@@ -428,13 +438,14 @@
     <MESSAGE value="Début level&#10;Début mouvement models" />
     <MESSAGE value="Niveau OK, manque transition (messages)" />
     <MESSAGE value="Transitions entre niveau OK (bateau qui coule etc)&#10;Pouvoir choisir quels objets sont en collisions avec la balle OK&#10;Niveau OK&#10;Ajout des matériels pour peaufiner les niveaux" />
-    <option name="LAST_COMMIT_MESSAGE" value="Transitions entre niveau OK (bateau qui coule etc)&#10;Pouvoir choisir quels objets sont en collisions avec la balle OK&#10;Niveau OK&#10;Ajout des matériels pour peaufiner les niveaux" />
+    <MESSAGE value="Niveaux (ajout cannons et boulets) OK&#10;Vitesse balle cappé pour la jouabilité&#10;Vitesse balle changeante tout le temps pour éviter les blocages" />
+    <option name="LAST_COMMIT_MESSAGE" value="Niveaux (ajout cannons et boulets) OK&#10;Vitesse balle cappé pour la jouabilité&#10;Vitesse balle changeante tout le temps pour éviter les blocages" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1588084892869">
+    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1588095399914">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588084892869" />
+    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588095399914" />
     <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1581672651017">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -443,17 +454,17 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1581672701148" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588084896265">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588095402961">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588084896265" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588095402961" />
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586263898043">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1586263898043" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1588077433192">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1588168914831">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1588077433192" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1588168914831" />
   </component>
 </project>
