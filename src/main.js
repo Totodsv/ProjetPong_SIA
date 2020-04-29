@@ -31,6 +31,7 @@ var textureScore = [];
 var player = 0;
 var ia = 0;
 var elem = document.documentElement;
+var perdu = false;
 //Animation entre les niveaux
 var ballePause = false;
 var couler = false;
@@ -48,6 +49,13 @@ var tirZ = -0.3;
 var compteurTir = 0;
 //Jokers
 var plusieursBalle = false;
+var joueur = false;
+var rhum = false;
+var hautBottle = false;
+
+var bottleX = 5;
+var bottleY = 2.5;
+var bottleZ = 0;
 
 
 //Paramètres de l'affichage des dialogues (police, couleur etc...)
@@ -67,20 +75,13 @@ textToDisplay.style.backgroundColor='rgba(250,250,250,.7)';
 textToDisplay.style.padding = '20px';
 textToDisplay.style.letterSpacing = '5px';
 textToDisplay.style.fontSize = '80px';
-textToDisplay.style.fontFamily = 'Luminari', 'Helvetica', 'Arial', 'Times New Roman';
+textToDisplay.style.fontFamily = 'myFont','Luminari', 'Helvetica', 'Arial', 'Times New Roman';
 textToDisplay.style.textShadow = '-1px -1px 0px $clr-blue,\n' +
     '    3px 3px 0px $clr-blue,\n' +
     '    6px 6px 0px $clr-blue-900';
-//textToDisplay.style.opacity = '0.8';
-textToDisplay.style.back
 
 
 
-
-
-//affichage.removeChild(textToDisplay); // Pour supprimer
-//var full = false;
-var perdu = false;
 
 // Classe Balle
 class Balle {
@@ -118,13 +119,16 @@ class Balle {
 
     const distance = 2; // Un pad fait 1 en z donc si on veut que la balle rebondisse de façons réaliste on prend la moitié de cette valeur pour être à la position de la face de notre objet
 
-    //console.log(scene.children);
     var collisionGroup = [];
-    for (i=0; i<=scene.children.length-1; i++) { // On ajoute dans ce tableau les objets avec lesquels on souhaite une collision
+    var jokerGroup = [];
+    for (i=0; i<=scene.children.length-1; i++) { // On ajoute dans les objets à collisions avec le tableau collision et les objets joker dans le tableau des jokers
       if (scene.children[i].name == "BouclierJoueur") {
         collisionGroup.push(scene.children[i]);
       }
       if (scene.children[i].name == "BouclierAdverse") {
+        collisionGroup.push(scene.children[i]);
+      }
+      if (scene.children[i].name == "BouclierInvincible") {
         collisionGroup.push(scene.children[i]);
       }
       if (scene.children[i].name == "MurDroite") {
@@ -140,73 +144,80 @@ class Balle {
         collisionGroup.push(scene.children[i]);
       }
       if (scene.children[i].name == "Cannon"){ // Pour ajouter un model
-        //console.log(scene.children[i].children.length);
         for (j = scene.children[i].children.length - 1; j >= 0 ; j -- ) {
-          //console.log(scene.children[i].length);
             collisionGroup.push(scene.children[i].children[j]);
         }
       }
-      if (scene.children[i].name == "CannonBall"){ // Pour ajouter un model
-        //console.log(scene.children[i].children.length);
+      if (scene.children[i].name == "CannonBall"){
         for (j = scene.children[i].children.length - 1; j >= 0 ; j -- ) {
-          //console.log(scene.children[i].length);
           collisionGroup.push(scene.children[i].children[j]);
         }
       }
+      if (scene.children[i].name == "Bottle"){ // Ajout d'un Joker
+        for (j = scene.children[i].children.length - 1; j >= 0 ; j -- ) {
+          jokerGroup.push(scene.children[i].children[j]);
+        }
+      }
     }
+
     for (i = 0; i < tab.length; i += 1) {
       this.caster.set(this.mesh.position, this.rays[i]); // On ajoute les raycasters sur la balle
-      //var collisionGroup = [scene.children[4], scene.children[5], scene.children[8], scene.children[9], scene.children[10], scene.children[11]]; // On ajouter les objets avec lesquels on souhaite une collision
       //var obstacles = this.caster.intersectObjects(scene.children); // Collisions -> les rayons de la balle peuvent entrer en contact avec les objets de la scène
-
-      //console.log(collisionGroup);
-      var obstacles = this.caster.intersectObjects(collisionGroup);
+      //console.log(jokerGroup);
+      //console.log(rhum);
+      var obstacles = this.caster.intersectObjects(collisionGroup); // Groupe des obstacles
+      var obstaclesJokers = this.caster.intersectObjects(jokerGroup); // Groupe des jokers
       //Collision avec les boucliers
       var bouclierJoueur = scene.children[4];
       var bouclierAdverse = scene.children[5];
 
       if (obstacles.length > 0 && obstacles[0].distance <= distance) {// si la distance de collision est plus petite que celle définie alors il y a collision
         //Test vitesse balle
-        if(ballSpeed < 30){ // On bloque la vitesse de la balle pour que ça reste jouable pour un humain
-          ballSpeed+=0.1;
-        }
-        else {
+        if (ballSpeed < 30) { // On bloque la vitesse de la balle pour que ça reste jouable pour un humain
+          ballSpeed += 0.1;
+        } else {
           ballSpeed = 25;
         }
 
         //Gestion des boucliers
-        if(obstacles[0].object.name=="BouclierJoueur"){
+        if (obstacles[0].object.name == "BouclierJoueur") {
           console.log("Bouclier Joueur");
-          bouclierJoueur.position.set(0,-2.5,45);
+          bouclierJoueur.position.set(0, -2.5, 45);
+          joueur=true;
         }
-        if(obstacles[0].object.name=="BouclierAdverse"){
+        if (obstacles[0].object.name == "BouclierAdverse") {
           console.log("Bouclier Adverse");
-          bouclierAdverse.position.set(0,-2.5,-45);
+          bouclierAdverse.position.set(0, -2.5, -45);
+          joueur=false;
+        }
+        //Obtenir le dernier joueur qui a touché la balle pour lui attribuer un Joker
+        if (obstacles[0].object.name == "PadJoueur") {
+          joueur=true;
+        }
+        if (obstacles[0].object.name == "PadAdverse") {
+          joueur=false;
         }
         //Gestion des collisions
         if (i === 4) {
           console.log("Collision De Face");
           ballDirZ = -ballDirZ;
-        }
-        else if (i === 0) {
+        } else if (i === 0) {
           console.log("Collision De Dos");
           ballDirZ = -ballDirZ;
-          if (this.mesh.position.x > padX + (paddleSize/3.5)){ //Si la balle entre avec le côté droite du pad alors elle part vers la droite
+          if (this.mesh.position.x > padX + (paddleSize / 3.5)) { //Si la balle entre avec le côté droite du pad alors elle part vers la droite
             ballDirX = -0.02;
             ballDirX = -ballDirX;
             console.log("Je dois partir à droite");
-          }
-          else if (this.mesh.position.x < padX - (paddleSize/3.5)){ //Si la balle entre avec le côté gauche du pad alors elle part vers la gauche
+          } else if (this.mesh.position.x < padX - (paddleSize / 3.5)) { //Si la balle entre avec le côté gauche du pad alors elle part vers la gauche
             ballDirX = 0.02;
             ballDirX = -ballDirX;
             console.log("Je dois partir à gauche");
           }
-          if (this.mesh.position.x > padX + (paddleSize/8) && this.mesh.position.x < padX + (paddleSize/3.5)){ //Si la balle entre avec le côté droite du pad alors elle part vers la droite
+          if (this.mesh.position.x > padX + (paddleSize / 8) && this.mesh.position.x < padX + (paddleSize / 3.5)) { //Si la balle entre avec le côté droite du pad alors elle part vers la droite
             ballDirX = -0.01;
             ballDirX = -ballDirX;
             console.log("Je dois partir légèrement à droite");
-          }
-          else if (this.mesh.position.x < padX - (paddleSize/8) && this.mesh.position.x > padX - (paddleSize/3.5)){ //Si la balle entre avec le côté gauche du pad alors elle part vers la gauche
+          } else if (this.mesh.position.x < padX - (paddleSize / 8) && this.mesh.position.x > padX - (paddleSize / 3.5)) { //Si la balle entre avec le côté gauche du pad alors elle part vers la gauche
             ballDirX = 0.01;
             ballDirX = -ballDirX;
             console.log("Je dois partir légèrement à gauche");
@@ -216,11 +227,19 @@ class Balle {
           console.log("Collision De Droite");
           ballDirX = 0.05;
           ballDirX = -ballDirX;
-        }
-        else if (i === 5 || i === 6 || i ===7) {
+        } else if (i === 5 || i === 6 || i === 7) {
           console.log("Collision De Gauche");
           ballDirX = -0.05;
           ballDirX = -ballDirX;
+        }
+      }
+      if (obstaclesJokers.length > 0 && obstaclesJokers[0].distance <= distance) { // Si la balle entre en collision avec un des objets joker
+        //console.log("JOKKKKKERRRR");
+        // Gestion des Jokers
+        if (obstaclesJokers[0].object.parent.name == "Bottle") {
+          console.log("Joker : Bouteille de Rhum");
+          Rhum(); // Active l'effet du joker
+          rhum=false;
         }
       }
     }
@@ -251,8 +270,18 @@ class Balle {
         bouclierJoueur.position.set(0,2.5,43.5);//On remet le shield du Joueur
         bouclierAdverse.position.set(0,2.5,-43.5);//On remet le shield de l'adversaire
         ballSpeed=16; //On réinitialise la vitesse de la balle
+        if (ia == 3) {
+          this.pause();
+          perdu=true;
+          console.log("Vous avez perdu");
+        }
       }
       this.reset(); // On remet la balle et les pads au centre
+    }
+
+// Si la balle quitte les limites du terrain
+    if (this.mesh.position.x >= 35 || this.mesh.position.x <= -35 ){
+      this.reset();
     }
   }
 
@@ -286,13 +315,23 @@ class Bouclier {
     const shieldMaterial =  new THREE.MeshStandardMaterial({transparent:true, opacity:0.5});
 
     this.mesh = new THREE.Mesh(shieldGeometry, shieldMaterial);
-    this.mesh.position.set(0, 0, 0);
+    this.mesh.position.set(0, -10, 0);
     //this.mesh.name = "Bouclier";
     scene.add(this.mesh);
     this.mesh.name=nom;
   }
   positionShield(x,y,z){
     this.mesh.position.set(x, y, z);
+  }
+  initInvincibleShield(nom) {
+    const shieldGeometry = new THREE.BoxBufferGeometry( tailleTerrain*0.695, 4, 0.5, 1, 1, 1 );
+    const shieldMaterial =  new THREE.MeshStandardMaterial({transparent:true, opacity:0.9, color: 0xE8D560});
+    //const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
+    this.mesh = new THREE.Mesh(shieldGeometry, shieldMaterial);
+    this.mesh.position.set(0, -10, 0);
+    //this.mesh.name = "Bouclier";
+    scene.add(this.mesh);
+    this.mesh.name=nom;
   }
 }
 
@@ -586,8 +625,8 @@ class Score {
         removeEntity(scoreIA);
         scoreIA.initScore3("ScoreIA");
         scoreIA.positionScore(-50,5,0);
-        console.log("Vous avez perdu, voulez-vous recommencer?");
-        perdu=true;
+        //console.log("Vous avez perdu, voulez-vous recommencer?");
+        //perdu=true;
       }
     }
   }
@@ -874,6 +913,25 @@ class Models {
       });
     });
   }
+  initBottle(nom, x, y, z) {
+    //Ajout des textures de l'objet
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    var url = 'bottle.mtl';
+    mtlLoader.load(url , function(materialsShipLight){
+      materialsShipLight.preload();
+      // Ajout de l'objet
+      var objLoader = new THREE.OBJLoader();
+      objLoader.setMaterials(materialsShipLight);
+      objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+      objLoader.load('bottle.obj', function(bottle) {
+        bottle.position.set(x, y, z);
+        bottle.scale.set(1.3,1.3,1.3);
+        scene.add(bottle);
+        bottle.name=nom;
+      });
+    });
+  }
 }
 
 class Skybox {
@@ -919,6 +977,7 @@ var terrain = new Terrain();
 var stade = new Stade();
 var shieldJoueur = new Bouclier();
 var shieldAdverse = new Bouclier();
+var invicibleShield = new Bouclier();
 var ile = new Ile();
 var requin = new Requin();
 var padAdverse = new Pad();
@@ -942,6 +1001,7 @@ var brokenShip = new Models();
 var cannonDroite = new Models();
 var cannonGauche = new Models();
 var cannonBall = new Models();
+var bottle = new Models();
 
 // Initialisation du monde 3D
 function init() {
@@ -963,7 +1023,7 @@ function init() {
   //camera2.lookAt(padJoueur.position);
 
 
-
+  //Controls
   controls = new THREE.TrackballControls(camera, container);
   controls.target = new THREE.Vector3(0, 0, 0.75);
   controls.panSpeed = 0.4;
@@ -1019,14 +1079,13 @@ function init() {
   shieldJoueur.positionShield(0,2.5,43.5);
   shieldAdverse.initShield("BouclierAdverse");
   shieldAdverse.positionShield(0,2.5,-43.5);
+  invicibleShield.initInvincibleShield("BouclierInvincible");
   ile.initIle("Ile");
   ile.positionIle(88,0.5,30)
   requin.initRequin("Requin");
   murDroite.initMur("MurDroite");
-  //murDroite.positionMur(8,1,1);
   murDroite.positionMur(32,1,1);
   murGauche.initMur("MurGauche");
-  //murGauche.positionMur(-8,1,1);
   murGauche.positionMur(-32,1,1);
   padAdverse.initPad("PadAdverse");
   padAdverse.positionPad(0,2.5,-40);
@@ -1041,7 +1100,6 @@ function init() {
 
 
   // add some models
-
   tower.initTower("Tour");
   plant.initPlant("Plante");
   chest.initChest("Coffre");
@@ -1072,6 +1130,9 @@ function init() {
     bateauPirate.initPirateShip("BateauPirate");
     captain.initCaptain("Captain");
   }
+
+  //Activation des Jokers
+  setTimeout(Joker, 5000);
 
   // Stats
   const fps  = 60;
@@ -1136,7 +1197,6 @@ function Niveau2() {
   cannonGauche.initCannon("Cannon", -25, -0.5, 0, -1.55);
   cannonBall.initCannonBall("CannonBall", -19, 3.3, -0.3);
   tir=true;
-
 }
 
 function Niveau3() {
@@ -1212,6 +1272,45 @@ function moveModel(id, x, y, z) {
   var i;
   for ( i = id.children.length - 1; i >= 0 ; i -- ) {
     id.position.set(x,y,z);
+  }
+}
+
+function Joker(){
+  var a = getRandomInt(2);
+  var xRandom = getRandomIntInclusive(-20,20);
+  var zRandom = getRandomIntInclusive(-35,35);
+  if(a==0 && rhum!=true){
+    bottleX=xRandom;
+    bottleZ=zRandom;
+    bottle.initBottle("Bottle", bottleX,2.5,bottleZ);
+    rhum=true;
+    setTimeout(function(){
+      for (i=0; i<=scene.children.length-1; i++) {
+        if (scene.children[i].name == "Bottle") { // on enlève le rhum au bout de 10 sec sans qu'il soit utilisé
+          removeModel(scene.children[i]);
+          rhum=false;
+          console.log("disparition");
+        }
+      }
+    }, 10000);
+  }
+  else{
+    console.log(a);
+  }
+  setTimeout(Joker,5000);
+}
+
+function Rhum() { // Joker Bouteille de Rhum
+  for (i=0; i<=scene.children.length-1; i++) {
+    if (scene.children[i].name == "Bottle") { // on enlève le bateau pirate
+      removeModel(scene.children[i]);
+    }
+  }
+  if(joueur){
+    shieldJoueur.positionShield(0,2.5,43.5)
+  }
+  else{
+    shieldAdverse.positionShield(0,2.5,-43.5)
   }
 }
 
@@ -1333,22 +1432,65 @@ function update(step) {
     }
   }
 
+  //Animation Rhum
+  if(rhum) {
+    //console.log(hautBottle);
+    for (i = 0; i <= scene.children.length - 1; i++) {
+      if (scene.children[i].name == "Bottle") { // On enlève le bateau cassé
+        //console.log(scene.children[i].position.y);
+        moveModel(scene.children[i], bottleX, bottleY, bottleZ);
+        if (hautBottle) { // Le boulet est dans le cannon de droite
+          bottleX += 0;
+          bottleY -= 0.07;
+          bottleZ += 0;
+          if (scene.children[i].position.y < 1)
+            hautBottle = false;
+        } else { // Le boulet est dans le cannon de gauche
+          bottleX += 0;
+          bottleY += 0.07;
+          bottleZ += 0;
+          if (scene.children[i].position.y > 3) {
+            hautBottle = true;
+          }
+        }
+      }
+    }
+  }
+
   //Animations Jokers
 
   if(plusieursBalle){
     balleBonus.mouvement(padPosition);
   }
-
   if(keyboard.pressed("Q")){
     padJoueur.mouvementLeft();
   }
   if(keyboard.pressed("D")){
     padJoueur.mouvementRight();
   }
-
-  if(keyboard.pressed("K")){
+  if(keyboard.pressed("N")){
     scorePlayer.playerScore();
   }
+  if(keyboard.pressed("K")){
+    shieldAdverse.positionShield(0,-10,-43.5)
+  }
+  if(keyboard.pressed("I")){
+    invicibleShield.positionShield(0,2.5,43.5);
+    shieldJoueur.positionShield(0,-10,43.5)
+  }
+  if(keyboard.pressed("J")){
+    Joker();
+  }
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min +1)) + min;
 }
 
 function onDocumentKeyDown(){ // Une fois qu'on relâche le bouton permettant d'aller à droite ou à gauche, on réinitialise la vitesse du pad
@@ -1359,7 +1501,6 @@ function onDocumentKeyDown(){ // Une fois qu'on relâche le bouton permettant d'
 function fullScreen(){
   /* View in fullscreen */
   if(keyboard.pressed("F")) {
-    console.log("pas full");
     if (elem.requestFullscreen) {
       elem.requestFullscreen();
     } else if (elem.mozRequestFullScreen) { /* Firefox */

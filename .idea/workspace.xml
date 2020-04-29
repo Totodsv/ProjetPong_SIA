@@ -69,7 +69,7 @@
       <workItem from="1588060939731" duration="6052000" />
       <workItem from="1588075222833" duration="19671000" />
       <workItem from="1588146658650" duration="4222000" />
-      <workItem from="1588162728332" duration="11666000" />
+      <workItem from="1588162728332" duration="28047000" />
     </task>
     <task id="LOCAL-00001" summary="Test Web Storm">
       <created>1581673514715</created>
@@ -407,14 +407,20 @@
       <option name="project" value="LOCAL" />
       <updated>1588095401396</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="Dialogues entre niveaux OK&#10;Test ajout police Luminari">
+      <created>1588177506357</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1588177506357</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Test sol 4" />
     <MESSAGE value="Test sol 5" />
     <MESSAGE value="Test sol 6 - 13" />
     <MESSAGE value="Ajout Capitaine Pirate" />
@@ -439,13 +445,14 @@
     <MESSAGE value="Niveau OK, manque transition (messages)" />
     <MESSAGE value="Transitions entre niveau OK (bateau qui coule etc)&#10;Pouvoir choisir quels objets sont en collisions avec la balle OK&#10;Niveau OK&#10;Ajout des matériels pour peaufiner les niveaux" />
     <MESSAGE value="Niveaux (ajout cannons et boulets) OK&#10;Vitesse balle cappé pour la jouabilité&#10;Vitesse balle changeante tout le temps pour éviter les blocages" />
-    <option name="LAST_COMMIT_MESSAGE" value="Niveaux (ajout cannons et boulets) OK&#10;Vitesse balle cappé pour la jouabilité&#10;Vitesse balle changeante tout le temps pour éviter les blocages" />
+    <MESSAGE value="Dialogues entre niveaux OK&#10;Test ajout police Luminari" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dialogues entre niveaux OK&#10;Test ajout police Luminari" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1588095399914">
+    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1588177504765">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588095399914" />
+    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588177504765" />
     <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1581672651017">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -454,10 +461,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1581672701148" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588095402961">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588177507902">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588095402961" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588177507902" />
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586263898043">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
