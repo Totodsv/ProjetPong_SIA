@@ -57,7 +57,11 @@ var sword = false;
 var hautSword = false;
 var bomb = false;
 var hautBomb = false;
-var petit=true;
+var barrel = false;
+var hautBarrel = false;
+var hautChloro = false;
+var chloro = false;
+var print = true;
 
 var swordX = 5;
 var swordY = 2.5;
@@ -68,6 +72,13 @@ var bottleZ = 0;
 var bombX = 5;
 var bombY = 2.5;
 var bombZ = 0;
+var barrelX = 5;
+var barrelY = 2.5;
+var barrelZ = 20;
+var chloroX = 5;
+var chloroY = 2.5;
+var chloroZ = 0;
+
 
 
 //Paramètres de l'affichage des dialogues (police, couleur etc...)
@@ -167,10 +178,7 @@ class Balle {
       if (scene.children[i].name == "Protection4") {
         collisionGroup.push(scene.children[i]);
       }
-      if (scene.children[i].name == "Protection5") {
-        collisionGroup.push(scene.children[i]);
-      }
-      if (scene.children[i].name == "Protection6") {
+      if (scene.children[i].name == "Corona"){ // Ajout d'un Joker
         collisionGroup.push(scene.children[i]);
       }
       if (scene.children[i].name == "Cannon"){ // Pour ajouter un model
@@ -194,6 +202,16 @@ class Balle {
         }
       }
       if (scene.children[i].name == "Bombe"){ // Ajout d'un Joker
+        for (j = scene.children[i].children.length - 1; j >= 0 ; j -- ) {
+          jokerGroup.push(scene.children[i].children[j]);
+        }
+      }
+      if (scene.children[i].name == "Barrel"){ // Ajout d'un Joker
+        for (j = scene.children[i].children.length - 1; j >= 0 ; j -- ) {
+          jokerGroup.push(scene.children[i].children[j]);
+        }
+      }
+      if (scene.children[i].name == "Chloroquine"){ // Ajout d'un Joker
         for (j = scene.children[i].children.length - 1; j >= 0 ; j -- ) {
           jokerGroup.push(scene.children[i].children[j]);
         }
@@ -291,6 +309,16 @@ class Balle {
           Bombe(); // Active l'effet du joker
           bomb=false;
         }
+        if (obstaclesJokers[0].object.parent.name == "Barrel") {
+          console.log("Joker : Barile");
+          Barile(); // Active l'effet du joker
+          barrel=false;
+        }
+        if (obstaclesJokers[0].object.parent.name == "Chloroquine") {
+          console.log("Joker : Chloroquine");
+          Chloroquine(); // Active l'effet du joker
+          chloro=false;
+        }
       }
     }
 
@@ -327,11 +355,25 @@ class Balle {
         }
       }
       this.reset(); // On remet la balle et les pads au centre
+      corona.positionCorona(0,-10,0);//On enlève le mur du corona s'il y est.
+      chloro = false;
+      for (i=0; i<=scene.children.length-1; i++) {
+        if (scene.children[i].name == "Chloroquine") { // on enlève la chloroquine qui ne sert plus
+          removeModel(scene.children[i]);
+        }
+      }
     }
 
 // Si la balle quitte les limites du terrain
     if (this.mesh.position.x >= 35 || this.mesh.position.x <= -35 ){
       this.reset();
+      corona.positionCorona(0,-10,0);//On enlève le mur du corona s'il y est.
+      chloro = false;
+      for (i=0; i<=scene.children.length-1; i++) {
+        if (scene.children[i].name == "Chloroquine") { // on enlève la chloroquine qui ne sert plus
+          removeModel(scene.children[i]);
+        }
+      }
     }
   }
 
@@ -388,7 +430,7 @@ class Bouclier {
 class Protection{
   initProtection(nom){
     const protectGeometry = new THREE.BoxBufferGeometry( 6, 4, 0.5, 1, 1, 1 );
-    const protectMaterial =  new THREE.MeshStandardMaterial({transparent:true, opacity:0.5});
+    const protectMaterial =  new THREE.MeshStandardMaterial({transparent:true, opacity:0});
     this.mesh = new THREE.Mesh(protectGeometry, protectMaterial);
     this.mesh.position.set(35, 0, 1);
     //this.mesh.name = "Bouclier";
@@ -730,6 +772,20 @@ class Requin {
   }
 }
 
+class Corona {
+  initCorona(nom) {
+    const murGeometry = new THREE.BoxBufferGeometry( tailleTerrain*0.695, 20, 0, 1, 1, 1 );
+    const murMaterial =  new THREE.MeshStandardMaterial({transparent:true, opacity:0.5, color: 0xE8D560});
+    this.mesh = new THREE.Mesh(murGeometry, murMaterial);
+    this.mesh.position.set(0, -10, -8);
+    scene.add(this.mesh);
+    this.mesh.name=nom;
+  }
+  positionCorona(x,y,z){
+    this.mesh.position.set(x, y, z);
+  }
+}
+
 class Models {
   initPirateShip(nom) {
     //Ajout des textures de l'objet
@@ -1043,6 +1099,45 @@ class Models {
       });
     });
   }
+  initBarrel(nom, x, y, z) {
+    //Ajout des textures de l'objet
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    var url = 'barrel.mtl';
+    mtlLoader.load(url , function(materialsShipLight){
+      materialsShipLight.preload();
+      // Ajout de l'objet
+      var objLoader = new THREE.OBJLoader();
+      objLoader.setMaterials(materialsShipLight);
+      objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+      objLoader.load('barrel.obj', function(barrel) {
+        barrel.position.set(x, y, z);
+        barrel.scale.set(6,6,6);
+        barrel.rotation.y = 1;
+        scene.add(barrel);
+        barrel.name=nom;
+      });
+    });
+  }
+  initChloroquine(nom, x, y, z) {
+    //Ajout des textures de l'objet
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    var url = 'chloroquine.mtl';
+    mtlLoader.load(url , function(materialsShipLight){
+      materialsShipLight.preload();
+      // Ajout de l'objet
+      var objLoader = new THREE.OBJLoader();
+      objLoader.setMaterials(materialsShipLight);
+      objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+      objLoader.load('chloroquine.obj', function(chloroquine) {
+        chloroquine.position.set(x, y, z);
+        chloroquine.scale.set(0.9,0.9,0.9);
+        scene.add(chloroquine);
+        chloroquine.name=nom;
+      });
+    });
+  }
   initPangolin() {
    /* let gltfLoader = new THREE.GLTFLoader();
     gltfLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
@@ -1123,6 +1218,7 @@ var murGauche = new Mur();
 var scoreIA = new Score();
 var scorePlayer = new Score();
 var ciel = new Skybox();
+var corona = new Corona();
 var bateauPirate = new Models();
 var captain = new Models();
 var pirate1 = new Models();
@@ -1140,13 +1236,13 @@ var protection1 = new Protection();
 var protection2 = new Protection();
 var protection3 = new Protection();
 var protection4 = new Protection();
-var protection5 = new Protection();
-var protection6 = new Protection();
 var cannonBall = new Models();
 var bottle = new Models();
 var epee = new Models();
 var bombe = new Models();
 var pangolin = new Models();
+var barile = new Models();
+var chloroq = new Models();
 
 // Initialisation du monde 3D
 function init() {
@@ -1240,11 +1336,8 @@ function init() {
   scoreIA.positionScore(-50,5,0);
   scorePlayer.initScore("ScoreJoueur");
   scorePlayer.positionScore(-58,5,16);
+  corona.initCorona("Corona");
   ciel.initSkyBox();
-  protection5.initProtection("Protection5");
-  protection5.rotationProtection(1.5);
-  protection6.initProtection("Protection6");
-  protection6.rotationProtection(1.5);
 
 
 
@@ -1435,7 +1528,7 @@ function moveModel(id, x, y, z) {
 }
 
 function Joker(){
-  var a = getRandomInt(3);
+  var a = getRandomInt(4);
   var xRandom = getRandomIntInclusive(-20,20);
   var zRandom = getRandomIntInclusive(-35,35);
   if(a==0 && rhum!=true){
@@ -1485,6 +1578,34 @@ function Joker(){
         }
       }
     }, 10000);
+  }
+  if(a==3 && barrel!=true){
+    console.log(a)
+    barrelX=xRandom;
+    if(chloro){
+      barrelX=-10;
+      barrelZ=20;
+    }
+    else{
+      barrelX=xRandom;
+      barrelZ=getRandomIntInclusive(20,35);
+    }
+
+    barile.initBarrel("Barrel", barrelX,2.5,barrelZ);
+    barrel=true;
+    setTimeout(function(){
+      for (i=0; i<=scene.children.length-1; i++) {
+        if (scene.children[i].name == "Barrel") { // on enlève le rhum au bout de 10 sec sans qu'il soit utilisé
+          removeModel(scene.children[i]);
+          barrel=false;
+          console.log("disparition");
+        }
+      }
+    }, 10000);
+  }
+  if(chloro){
+    chloroZ=getRandomIntInclusive(5,25);
+    chloroq.initChloroquine("Chloroquine", chloroX,1,chloroZ);
   }
   else{
     console.log(a);
@@ -1493,7 +1614,7 @@ function Joker(){
 }
 
 function addJoker(){
-  var a = getRandomInt(3);
+  var a = getRandomInt(4);
   var xRandom = getRandomIntInclusive(-20,20);
   var zRandom = getRandomIntInclusive(-35,35);
   if(a==0 && rhum!=true){
@@ -1539,6 +1660,22 @@ function addJoker(){
         if (scene.children[i].name == "Bombe") { // on enlève le rhum au bout de 10 sec sans qu'il soit utilisé
           removeModel(scene.children[i]);
           bomb=false;
+          console.log("disparition");
+        }
+      }
+    }, 10000);
+  }
+  if(a==3 && barrel!=true){
+    console.log(a)
+    barrelX=xRandom;
+    barrelZ=zRandom;
+    barile.initBarrel("Barrel", barrelX,2.5,barrelZ);
+    barrel=true;
+    setTimeout(function(){
+      for (i=0; i<=scene.children.length-1; i++) {
+        if (scene.children[i].name == "Barrel") { // on enlève le rhum au bout de 10 sec sans qu'il soit utilisé
+          removeModel(scene.children[i]);
+          barrel=false;
           console.log("disparition");
         }
       }
@@ -1562,13 +1699,13 @@ function animationJokers() {
           bottleX += 0;
           bottleY -= 0.07;
           bottleZ += 0;
-          if (scene.children[i].position.y < 1)
+          if (scene.children[i].position.y < 0.5)
             hautBottle = false;
         } else { // La bouteille est en bas et doit monter
           bottleX += 0;
           bottleY += 0.07;
           bottleZ += 0;
-          if (scene.children[i].position.y > 3) {
+          if (scene.children[i].position.y > 2.5) {
             hautBottle = true;
           }
         }
@@ -1622,6 +1759,53 @@ function animationJokers() {
       }
     }
   }
+  if(barrel) {
+    //console.log(hautBottle);
+    for (i = 0; i <= scene.children.length - 1; i++) {
+      if (scene.children[i].name == "Barrel") { // On anime l'épée
+        //console.log(scene.children[i].position.y);
+        moveModel(scene.children[i], barrelX, barrelY, barrelZ);
+        if (hautBarrel) { // L'épée est en haut et doit descendre
+          barrelX += 0;
+          barrelY -= 0.07;
+          barrelZ += 0;
+          if (scene.children[i].position.y < 0.5)
+            hautBarrel = false;
+        } else { // L'épée est en haut et doit monter
+          barrelX += 0;
+          barrelY += 0.07;
+          barrelZ += 0;
+          if (scene.children[i].position.y > 2.5) {
+            hautBarrel = true;
+          }
+        }
+      }
+    }
+  }
+  if(chloro) {
+    //console.log(hautBottle);
+    for (i = 0; i <= scene.children.length - 1; i++) {
+      if (scene.children[i].name == "Chloroquine") { // On anime l'épée
+        //console.log(scene.children[i].position.y);
+        moveModel(scene.children[i], chloroX, chloroY, chloroZ);
+        if (hautChloro) { // L'épée est en haut et doit descendre
+          chloroX += 0;
+          chloroY -= 0.07;
+          chloroZ += 0;
+          if (scene.children[i].position.y < 0.5)
+            hautChloro = false;
+        } else { // L'épée est en haut et doit monter
+          console.log("JE SUIS CENSEEEEEEEEE BOUGEEEEEEEEEEEER");
+          chloroX += 0;
+          chloroY += 0.07;
+          chloroZ += 0;
+          if (scene.children[i].position.y > 2.5) {
+            hautChloro = true;
+          }
+        }
+      }
+    }
+  }
 }
 
 function Rhum() { // Joker Bouteille de Rhum
@@ -1665,10 +1849,30 @@ function Bombe(){ // Joker épée pirate
     setTimeout(function(){padAdverse.padBomb(1, 1, 1);}, 5000);
   }
   else{
-    petit=true
     padJoueur.padBomb(0.5, 0.5, 0.5);
-    setTimeout(function(){padJoueur.padBomb(1, 1, 1);petit=false;}, 5000);
+    setTimeout(function(){padJoueur.padBomb(1, 1, 1);}, 5000);
   }
+}
+
+function Barile(){ // Joker épée pirate
+  for (i=0; i<=scene.children.length-1; i++) {
+    if (scene.children[i].name == "Barrel") { // on enlève le joker Barile
+      removeModel(scene.children[i]);
+    }
+  }
+  chloro = true;
+  corona.positionCorona(0,0,-5);
+}
+
+function Chloroquine(){
+  chloro = false;
+  for (i=0; i<=scene.children.length-1; i++) {
+    if (scene.children[i].name == "Chloroquine") { // on enlève le joker Chloroquine
+      removeModel(scene.children[i]);
+    }
+  }
+  corona.positionCorona(0,-10,0);
+  console.log("Le confinement est terminé");
 }
 
 function gameLoop() {
@@ -1713,13 +1917,6 @@ function update(step) {
   //const angleIncr = Math.PI * 2 * step / 5 ; // une rotation complète en 5 secondes
   padPosition = padJoueur.positionX(); // Récupère à l'instant t la position x du pad
 
-  if(petit){
-
-  }
-  else{
-    protection5.positionProtection(padPosition + 8.4, 2.5, 40.5);
-    protection6.positionProtection(padPosition - 8.4, 2.5, 40.5);
-  }
 
 
   if (ballePause){
@@ -1808,13 +2005,9 @@ function update(step) {
   }
   if(keyboard.pressed("Q")){
     padJoueur.mouvementLeft();
-    //protection5.positionProtection(padPosition + 8.4, 2.5, 40.5);
-    //protection6.positionProtection(padPosition - 8.4, 2.5, 40.5);
   }
   if(keyboard.pressed("D")){
     padJoueur.mouvementRight();
-    //protection5.positionProtection(padPosition + 8.4, 2.5, 40.5);
-    //protection6.positionProtection(padPosition - 8.4, 2.5, 40.5);
   }
   if(keyboard.pressed("N")){
     scorePlayer.playerScore();
@@ -1860,7 +2053,29 @@ function fullScreen(){
       elem.msRequestFullscreen();
     }
   }
+  if(print) {
+    if (keyboard.pressed("P")) {
+      print = false;
+      var screen = window.open('', '');
+      screen.document.title = "Screenshot";
+      var img = new Image();
+      renderer.render(scene, camera);
+      img.src = renderer.domElement.toDataURL();
+      screen.document.body.appendChild(img);
+    }
+  }
 }
+
+/*function screenShot() {
+  if(keyboard.pressed("P")) {
+    var screen = window.open('', '');
+    screen.document.title = "Screenshot";
+    var img = new Image();
+    renderer.render(scene, camera);
+    img.src = renderer.domElement.toDataURL();
+    screen.document.body.appendChild(img);
+  }
+}*/
 
 function resize() {
   w = container.clientWidth;
