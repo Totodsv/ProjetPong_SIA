@@ -48,6 +48,7 @@ var tirY = 3.3;
 var tirZ = -0.3;
 var compteurTir = 0;
 //Jokers
+var unJoker = false;
 var plusieursBalle = false;
 var joueur = false;
 var rhum = false;
@@ -173,6 +174,11 @@ class Balle {
           jokerGroup.push(scene.children[i].children[j]);
         }
       }
+      if (scene.children[i].name == "Bombe"){ // Ajout d'un Joker
+        for (j = scene.children[i].children.length - 1; j >= 0 ; j -- ) {
+          jokerGroup.push(scene.children[i].children[j]);
+        }
+      }
     }
 
     for (i = 0; i < tab.length; i += 1) {
@@ -260,6 +266,11 @@ class Balle {
           console.log("Joker : Epée de Pirate");
           Epee(); // Active l'effet du joker
           sword=false;
+        }
+        if (obstaclesJokers[0].object.parent.name == "Bombe") {
+          console.log("Joker : Bombe");
+          Bombe(); // Active l'effet du joker
+          bomb=false;
         }
       }
     }
@@ -490,6 +501,9 @@ class Pad {
   }
   positionX(){
     return this.mesh.position.x
+  }
+  padBomb(x,y,z){
+    this.mesh.scale.set(x,y,z);
   }
 };
 
@@ -906,7 +920,7 @@ class Models {
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
       objLoader.load('cannon.obj', function(cannon) {
         cannon.position.set(x, y, z);
-        cannon.scale.set(1.4, 1.4, 1.4)
+        cannon.scale.set(1.4, 1.4, 1.4);
         cannon.rotation.y += rotate;
         scene.add(cannon);
         cannon.name=nom;
@@ -1395,6 +1409,64 @@ function Joker(){
   setTimeout(Joker,5000);
 }
 
+function addJoker(){
+  var a = getRandomInt(3);
+  var xRandom = getRandomIntInclusive(-20,20);
+  var zRandom = getRandomIntInclusive(-35,35);
+  if(a==0 && rhum!=true){
+    console.log(a)
+    bottleX=xRandom;
+    bottleZ=zRandom;
+    bottle.initBottle("Bottle", bottleX,2.5,bottleZ);
+    rhum=true;
+    setTimeout(function(){
+      for (i=0; i<=scene.children.length-1; i++) {
+        if (scene.children[i].name == "Bottle") { // on enlève le rhum au bout de 10 sec sans qu'il soit utilisé
+          removeModel(scene.children[i]);
+          rhum=false;
+          console.log("disparition");
+        }
+      }
+    }, 10000);
+  }
+  if(a==1 && sword!=true){
+    console.log(a)
+    swordX=xRandom;
+    swordZ=zRandom;
+    epee.initSword("Sword", swordX,2.5,swordZ);
+    sword=true;
+    setTimeout(function(){
+      for (i=0; i<=scene.children.length-1; i++) {
+        if (scene.children[i].name == "Sword") { // on enlève le rhum au bout de 10 sec sans qu'il soit utilisé
+          removeModel(scene.children[i]);
+          sword=false;
+          console.log("disparition");
+        }
+      }
+    }, 10000);
+  }
+  if(a==2 && bomb!=true){
+    console.log(a)
+    bombX=xRandom;
+    bombZ=zRandom;
+    bombe.initBomb("Bombe", bombX,2.5,bombZ);
+    bomb=true;
+    setTimeout(function(){
+      for (i=0; i<=scene.children.length-1; i++) {
+        if (scene.children[i].name == "Bombe") { // on enlève le rhum au bout de 10 sec sans qu'il soit utilisé
+          removeModel(scene.children[i]);
+          bomb=false;
+          console.log("disparition");
+        }
+      }
+    }, 10000);
+  }
+  else{
+    console.log(a);
+  }
+  unJoker = false;
+}
+
 function animationJokers() {
   //Animation Rhum
   if(rhum) {
@@ -1495,6 +1567,23 @@ function Epee(){ // Joker épée pirate
   }
   else{
     shieldJoueur.positionShield(0, -2.5, 43.5);
+  }
+}
+
+function Bombe(){ // Joker épée pirate
+  for (i=0; i<=scene.children.length-1; i++) {
+    if (scene.children[i].name == "Bombe") { // on enlève le bateau pirate
+      removeModel(scene.children[i]);
+    }
+  }
+  if(joueur){
+
+    padAdverse.padBomb(0.5, 0.5, 0.5);
+    setTimeout(function(){padAdverse.padBomb(1, 1, 1);}, 5000);
+  }
+  else{
+    padJoueur.padBomb(0.5, 0.5, 0.5);
+    setTimeout(function(){padJoueur.padBomb(1, 1, 1);}, 5000);
   }
 }
 
@@ -1641,7 +1730,8 @@ function update(step) {
     shieldJoueur.positionShield(0,-10,43.5)
   }
   if(keyboard.pressed("J")){
-    //Joker();
+    addJoker();
+    unJoker = true;
   }
 }
 
