@@ -1985,7 +1985,7 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop); // relance la boucle du jeu
 
-  controls.update(); // Pour laisser l'utilisateur bouger la scène à la souris
+  //controls.update(); // Pour laisser l'utilisateur bouger la scène à la souris
   stats.update();
 }
 
