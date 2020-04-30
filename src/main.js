@@ -24,7 +24,7 @@ var paddleDirNX = -0.4;
 var paddleSpeedX = 1.4;
 var paddleSpeedNX = 1.4;
 var tailleTerrain = 88 * 0.98;
-var level = 1;
+var level = 0;
 var ballePosition = 0;
 var paddleSize = 16
 var textureScore = [];
@@ -49,7 +49,6 @@ var tirZ = -0.3;
 var compteurTir = 0;
 //Jokers
 var unJoker = false;
-var plusieursBalle = false;
 var joueur = false;
 var rhum = false;
 var hautBottle = false;
@@ -62,6 +61,8 @@ var hautBarrel = false;
 var hautChloro = false;
 var chloro = false;
 var print = true;
+var hPress = false;
+var commencer = true;
 
 var swordX = 5;
 var swordY = 2.5;
@@ -738,6 +739,8 @@ class Score {
         removeEntity(scoreIA);
         scoreIA.initScore3("ScoreIA");
         scoreIA.positionScore(-50,5,0);
+        textToDisplay.textContent = "Dommage, vous avez coulé. Pour recommencer : Appuyez sur F5";
+        Afficher(); // affiche le texte
         //console.log("Vous avez perdu, voulez-vous recommencer?");
         //perdu=true;
       }
@@ -1103,17 +1106,18 @@ class Models {
     //Ajout des textures de l'objet
     var mtlLoader = new THREE.MTLLoader();
     mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-    var url = 'barrel.mtl';
+    var url = 'fishBones.mtl';
     mtlLoader.load(url , function(materialsShipLight){
       materialsShipLight.preload();
       // Ajout de l'objet
       var objLoader = new THREE.OBJLoader();
       objLoader.setMaterials(materialsShipLight);
       objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-      objLoader.load('barrel.obj', function(barrel) {
+      objLoader.load('fishBones.obj', function(barrel) {
         barrel.position.set(x, y, z);
-        barrel.scale.set(6,6,6);
+        barrel.scale.set(7,7,7);
         barrel.rotation.y = 1;
+        barrel.rotation.x = 1.45;
         scene.add(barrel);
         barrel.name=nom;
       });
@@ -1138,31 +1142,6 @@ class Models {
       });
     });
   }
-  initPangolin() {
-   /* let gltfLoader = new THREE.GLTFLoader();
-    gltfLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
-    gltfLoader.load('pangolin.gltf', function (pangolin) {
-      pangolin = gltf.scene.children[0];
-      pangolin.scale.set(5, 5, 5);
-      pangolin.rotation.z = -Math.PI / 2;
-      pangolin.position.z = 0;
-      pangolin.position.y = 0;
-      pangolin.name = "Pangolin";
-      scene.add(pangolin);
-    });*/
-    let loaderUn = new THREE.GLTFLoader();
-    loaderUn.setPath('https://github.com/Thomcarena/ProjetPong_SIA/blob/Projet_DASILVA_Thomas/src/medias/images/');
-    var url = 'pangolin.gltf';
-    loaderUn.load(url, function (pangolin) {
-      pangolin = scene.children[0];
-      pangolin.scale.set(5, 5, 5);
-      pangolin.rotation.z = -Math.PI / 2;
-      pangolin.position.z = 13.5;
-      pangolin.position.y = 1;
-      pangolin.name = "Pangolin";
-      scene.add(pangolin);
-    });
-    }
 }
 
 class Skybox {
@@ -1203,7 +1182,6 @@ class Skybox {
 
 // Variables globales
 var balle = new Balle();
-var balleBonus = new Balle();
 var terrain = new Terrain();
 var stade = new Stade();
 var shieldJoueur = new Bouclier();
@@ -1244,6 +1222,11 @@ var pangolin = new Models();
 var barile = new Models();
 var chloroq = new Models();
 
+
+// Initialisation monde d'accueil
+function accueil(){
+
+}
 // Initialisation du monde 3D
 function init() {
   container = document.querySelector('#SIApp');
@@ -1260,9 +1243,13 @@ function init() {
   camera.rotation.x=3.14/4;
 
   camera2 = new THREE.PerspectiveCamera(10, w/h, 0.1, 1000);
-  camera2.position.set(0, 40, 60);
+  camera2.position.set(0, 0, 0);
   //camera2.lookAt(padJoueur.position);
 
+  camera3 = new THREE.PerspectiveCamera(10, w/h, 0.1, 1000);
+  camera3.position.set(110, 5, 100);
+  //camera3.fov = 100;
+  //camera3.rotation.x=3.14;
 
   //Controls
   controls = new THREE.TrackballControls(camera, container);
@@ -1348,10 +1335,16 @@ function init() {
   shovel.initShovel("Pelle");
   palmShort.initPalmShort("Palmier");
   shipLight.initShipLight("BateauJoueur");
+  bateauPirate.initPirateShip("BateauPirate");
+  pirate1.initPirate1("Pirate1");
   //pangolin.initPangolin();
 
 
   //Levels
+  if(level == 0){
+    balle.pause();
+
+  }
   if(level==1){
     document.body.appendChild(textToDisplay); // Affiche le texte sur la page
     //textToDisplay.textContent = "Bievenue Pirate ! Marquez 3 points pour détruire le bateau";
@@ -1361,9 +1354,10 @@ function init() {
     setTimeout(Cacher, 2500);
 
     balle.pause();
-    bateauPirate.initPirateShip("BateauPirate");
-    pirate1.initPirate1("Pirate1");
+
     setTimeout(Niveau1, 2500);
+    //Activation des Jokers
+    setTimeout(Joker, 5000);
   }
   if(level==2){
     bateauPirate.initShipLight("BateauPirate");
@@ -1374,8 +1368,7 @@ function init() {
     captain.initCaptain("Captain");
   }
 
-  //Activation des Jokers
-  setTimeout(Joker, 5000);
+
 
   // Stats
   const fps  = 60;
@@ -1414,7 +1407,22 @@ function Intermediaire() {
 }
 
 function Niveau1 () {
-  balle.go();
+
+    console.log("coucou");
+    document.body.appendChild(textToDisplay); // Affiche le texte sur la page
+    //textToDisplay.textContent = "Bievenue Pirate ! Marquez 3 points pour détruire le bateau";
+    //textToDisplay.textContent = "Venez à bout des 3 pirates pour obtenir le trésor légendaire !";
+    textToDisplay.textContent = "~ NIVEAU 1 ~";
+    Afficher();
+    setTimeout(Cacher, 2500);
+
+    balle.pause();
+
+    //setTimeout(Niveau1, 2500);
+    //Activation des Jokers
+    setTimeout(balleGo,2500);
+    setTimeout(Joker, 5000);
+
 }
 
 function Niveau2() {
@@ -1488,19 +1496,6 @@ function Cacher() {
 
 function balleGo() {
   balle.go();
-}
-
-function BonusBalle(){
-  console.log("test");
-  for (i=0; i<=scene.children.length-1; i++) {
-    if (scene.children[i].name == "Balle") {
-      console.log("AJOUT DE BALLE");
-      //var balleBonus = scene.children[i].clone();
-      balleBonus.initBalle("BalleTest");
-      //balleBonus.position.set(0;2.5;0);
-      plusieursBalle = true;
-    }
-  }
 }
 
 function removeEntity(object) {
@@ -1668,7 +1663,15 @@ function addJoker(){
   if(a==3 && barrel!=true){
     console.log(a)
     barrelX=xRandom;
-    barrelZ=zRandom;
+    if(chloro){
+      barrelX=-10;
+      barrelZ=20;
+    }
+    else{
+      barrelX=xRandom;
+      barrelZ=getRandomIntInclusive(20,35);
+    }
+
     barile.initBarrel("Barrel", barrelX,2.5,barrelZ);
     barrel=true;
     setTimeout(function(){
@@ -1680,6 +1683,10 @@ function addJoker(){
         }
       }
     }, 10000);
+  }
+  if(chloro){
+    chloroZ=getRandomIntInclusive(5,25);
+    chloroq.initChloroquine("Chloroquine", chloroX,1,chloroZ);
   }
   else{
     console.log(a);
@@ -1769,13 +1776,13 @@ function animationJokers() {
           barrelX += 0;
           barrelY -= 0.07;
           barrelZ += 0;
-          if (scene.children[i].position.y < 0.5)
+          if (scene.children[i].position.y < 1.7)
             hautBarrel = false;
         } else { // L'épée est en haut et doit monter
           barrelX += 0;
           barrelY += 0.07;
           barrelZ += 0;
-          if (scene.children[i].position.y > 2.5) {
+          if (scene.children[i].position.y > 3.5) {
             hautBarrel = true;
           }
         }
@@ -1795,7 +1802,6 @@ function animationJokers() {
           if (scene.children[i].position.y < 0.5)
             hautChloro = false;
         } else { // L'épée est en haut et doit monter
-          console.log("JE SUIS CENSEEEEEEEEE BOUGEEEEEEEEEEEER");
           chloroX += 0;
           chloroY += 0.07;
           chloroZ += 0;
@@ -1885,31 +1891,38 @@ function gameLoop() {
     update(loop.step); // déplace les objets d'une fraction de seconde
   }
   if(keyboard.pressed("1") || keyboard.pressed("&")){
-    //if (changement){
-      //changement=false;
-    //}
-    //else {
       changement = true;
-    //}
   }
   if(keyboard.pressed("0") || keyboard.pressed("à")){
     changement=false;
+    hPress = false;
+    balle.go();
   }
 
   if(changement) {
-    camera2.fov = 100;
-    camera2.position.set(scene.children[11].position.x, scene.children[11].position.y, scene.children[11].position.z - 0.1);
+    //camera2.fov = 100;
+    for (i=0; i<=scene.children.length-1; i++) {
+      if (scene.children[i].name == "PadJoueur") { // On simule le bâteau qui coule
+        //camera2.position.set(scene.children[i].position.x, scene.children[i].position.y, scene.children[i].position.z - 0.1);
+        camera2.position.set(scene.children[i].position.x, scene.children[i].position.y, scene.children[i].position.z - 0.1);
+      }
+    }
     renderer.render(scene, camera2);
   }
   else {
-    renderer.render(scene, camera);  // rendu de la scène
+    if(level == 0 || hPress){
+      renderer.render(scene, camera3);
+    }
+    else{
+      renderer.render(scene, camera);  // rendu de la scène
+    }
   }
 
     loop.last = loop.now;
 
   requestAnimationFrame(gameLoop); // relance la boucle du jeu
 
-  controls.update();
+  //controls.update(); // Pour laisser l'utilisateur bouger la scène à la souris
   stats.update();
 }
 
@@ -1997,16 +2010,10 @@ function update(step) {
 //Animations des Jokers
   animationJokers();
 
-
-  //Animations Jokers
-
-  if(plusieursBalle){
-    balleBonus.mouvement(padPosition);
-  }
-  if(keyboard.pressed("Q")){
+  if(keyboard.pressed("Q") || keyboard.pressed("left")){
     padJoueur.mouvementLeft();
   }
-  if(keyboard.pressed("D")){
+  if(keyboard.pressed("D") || keyboard.pressed("right")){
     padJoueur.mouvementRight();
   }
   if(keyboard.pressed("N")){
@@ -2022,6 +2029,18 @@ function update(step) {
   if(keyboard.pressed("J")){
     addJoker();
     unJoker = true;
+  }
+  if(keyboard.pressed("space")){
+    if(level == 0){
+      Niveau1();
+      level = 1;
+      //console.log(commencer);
+      //commencer = false;
+    }
+  }
+  if(keyboard.pressed("H")){
+    hPress = true;
+    balle.pause();
   }
 }
 
