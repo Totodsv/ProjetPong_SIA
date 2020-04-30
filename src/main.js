@@ -63,6 +63,7 @@ var chloro = false;
 var print = true;
 var hPress = false;
 var commencer = true;
+var rebondSon;
 
 var swordX = 5;
 var swordY = 2.5;
@@ -231,11 +232,8 @@ class Balle {
       var bouclierAdverse = scene.children[5];
 
       if (obstacles.length > 0 && obstacles[0].distance <= distance) {// si la distance de collision est plus petite que celle définie alors il y a collision
-        for (i=0; i<=scene.children.length-1; i++) {
-          if (scene.children[i].name == "Rebond") { // On active la musique de pirate des caraïbes
-            scene.children[i].play();
-          }
-        }
+        rebondSon.play();
+
         //Test vitesse balle
         if (ballSpeed < 30) { // On bloque la vitesse de la balle pour que ça reste jouable pour un humain
           ballSpeed += 0.1;
@@ -1343,12 +1341,13 @@ function init() {
   var sound2 = new THREE.Audio( listener2 );
   var audioLoader2 = new THREE.AudioLoader();
   //audioLoader.load( 'https://github.com/Thomcarena/ProjetPong_SIA/blob/Projet_DASILVA_Thomas/src/medias/musiques/pirateCaraibes.mp3', function( buffer ) {
-  audioLoader2.load( 'src/medias/musiques/sonRebond.mp3', function( buffer ) {
-    sound2.setBuffer( buffer );
-    sound2.setLoop( true );
+  audioLoader2.load( 'src/medias/musiques/sonRebond.mp3', function( buffer2 ) {
+    sound2.setBuffer( buffer2 );
+    sound2.setLoop( false );
     sound2.setVolume( 0.5 );
     sound2.name = "Rebond";
     scene.add(sound2);
+    rebondSon= scene.getObjectByName("Rebond");
   });
 
 
@@ -1359,7 +1358,6 @@ function init() {
   document.body.appendChild( stats.domElement );
 
   // add some geometries
-
 
   balle.initBalle("Balle");
   balle.positionBalle(0,2.5,0);
