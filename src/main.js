@@ -1006,6 +1006,18 @@ class Models {
       });
     });
   }
+  initPangolin() {
+    let loader = new THREE.GLTFLoader();
+    loader.load('pangolin.gltf', function (pangolin) {
+      pangolin = gltf.scene.children[0];
+      pangolin.scale.set(5, 5, 5);
+      pangolin.rotation.z = -Math.PI / 2;
+      pangolin.position.z = 0;
+      pangolin.position.y = 0;
+      pangolin.name = "Pangolin";
+      scene.add(pangolin);
+    });
+  }
 }
 
 class Skybox {
@@ -1078,6 +1090,7 @@ var cannonBall = new Models();
 var bottle = new Models();
 var epee = new Models();
 var bombe = new Models();
+var pangolin = new Models();
 
 // Initialisation du monde 3D
 function init() {
@@ -1182,6 +1195,7 @@ function init() {
   shovel.initShovel("Pelle");
   palmShort.initPalmShort("Palmier");
   shipLight.initShipLight("BateauJoueur");
+  pangolin.initPangolin();
 
 
   //Levels
