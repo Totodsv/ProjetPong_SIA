@@ -68,21 +68,7 @@
       <workItem from="1588075222833" duration="19671000" />
       <workItem from="1588146658650" duration="4222000" />
       <workItem from="1588162728332" duration="28281000" />
-      <workItem from="1588237248030" duration="3806000" />
-    </task>
-    <task id="LOCAL-00002" summary="Textures fonctionnelles">
-      <created>1581678131753</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1581678131753</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Ajout Image sol">
-      <created>1581678282037</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1581678282037</updated>
+      <workItem from="1588237248030" duration="4415000" />
     </task>
     <task id="LOCAL-00004" summary="Textures OK">
       <created>1581678378645</created>
@@ -413,14 +399,27 @@
       <option name="project" value="LOCAL" />
       <updated>1588195517064</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Joker : Epée&#10;(ajout de bombe et chloroquine)">
+      <created>1588243826318</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1588243826318</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Joker : Epée&#10;(ajout de bombe et chloroquine)">
+      <created>1588243901503</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1588243901503</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Test sol 6 - 13" />
     <MESSAGE value="Ajout Capitaine Pirate" />
     <MESSAGE value="Test Low Poly Captain" />
     <MESSAGE value="Test de nouveaux bateaux" />
@@ -445,13 +444,14 @@
     <MESSAGE value="Niveaux (ajout cannons et boulets) OK&#10;Vitesse balle cappé pour la jouabilité&#10;Vitesse balle changeante tout le temps pour éviter les blocages" />
     <MESSAGE value="Dialogues entre niveaux OK&#10;Test ajout police Luminari" />
     <MESSAGE value="Joker : totalement fonctionnel pour 1 joker&#10;(Reste à ajouter d'autres jokers pour terminer)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Joker : totalement fonctionnel pour 1 joker&#10;(Reste à ajouter d'autres jokers pour terminer)" />
+    <MESSAGE value="Joker : Epée&#10;(ajout de bombe et chloroquine)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Joker : Epée&#10;(ajout de bombe et chloroquine)" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1588243824885">
+    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1588243899924">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588243824885" />
+    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588243899924" />
     <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1581672651017">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -460,10 +460,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1581672701148" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588243890128">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588243904690">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588243890128" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588243904690" />
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586263898043">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

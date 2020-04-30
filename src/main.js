@@ -54,6 +54,8 @@ var rhum = false;
 var hautBottle = false;
 var sword = false;
 var hautSword = false;
+var bomb = false;
+var hautBomb = false;
 
 var swordX = 5;
 var swordY = 2.5;
@@ -61,6 +63,9 @@ var swordZ = 0;
 var bottleX = 5;
 var bottleY = 2.5;
 var bottleZ = 0;
+var bombX = 5;
+var bombY = 2.5;
+var bombZ = 0;
 
 
 //Paramètres de l'affichage des dialogues (police, couleur etc...)
@@ -967,6 +972,26 @@ class Models {
       });
     });
   }
+  initBomb(nom, x, y, z) {
+    //Ajout des textures de l'objet
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    var url = 'bomb.mtl';
+    mtlLoader.load(url , function(materialsShipLight){
+      materialsShipLight.preload();
+      // Ajout de l'objet
+      var objLoader = new THREE.OBJLoader();
+      objLoader.setMaterials(materialsShipLight);
+      objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+      objLoader.load('bomb.obj', function(bomb) {
+        bomb.position.set(x, y, z);
+        bomb.scale.set(10,10,10);
+        //bomb.rotation.y = 1.5;
+        scene.add(bomb);
+        bomb.name=nom;
+      });
+    });
+  }
 }
 
 class Skybox {
@@ -1038,6 +1063,7 @@ var cannonGauche = new Models();
 var cannonBall = new Models();
 var bottle = new Models();
 var epee = new Models();
+var bombe = new Models();
 
 // Initialisation du monde 3D
 function init() {
@@ -1312,7 +1338,7 @@ function moveModel(id, x, y, z) {
 }
 
 function Joker(){
-  var a = getRandomInt(2);
+  var a = getRandomInt(3);
   var xRandom = getRandomIntInclusive(-20,20);
   var zRandom = getRandomIntInclusive(-35,35);
   if(a==0 && rhum!=true){
@@ -1342,6 +1368,22 @@ function Joker(){
         if (scene.children[i].name == "Sword") { // on enlève le rhum au bout de 10 sec sans qu'il soit utilisé
           removeModel(scene.children[i]);
           sword=false;
+          console.log("disparition");
+        }
+      }
+    }, 10000);
+  }
+  if(a==2 && bomb!=true){
+    console.log(a)
+    bombX=xRandom;
+    bombZ=zRandom;
+    bombe.initBomb("Bombe", bombX,2.5,bombZ);
+    bomb=true;
+    setTimeout(function(){
+      for (i=0; i<=scene.children.length-1; i++) {
+        if (scene.children[i].name == "Bombe") { // on enlève le rhum au bout de 10 sec sans qu'il soit utilisé
+          removeModel(scene.children[i]);
+          bomb=false;
           console.log("disparition");
         }
       }
@@ -1397,6 +1439,29 @@ function animationJokers() {
           swordZ += 0;
           if (scene.children[i].position.y > 3.5) {
             hautSword = true;
+          }
+        }
+      }
+    }
+  }
+  if(bomb) {
+    //console.log(hautBottle);
+    for (i = 0; i <= scene.children.length - 1; i++) {
+      if (scene.children[i].name == "Bombe") { // On anime l'épée
+        //console.log(scene.children[i].position.y);
+        moveModel(scene.children[i], bombX, bombY, bombZ);
+        if (hautBomb) { // L'épée est en haut et doit descendre
+          bombX += 0;
+          bombY -= 0.07;
+          bombZ += 0;
+          if (scene.children[i].position.y < 1.5)
+            hautBomb = false;
+        } else { // L'épée est en haut et doit monter
+          bombX += 0;
+          bombY += 0.07;
+          bombZ += 0;
+          if (scene.children[i].position.y > 3.5) {
+            hautBomb = true;
           }
         }
       }
