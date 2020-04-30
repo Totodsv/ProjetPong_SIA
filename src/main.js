@@ -57,6 +57,7 @@ var sword = false;
 var hautSword = false;
 var bomb = false;
 var hautBomb = false;
+var petit=true;
 
 var swordX = 5;
 var swordY = 2.5;
@@ -152,6 +153,24 @@ class Balle {
         collisionGroup.push(scene.children[i]);
       }
       if (scene.children[i].name == "PadJoueur") {
+        collisionGroup.push(scene.children[i]);
+      }
+      if (scene.children[i].name == "Protection1") {
+        collisionGroup.push(scene.children[i]);
+      }
+      if (scene.children[i].name == "Protection2") {
+        collisionGroup.push(scene.children[i]);
+      }
+      if (scene.children[i].name == "Protection3") {
+        collisionGroup.push(scene.children[i]);
+      }
+      if (scene.children[i].name == "Protection4") {
+        collisionGroup.push(scene.children[i]);
+      }
+      if (scene.children[i].name == "Protection5") {
+        collisionGroup.push(scene.children[i]);
+      }
+      if (scene.children[i].name == "Protection6") {
         collisionGroup.push(scene.children[i]);
       }
       if (scene.children[i].name == "Cannon"){ // Pour ajouter un model
@@ -363,6 +382,24 @@ class Bouclier {
     //this.mesh.name = "Bouclier";
     scene.add(this.mesh);
     this.mesh.name=nom;
+  }
+}
+
+class Protection{
+  initProtection(nom){
+    const protectGeometry = new THREE.BoxBufferGeometry( 6, 4, 0.5, 1, 1, 1 );
+    const protectMaterial =  new THREE.MeshStandardMaterial({transparent:true, opacity:0.5});
+    this.mesh = new THREE.Mesh(protectGeometry, protectMaterial);
+    this.mesh.position.set(35, 0, 1);
+    //this.mesh.name = "Bouclier";
+    scene.add(this.mesh);
+    this.mesh.name=nom;
+  }
+  positionProtection(x,y,z){
+    this.mesh.position.set(x, y, z);
+  }
+  rotationProtection(y){
+    this.mesh.rotation.y = y;
   }
 }
 
@@ -1007,8 +1044,9 @@ class Models {
     });
   }
   initPangolin() {
-    let loader = new THREE.GLTFLoader();
-    loader.load('pangolin.gltf', function (pangolin) {
+   /* let gltfLoader = new THREE.GLTFLoader();
+    gltfLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    gltfLoader.load('pangolin.gltf', function (pangolin) {
       pangolin = gltf.scene.children[0];
       pangolin.scale.set(5, 5, 5);
       pangolin.rotation.z = -Math.PI / 2;
@@ -1016,8 +1054,20 @@ class Models {
       pangolin.position.y = 0;
       pangolin.name = "Pangolin";
       scene.add(pangolin);
+    });*/
+    let loaderUn = new THREE.GLTFLoader();
+    loaderUn.setPath('https://github.com/Thomcarena/ProjetPong_SIA/blob/Projet_DASILVA_Thomas/src/medias/images/');
+    var url = 'pangolin.gltf';
+    loaderUn.load(url, function (pangolin) {
+      pangolin = scene.children[0];
+      pangolin.scale.set(5, 5, 5);
+      pangolin.rotation.z = -Math.PI / 2;
+      pangolin.position.z = 13.5;
+      pangolin.position.y = 1;
+      pangolin.name = "Pangolin";
+      scene.add(pangolin);
     });
-  }
+    }
 }
 
 class Skybox {
@@ -1086,6 +1136,12 @@ var shipLight = new Models();
 var brokenShip = new Models();
 var cannonDroite = new Models();
 var cannonGauche = new Models();
+var protection1 = new Protection();
+var protection2 = new Protection();
+var protection3 = new Protection();
+var protection4 = new Protection();
+var protection5 = new Protection();
+var protection6 = new Protection();
 var cannonBall = new Models();
 var bottle = new Models();
 var epee = new Models();
@@ -1185,6 +1241,10 @@ function init() {
   scorePlayer.initScore("ScoreJoueur");
   scorePlayer.positionScore(-58,5,16);
   ciel.initSkyBox();
+  protection5.initProtection("Protection5");
+  protection5.rotationProtection(1.5);
+  protection6.initProtection("Protection6");
+  protection6.rotationProtection(1.5);
 
 
 
@@ -1195,7 +1255,7 @@ function init() {
   shovel.initShovel("Pelle");
   palmShort.initPalmShort("Palmier");
   shipLight.initShipLight("BateauJoueur");
-  pangolin.initPangolin();
+  //pangolin.initPangolin();
 
 
   //Levels
@@ -1285,6 +1345,15 @@ function Niveau2() {
   ia = 0;
   cannonDroite.initCannon("Cannon", 25, -0.5, 0, 1.55); // Ajoute des canons à droite et à gauche du terrain
   cannonGauche.initCannon("Cannon", -25, -0.5, 0, -1.55);
+  //Protège du bug de collision avec les canons
+  protection1.initProtection("Protection1");
+  protection1.positionProtection(22, 2.5, -3);
+  protection2.initProtection("Protection2");
+  protection2.positionProtection(-22, 2.5, -3);
+  protection3.initProtection("Protection3");
+  protection3.positionProtection(-22, 2.5, 3);
+  protection4.initProtection("Protection4");
+  protection4.positionProtection(22, 2.5, 3);
   cannonBall.initCannonBall("CannonBall", -19, 3.3, -0.3);
   tir=true;
 }
@@ -1571,7 +1640,7 @@ function Rhum() { // Joker Bouteille de Rhum
 
 function Epee(){ // Joker épée pirate
   for (i=0; i<=scene.children.length-1; i++) {
-    if (scene.children[i].name == "Sword") { // on enlève le bateau pirate
+    if (scene.children[i].name == "Sword") { // on enlève le joker Epée
       removeModel(scene.children[i]);
     }
   }
@@ -1586,7 +1655,7 @@ function Epee(){ // Joker épée pirate
 
 function Bombe(){ // Joker épée pirate
   for (i=0; i<=scene.children.length-1; i++) {
-    if (scene.children[i].name == "Bombe") { // on enlève le bateau pirate
+    if (scene.children[i].name == "Bombe") { // on enlève le joker Bombe
       removeModel(scene.children[i]);
     }
   }
@@ -1596,8 +1665,9 @@ function Bombe(){ // Joker épée pirate
     setTimeout(function(){padAdverse.padBomb(1, 1, 1);}, 5000);
   }
   else{
+    petit=true
     padJoueur.padBomb(0.5, 0.5, 0.5);
-    setTimeout(function(){padJoueur.padBomb(1, 1, 1);}, 5000);
+    setTimeout(function(){padJoueur.padBomb(1, 1, 1);petit=false;}, 5000);
   }
 }
 
@@ -1642,6 +1712,15 @@ function gameLoop() {
 function update(step) {
   //const angleIncr = Math.PI * 2 * step / 5 ; // une rotation complète en 5 secondes
   padPosition = padJoueur.positionX(); // Récupère à l'instant t la position x du pad
+
+  if(petit){
+
+  }
+  else{
+    protection5.positionProtection(padPosition + 8.4, 2.5, 40.5);
+    protection6.positionProtection(padPosition - 8.4, 2.5, 40.5);
+  }
+
 
   if (ballePause){
     //la balle ne bouge plus.
@@ -1729,9 +1808,13 @@ function update(step) {
   }
   if(keyboard.pressed("Q")){
     padJoueur.mouvementLeft();
+    //protection5.positionProtection(padPosition + 8.4, 2.5, 40.5);
+    //protection6.positionProtection(padPosition - 8.4, 2.5, 40.5);
   }
   if(keyboard.pressed("D")){
     padJoueur.mouvementRight();
+    //protection5.positionProtection(padPosition + 8.4, 2.5, 40.5);
+    //protection6.positionProtection(padPosition - 8.4, 2.5, 40.5);
   }
   if(keyboard.pressed("N")){
     scorePlayer.playerScore();

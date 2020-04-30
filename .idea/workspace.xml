@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e40b87fb-0349-4446-82f4-92fc1956b093" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pong3D.html" beforeDir="false" afterPath="$PROJECT_DIR$/pong3D.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,7 +24,7 @@
     <property name="ChangesTree.GroupingKeys" value="" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/Web/Vasspong/SIA" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="SvnConfiguration">
@@ -69,14 +68,8 @@
       <workItem from="1588075222833" duration="19671000" />
       <workItem from="1588146658650" duration="4222000" />
       <workItem from="1588162728332" duration="28281000" />
-      <workItem from="1588237248030" duration="9107000" />
-    </task>
-    <task id="LOCAL-00006" summary="Test tnt img">
-      <created>1581695456917</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1581695456917</updated>
+      <workItem from="1588237248030" duration="9671000" />
+      <workItem from="1588257249411" duration="4938000" />
     </task>
     <task id="LOCAL-00007" summary="Skybox fonctionnel !">
       <created>1581698568879</created>
@@ -414,14 +407,20 @@
       <option name="project" value="LOCAL" />
       <updated>1588253434454</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Joker : corona">
+      <created>1588256691596</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1588256691596</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Test de nouveaux bateaux" />
     <MESSAGE value="Taille x4 pour ajouter nouveaux modèles OK" />
     <MESSAGE value="Test Score" />
     <MESSAGE value="Score ~ OK :&#10;Manque positionnement et cohérence dans l'espace" />
@@ -446,25 +445,26 @@
     <MESSAGE value="Joker : Epée&#10;(ajout de bombe et chloroquine)" />
     <MESSAGE value="Joker : Bombe (manque fonctionnel)&#10;Test matériels" />
     <MESSAGE value="Joker : Rhum, Epée, Bombe" />
-    <option name="LAST_COMMIT_MESSAGE" value="Joker : Rhum, Epée, Bombe" />
+    <MESSAGE value="Joker : corona" />
+    <option name="LAST_COMMIT_MESSAGE" value="Joker : corona" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1588253433249">
+    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1588256690299">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588253433249" />
-    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1581672651017">
+    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588256690299" />
+    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1588259989522">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1581672651017" />
+    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1588259989522" />
     <state x="461" y="162" key="SettingsEditor" timestamp="1581672701148">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1581672701148" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588253437237">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588256700159">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588253437237" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588256700159" />
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586263898043">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
