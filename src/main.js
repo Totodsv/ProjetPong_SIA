@@ -501,8 +501,6 @@ class Ile {
 class Mur {
   initMur(nom) {
     const murGeometry = new THREE.BoxBufferGeometry( 4, 4, 88, 1, 1, 1 );
-    //const murMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
-    //const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
     const textureMur = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/testSol6.jpg");
     const murMaterial = new THREE.MeshBasicMaterial ({map : textureMur});
 
@@ -529,7 +527,6 @@ class Pad {
   	scene.add(this.mesh);
     this.mesh.name=nom;
 
-    this.clock = new THREE.Clock();
   }
   positionPad(x,y,z){
     this.mesh.position.set(x, y, z);
@@ -1331,7 +1328,7 @@ function init() {
     audioLoader.load( 'src/medias/musiques/pirateCaraibes.mp3', function( buffer ) {
     sound.setBuffer( buffer );
     sound.setLoop( true );
-    sound.setVolume( 0.5 );
+    sound.setVolume( 0.3 );
     sound.name = "Caraibes";
     scene.add(sound);
   });
@@ -1344,7 +1341,7 @@ function init() {
   audioLoader2.load( 'src/medias/musiques/sonRebond.mp3', function( buffer2 ) {
     sound2.setBuffer( buffer2 );
     sound2.setLoop( false );
-    sound2.setVolume( 0.5 );
+    sound2.setVolume( 0.3 );
     sound2.name = "Rebond";
     scene.add(sound2);
     rebondSon= scene.getObjectByName("Rebond");
