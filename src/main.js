@@ -52,7 +52,12 @@ var plusieursBalle = false;
 var joueur = false;
 var rhum = false;
 var hautBottle = false;
+var sword = false;
+var hautSword = false;
 
+var swordX = 5;
+var swordY = 2.5;
+var swordZ = 0;
 var bottleX = 5;
 var bottleY = 2.5;
 var bottleZ = 0;
@@ -158,6 +163,11 @@ class Balle {
           jokerGroup.push(scene.children[i].children[j]);
         }
       }
+      if (scene.children[i].name == "Sword"){ // Ajout d'un Joker
+        for (j = scene.children[i].children.length - 1; j >= 0 ; j -- ) {
+          jokerGroup.push(scene.children[i].children[j]);
+        }
+      }
     }
 
     for (i = 0; i < tab.length; i += 1) {
@@ -240,6 +250,11 @@ class Balle {
           console.log("Joker : Bouteille de Rhum");
           Rhum(); // Active l'effet du joker
           rhum=false;
+        }
+        if (obstaclesJokers[0].object.parent.name == "Sword") {
+          console.log("Joker : Epée de Pirate");
+          Epee(); // Active l'effet du joker
+          sword=false;
         }
       }
     }
@@ -932,6 +947,26 @@ class Models {
       });
     });
   }
+  initSword(nom, x, y, z) {
+    //Ajout des textures de l'objet
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+    var url = 'sword_scimitar.mtl';
+    mtlLoader.load(url , function(materialsShipLight){
+      materialsShipLight.preload();
+      // Ajout de l'objet
+      var objLoader = new THREE.OBJLoader();
+      objLoader.setMaterials(materialsShipLight);
+      objLoader.setPath('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/');
+      objLoader.load('sword_scimitar.obj', function(sword) {
+        sword.position.set(x, y, z);
+        sword.scale.set(1.1,1.1,1.1);
+        sword.rotation.y = 1.5;
+        scene.add(sword);
+        sword.name=nom;
+      });
+    });
+  }
 }
 
 class Skybox {
@@ -1002,6 +1037,7 @@ var cannonDroite = new Models();
 var cannonGauche = new Models();
 var cannonBall = new Models();
 var bottle = new Models();
+var epee = new Models();
 
 // Initialisation du monde 3D
 function init() {
@@ -1280,6 +1316,7 @@ function Joker(){
   var xRandom = getRandomIntInclusive(-20,20);
   var zRandom = getRandomIntInclusive(-35,35);
   if(a==0 && rhum!=true){
+    console.log(a)
     bottleX=xRandom;
     bottleZ=zRandom;
     bottle.initBottle("Bottle", bottleX,2.5,bottleZ);
@@ -1294,10 +1331,77 @@ function Joker(){
       }
     }, 10000);
   }
+  if(a==1 && sword!=true){
+    console.log(a)
+    swordX=xRandom;
+    swordZ=zRandom;
+    epee.initSword("Sword", swordX,2.5,swordZ);
+    sword=true;
+    setTimeout(function(){
+      for (i=0; i<=scene.children.length-1; i++) {
+        if (scene.children[i].name == "Sword") { // on enlève le rhum au bout de 10 sec sans qu'il soit utilisé
+          removeModel(scene.children[i]);
+          sword=false;
+          console.log("disparition");
+        }
+      }
+    }, 10000);
+  }
   else{
     console.log(a);
   }
   setTimeout(Joker,5000);
+}
+
+function animationJokers() {
+  //Animation Rhum
+  if(rhum) {
+    //console.log(hautBottle);
+    for (i = 0; i <= scene.children.length - 1; i++) {
+      if (scene.children[i].name == "Bottle") { // On anime la bouteille
+        //console.log(scene.children[i].position.y);
+        moveModel(scene.children[i], bottleX, bottleY, bottleZ);
+        if (hautBottle) { // La bouteille est en haut et doit descendre
+          bottleX += 0;
+          bottleY -= 0.07;
+          bottleZ += 0;
+          if (scene.children[i].position.y < 1)
+            hautBottle = false;
+        } else { // La bouteille est en bas et doit monter
+          bottleX += 0;
+          bottleY += 0.07;
+          bottleZ += 0;
+          if (scene.children[i].position.y > 3) {
+            hautBottle = true;
+          }
+        }
+      }
+    }
+  }
+  //Animation Epée pirate
+  if(sword) {
+    //console.log(hautBottle);
+    for (i = 0; i <= scene.children.length - 1; i++) {
+      if (scene.children[i].name == "Sword") { // On anime l'épée
+        //console.log(scene.children[i].position.y);
+        moveModel(scene.children[i], swordX, swordY, swordZ);
+        if (hautSword) { // L'épée est en haut et doit descendre
+          swordX += 0;
+          swordY -= 0.07;
+          swordZ += 0;
+          if (scene.children[i].position.y < 1.5)
+            hautSword = false;
+        } else { // L'épée est en haut et doit monter
+          swordX += 0;
+          swordY += 0.07;
+          swordZ += 0;
+          if (scene.children[i].position.y > 3.5) {
+            hautSword = true;
+          }
+        }
+      }
+    }
+  }
 }
 
 function Rhum() { // Joker Bouteille de Rhum
@@ -1311,6 +1415,21 @@ function Rhum() { // Joker Bouteille de Rhum
   }
   else{
     shieldAdverse.positionShield(0,2.5,-43.5)
+  }
+}
+
+function Epee(){ // Joker épée pirate
+  for (i=0; i<=scene.children.length-1; i++) {
+    if (scene.children[i].name == "Sword") { // on enlève le bateau pirate
+      removeModel(scene.children[i]);
+    }
+  }
+  if(joueur){
+
+    shieldAdverse.positionShield(0,-2.5,-43.5);
+  }
+  else{
+    shieldJoueur.positionShield(0, -2.5, 43.5);
   }
 }
 
@@ -1431,31 +1550,9 @@ function update(step) {
       }
     }
   }
+//Animations des Jokers
+  animationJokers();
 
-  //Animation Rhum
-  if(rhum) {
-    //console.log(hautBottle);
-    for (i = 0; i <= scene.children.length - 1; i++) {
-      if (scene.children[i].name == "Bottle") { // On enlève le bateau cassé
-        //console.log(scene.children[i].position.y);
-        moveModel(scene.children[i], bottleX, bottleY, bottleZ);
-        if (hautBottle) { // Le boulet est dans le cannon de droite
-          bottleX += 0;
-          bottleY -= 0.07;
-          bottleZ += 0;
-          if (scene.children[i].position.y < 1)
-            hautBottle = false;
-        } else { // Le boulet est dans le cannon de gauche
-          bottleX += 0;
-          bottleY += 0.07;
-          bottleZ += 0;
-          if (scene.children[i].position.y > 3) {
-            hautBottle = true;
-          }
-        }
-      }
-    }
-  }
 
   //Animations Jokers
 
@@ -1479,7 +1576,7 @@ function update(step) {
     shieldJoueur.positionShield(0,-10,43.5)
   }
   if(keyboard.pressed("J")){
-    Joker();
+    //Joker();
   }
 }
 
