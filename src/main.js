@@ -669,6 +669,47 @@ class Score {
     scene.add(this.mesh);
     this.mesh.name=nom;
   }
+  initRegles(nom) {
+    const scoreGeometry = new THREE.BoxBufferGeometry( 16, 16, 16, 1, 1, 1 );
+    //const padMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
+    //const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
+    textureScore =
+        [
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/reglesPong.jpg")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")})
+        ];
+    var scoreMaterial = new THREE.MeshFaceMaterial (textureScore);
+    this.mesh = new THREE.Mesh(scoreGeometry, scoreMaterial);
+    this.mesh.position.set(98, 8, 20);
+    this.mesh.rotation.y += 4.7;
+    scene.add(this.mesh);
+    this.mesh.name=nom;
+  }
+  initBonus(nom) {
+    const scoreGeometry = new THREE.BoxBufferGeometry( 16, 16, 16, 1, 1, 1 );
+    //const padMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
+    //const wireMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe:true } );
+    textureScore =
+        [
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/bonusPong.jpg")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")}),
+          new THREE.MeshBasicMaterial ({map : new THREE.TextureLoader().load("https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/images/caisse.png")})
+        ];
+    var scoreMaterial = new THREE.MeshFaceMaterial (textureScore);
+    this.mesh = new THREE.Mesh(scoreGeometry, scoreMaterial);
+    this.mesh.position.set(128, 8, 20);
+    this.mesh.rotation.y += 4.7;
+    scene.add(this.mesh);
+    this.mesh.name=nom;
+  }
+
   positionScore(x,y,z){
     this.mesh.position.set(x, y, z);
   }
@@ -1221,6 +1262,7 @@ var bombe = new Models();
 var pangolin = new Models();
 var barile = new Models();
 var chloroq = new Models();
+var regles = new Score();
 
 
 // Initialisation monde d'accueil
@@ -1247,7 +1289,7 @@ function init() {
   //camera2.lookAt(padJoueur.position);
 
   camera3 = new THREE.PerspectiveCamera(10, w/h, 0.1, 1000);
-  camera3.position.set(110, 5, 100);
+  camera3.position.set(110, 9, 200);
   //camera3.fov = 100;
   //camera3.rotation.x=3.14;
 
@@ -1323,6 +1365,7 @@ function init() {
   scoreIA.positionScore(-50,5,0);
   scorePlayer.initScore("ScoreJoueur");
   scorePlayer.positionScore(-58,5,16);
+  regles.initRegles("Regles");
   corona.initCorona("Corona");
   ciel.initSkyBox();
 
@@ -1922,7 +1965,7 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop); // relance la boucle du jeu
 
-  //controls.update(); // Pour laisser l'utilisateur bouger la scène à la souris
+  controls.update(); // Pour laisser l'utilisateur bouger la scène à la souris
   stats.update();
 }
 
