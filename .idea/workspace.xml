@@ -69,14 +69,7 @@
       <workItem from="1588146658650" duration="4222000" />
       <workItem from="1588162728332" duration="28281000" />
       <workItem from="1588237248030" duration="9671000" />
-      <workItem from="1588257249411" duration="23691000" />
-    </task>
-    <task id="LOCAL-00010" summary="Collisions presque fonctionnelles&#10;Mur OK&#10;Pads ~ Ok">
-      <created>1581769001279</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1581769001279</updated>
+      <workItem from="1588257249411" duration="27291000" />
     </task>
     <task id="LOCAL-00011" summary="Collisions presque fonctionnelles&#10;Mur OK&#10;Pads ~ Ok">
       <created>1581769027377</created>
@@ -414,14 +407,20 @@
       <option name="project" value="LOCAL" />
       <updated>1588280437586</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="Test: rêgles du jeu + bonus expliqués">
+      <created>1588281387327</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1588281387327</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Test eau" />
     <MESSAGE value="Ajout Stone" />
     <MESSAGE value="Environnement : Stone" />
     <MESSAGE value="Environnement : Stone right text" />
@@ -446,13 +445,14 @@
     <MESSAGE value="Joker : Baril" />
     <MESSAGE value="Joker : corona OK" />
     <MESSAGE value="Test: rêgles du jeu" />
-    <option name="LAST_COMMIT_MESSAGE" value="Test: rêgles du jeu" />
+    <MESSAGE value="Test: rêgles du jeu + bonus expliqués" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test: rêgles du jeu + bonus expliqués" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1588280436153">
+    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1588281386120">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588280436153" />
+    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588281386120" />
     <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1588259989522">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -461,10 +461,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1581672701148" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588280441156">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588281388594">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588280441156" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588281388594" />
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586263898043">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

@@ -222,7 +222,7 @@ class Balle {
     for (i = 0; i < tab.length; i += 1) {
       this.caster.set(this.mesh.position, this.rays[i]); // On ajoute les raycasters sur la balle
       //var obstacles = this.caster.intersectObjects(scene.children); // Collisions -> les rayons de la balle peuvent entrer en contact avec les objets de la scène
-      //console.log(jokerGroup);
+      //console.log(scene);
       //console.log(rhum);
       var obstacles = this.caster.intersectObjects(collisionGroup); // Groupe des obstacles
       var obstaclesJokers = this.caster.intersectObjects(jokerGroup); // Groupe des jokers
@@ -231,6 +231,11 @@ class Balle {
       var bouclierAdverse = scene.children[5];
 
       if (obstacles.length > 0 && obstacles[0].distance <= distance) {// si la distance de collision est plus petite que celle définie alors il y a collision
+        for (i=0; i<=scene.children.length-1; i++) {
+          if (scene.children[i].name == "Rebond") { // On active la musique de pirate des caraïbes
+            scene.children[i].play();
+          }
+        }
         //Test vitesse balle
         if (ballSpeed < 30) { // On bloque la vitesse de la balle pour que ça reste jouable pour un humain
           ballSpeed += 0.1;
@@ -756,6 +761,10 @@ class Score {
         if (level==3) {
           setTimeout(Niveau3, 5000); // Ajoute les éléments du niveau 2 dont le bateau et le pirates
         }
+        if (level==4) {
+          textToDisplay.textContent = "Vous avez coulé les 3 plus grand pirates des Océans. Vous êtes désormais le Pirate Légendaire.";
+          Afficher(); // affiche le texte
+        }
       }
     }
   }
@@ -1263,12 +1272,10 @@ var pangolin = new Models();
 var barile = new Models();
 var chloroq = new Models();
 var regles = new Score();
+var bonus = new Score();
 
 
-// Initialisation monde d'accueil
-function accueil(){
 
-}
 // Initialisation du monde 3D
 function init() {
   container = document.querySelector('#SIApp');
@@ -1289,7 +1296,7 @@ function init() {
   //camera2.lookAt(padJoueur.position);
 
   camera3 = new THREE.PerspectiveCamera(10, w/h, 0.1, 1000);
-  camera3.position.set(110, 9, 200);
+  camera3.position.set(115, 9, 200);
   //camera3.fov = 100;
   //camera3.rotation.x=3.14;
 
@@ -1317,19 +1324,32 @@ function init() {
   //light = new THREE.AmbientLight( 0x444444 );
   scene.add(light);
 
-/*  // AudioListener
+  // AudioListener
   var listener = new THREE.AudioListener();
   camera.add( listener );
-  // create a global audio source
   var sound = new THREE.Audio( listener );
-  // load a sound and set it as the Audio object's buffer
   var audioLoader = new THREE.AudioLoader();
-  audioLoader.load( 'https://github.com/Thomcarena/ProjetPong_SIA/blob/Projet_DASILVA_Thomas/src/medias/musiques/pirateCaraibes.mp3', function( buffer ) {
+  //audioLoader.load( 'https://github.com/Thomcarena/ProjetPong_SIA/blob/Projet_DASILVA_Thomas/src/medias/musiques/pirateCaraibes.mp3', function( buffer ) {
+    audioLoader.load( 'src/medias/musiques/pirateCaraibes.mp3', function( buffer ) {
     sound.setBuffer( buffer );
     sound.setLoop( true );
     sound.setVolume( 0.5 );
-    sound.play();
-  });*/
+    sound.name = "Caraibes";
+    scene.add(sound);
+  });
+
+  var listener2 = new THREE.AudioListener();
+  camera.add( listener2 );
+  var sound2 = new THREE.Audio( listener2 );
+  var audioLoader2 = new THREE.AudioLoader();
+  //audioLoader.load( 'https://github.com/Thomcarena/ProjetPong_SIA/blob/Projet_DASILVA_Thomas/src/medias/musiques/pirateCaraibes.mp3', function( buffer ) {
+  audioLoader2.load( 'src/medias/musiques/sonRebond.mp3', function( buffer ) {
+    sound2.setBuffer( buffer );
+    sound2.setLoop( true );
+    sound2.setVolume( 0.5 );
+    sound2.name = "Rebond";
+    scene.add(sound2);
+  });
 
 
   // add Stats.js - https://github.com/mrdoob/stats.js
@@ -1366,6 +1386,7 @@ function init() {
   scorePlayer.initScore("ScoreJoueur");
   scorePlayer.positionScore(-58,5,16);
   regles.initRegles("Regles");
+  bonus.initBonus("BonusRegles");
   corona.initCorona("Corona");
   ciel.initSkyBox();
 
@@ -1451,7 +1472,11 @@ function Intermediaire() {
 
 function Niveau1 () {
 
-    console.log("coucou");
+  for (i=0; i<=scene.children.length-1; i++) {
+    if (scene.children[i].name == "Caraibes") { // On active la musique de pirate des caraïbes
+      scene.children[i].play();
+    }
+  }
     document.body.appendChild(textToDisplay); // Affiche le texte sur la page
     //textToDisplay.textContent = "Bievenue Pirate ! Marquez 3 points pour détruire le bateau";
     //textToDisplay.textContent = "Venez à bout des 3 pirates pour obtenir le trésor légendaire !";
