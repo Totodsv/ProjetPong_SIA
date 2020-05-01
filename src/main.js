@@ -1325,7 +1325,8 @@ function init() {
   var sound = new THREE.Audio( listener );
   var audioLoader = new THREE.AudioLoader();
   //audioLoader.load( 'https://github.com/Thomcarena/ProjetPong_SIA/blob/Projet_DASILVA_Thomas/src/medias/musiques/pirateCaraibes.mp3', function( buffer ) {
-    audioLoader.load( 'src/medias/musiques/pirateCaraibes.mp3', function( buffer ) {
+    audioLoader.load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/musiques/pirateCaraibes.mp3', function( buffer ) {
+    //audioLoader.load( 'src/medias/musiques/pirateCaraibes.mp3', function( buffer ) {
     sound.setBuffer( buffer );
     sound.setLoop( true );
     sound.setVolume( 0.3 );
@@ -1338,7 +1339,7 @@ function init() {
   var sound2 = new THREE.Audio( listener2 );
   var audioLoader2 = new THREE.AudioLoader();
   //audioLoader.load( 'https://github.com/Thomcarena/ProjetPong_SIA/blob/Projet_DASILVA_Thomas/src/medias/musiques/pirateCaraibes.mp3', function( buffer ) {
-  audioLoader2.load( 'src/medias/musiques/sonRebond.mp3', function( buffer2 ) {
+  audioLoader2.load( 'https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/musiques/sonRebond.mp3', function( buffer2 ) {
     sound2.setBuffer( buffer2 );
     sound2.setLoop( false );
     sound2.setVolume( 0.3 );
