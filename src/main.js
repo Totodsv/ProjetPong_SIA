@@ -119,7 +119,7 @@ class Balle {
     this.mesh = new THREE.Mesh( geometryBalle, materialBalle, );
     scene.add( this.mesh );
     this.mesh.name = nom;
-    this.rays = [
+    this.rays = [ //On ajoute des vecteurs autour de la balle pour apprécier la distance entre les objets et la balle
         new THREE.Vector3(0, 0, 1),
         new THREE.Vector3(1, 0, 1),
         new THREE.Vector3(1, 0, 0),
@@ -222,25 +222,19 @@ class Balle {
 
     for (i = 0; i < tab.length; i += 1) {
       this.caster.set(this.mesh.position, this.rays[i]); // On ajoute les raycasters sur la balle
-      //var obstacles = this.caster.intersectObjects(scene.children); // Collisions -> les rayons de la balle peuvent entrer en contact avec les objets de la scène
-      //console.log(scene);
-      //console.log(rhum);
       var obstacles = this.caster.intersectObjects(collisionGroup); // Groupe des obstacles
       var obstaclesJokers = this.caster.intersectObjects(jokerGroup); // Groupe des jokers
       //Collision avec les boucliers
       var bouclierJoueur = scene.children[4];
       var bouclierAdverse = scene.children[5];
-
       if (obstacles.length > 0 && obstacles[0].distance <= distance) {// si la distance de collision est plus petite que celle définie alors il y a collision
         rebondSon.play();
-
         //Test vitesse balle
         if (ballSpeed < 30) { // On bloque la vitesse de la balle pour que ça reste jouable pour un humain
           ballSpeed += 0.1;
         } else {
           ballSpeed = 25;
         }
-
         //Gestion des boucliers
         if (obstacles[0].object.name == "BouclierJoueur") {
           console.log("Bouclier Joueur");
@@ -1324,9 +1318,7 @@ function init() {
   camera.add( listener );
   var sound = new THREE.Audio( listener );
   var audioLoader = new THREE.AudioLoader();
-  //audioLoader.load( 'https://github.com/Thomcarena/ProjetPong_SIA/blob/Projet_DASILVA_Thomas/src/medias/musiques/pirateCaraibes.mp3', function( buffer ) {
     audioLoader.load('https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/musiques/pirateCaraibes.mp3', function( buffer ) {
-    //audioLoader.load( 'src/medias/musiques/pirateCaraibes.mp3', function( buffer ) {
     sound.setBuffer( buffer );
     sound.setLoop( true );
     sound.setVolume( 0.2 );
@@ -1986,7 +1978,7 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop); // relance la boucle du jeu
 
-  //controls.update(); // Pour laisser l'utilisateur bouger la scène à la souris
+  controls.update(); // Pour laisser l'utilisateur bouger la scène à la souris
   stats.update();
 }
 
@@ -2098,8 +2090,6 @@ function update(step) {
     if(level == 0){
       Niveau1();
       level = 1;
-      //console.log(commencer);
-      //commencer = false;
     }
   }
   if(keyboard.pressed("H")){

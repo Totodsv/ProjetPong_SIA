@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e40b87fb-0349-4446-82f4-92fc1956b093" name="Default Changelist" comment="" />
+    <list default="true" id="e40b87fb-0349-4446-82f4-92fc1956b093" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rapport.html" beforeDir="false" afterPath="$PROJECT_DIR$/rapport.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -67,14 +71,7 @@
       <workItem from="1588162728332" duration="28281000" />
       <workItem from="1588237248030" duration="9671000" />
       <workItem from="1588257249411" duration="30415000" />
-      <workItem from="1588319577881" duration="4048000" />
-    </task>
-    <task id="LOCAL-00021" summary="Test eau">
-      <created>1583255624610</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1583255624610</updated>
+      <workItem from="1588319577881" duration="24215000" />
     </task>
     <task id="LOCAL-00022" summary="Ajout Capitaine Pirate">
       <created>1583258845516</created>
@@ -412,7 +409,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588327570429</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="Test bootstrap">
+      <created>1588327676528</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1588327676528</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -447,10 +451,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="Test bootstrap" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1588327569116">
+    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1588327675080">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588327569116" />
+    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588327675080" />
     <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1588286354266">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -459,10 +463,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1581672701148" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588327571666">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588327678041">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588327571666" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588327678041" />
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586263898043">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

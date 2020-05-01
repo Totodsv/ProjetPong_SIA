@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Resume - Start Bootstrap Theme</title>
+    <title>Rapport - Pirate Pong</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -38,46 +38,46 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#about">Déroulement du jeu</a>
+                <a class="nav-link js-scroll-trigger" href="#intro">Introduction</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#experience">Technologies logicielles</a>
+                <a class="nav-link js-scroll-trigger" href="#deroulement">Déroulement du jeu</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#education">Fenêtre graphique 3D</a>
+                <a class="nav-link js-scroll-trigger" href="#techno">Technologies logicielles</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#skills">Architecture logicielle</a>
+                <a class="nav-link js-scroll-trigger" href="#fenetre">Fenêtre graphique 3D</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#interests">Graphisme</a>
+                <a class="nav-link js-scroll-trigger" href="#graphisme">Graphisme</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#awards">Dialogues avec l’utilisateur</a>
+                <a class="nav-link js-scroll-trigger" href="#dialogues">Dialogues avec l’utilisateur</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#awards">Points de vue caméra</a>
+                <a class="nav-link js-scroll-trigger" href="#pdv">Points de vue caméra</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#awards">Gestion des collisions</a>
+                <a class="nav-link js-scroll-trigger" href="#gdc">Gestion des collisions</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#awards">Dynamique</a>
+                <a class="nav-link js-scroll-trigger" href="#dyn">Dynamique</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#awards">Jokers</a>
+                <a class="nav-link js-scroll-trigger" href="#jok">Jokers</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#awards">Intelligence artificielle de l'adversaire</a>
+                <a class="nav-link js-scroll-trigger" href="#ia">Intelligence artificielle de l'adversaire</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#awards">Musique et sons</a>
+                <a class="nav-link js-scroll-trigger" href="#musique">Musique et sons</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#awards">Triche</a>
+                <a class="nav-link js-scroll-trigger" href="#triche">Triche</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#awards">Les petits plus</a>
+                <a class="nav-link js-scroll-trigger" href="#plus">Les petits plus</a>
             </li>
         </ul>
     </div>
@@ -85,7 +85,7 @@
 
 <div class="container-fluid p-0">
 
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="about">
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="intro">
         <div class="w-100">
             <h1 class="mb-0">Pirate
                 <span class="text-primary">Pong</span>
@@ -93,116 +93,49 @@
             <div class="subheading mb-5">Projet Master 1 Technologie de l'Internet réalisé par DA SILVA Thomas
             </div>
             <p class="lead mb-5">Le projet de SIA consiste à développer une variante 3D du jeu PONG, inspirée du jeu Cubeslam.</p>
-            <div class="social-icons">
-                <a href="#">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a href="#">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="#">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="#">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
+            <p>J'ai décidé de réaliser ce pong sous le thème des Pirates.</p>
+            <p>La scène se situe sur un océan avec deux bateaux et des pirates qui se battent pour un trésor à l'aide de TNT.</p>
+        </div>
+    </section>
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="deroulement">
+        <div class="w-100">
+            <h2 class="mb-5">Déroulement du jeu</h2>
+            <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                <div class="resume-content">
+                    <h3 class="mb-0">But du jeu</h3>
+                    <div class="subheading mb-3">Contexte</div>
+                    <p>Le jeu, entre un joueur principal que l'on dirige et un adversaire, consiste à renvoyer une balle à l'aide de raquettes.</p>
+                    <p>Les joueurs sont représentés par des bateaux, l'adversaire est modélisé par un pirate et la balle par une TNT.</p>
+                    <p>Les raquettes sont matérialisées par des caisses en bois.</p>
+                    <p>Le but étant d'envoyer la TNT 3 fois dans le bateau adverse pour le détruire.</p>
+                    <p>Pour marquer un point il faut d'abord abaisser le bouclier adverse en le touchant.</p>
+                    <p>On peut voir le score qui flotte sur des caisses à la gauche du joueur.</p>
+                    <div class="subheading mb-3">Les rebonds</div>
+                    <p>Concernant la physique des rebonds, nous utilisons la technologie des Raycaster.</p>
+                    <p>La balle rebondit sur les pads des joueurs, les boucliers, les murs et certains éléments ajoutés à partir du niveau 2.</p>
+                    <p>Nous expliquerons plus en détail comment fonctionne les collisions dans la partie "Gestion Des Collisions". La manière dont nous avons géré les collisions permet de facilement ajouter ou enlever un objet qui serait en colission avec la balle.</p>
+                    <div class="subheading mb-3">Le score</div>
+                    <p>Un joueur marque un point lorsque la balle arrive à une certaine distance z (ou -z) du terrain.</p>
+                    <p>Lorsqu'un jouer marque un point, on réinitialise la balle au centre (la vitesse de la balle dont nous parlerons plus tard), les boucliers des joueurs et on incrémente son score.</p>
+                    <p>Si l'adversaire marque 3 points le jeu est terminé et un dialogue apparaît pour relancer une partie.</p>
+                    <p>Si le Joueur marque 3 points, alors il passe au niveau suivant avec une animation (le bateau adverse et le pirate coule), un dialogue le félicite d'avoir détruit le bateau et introduit le prochain niveau.</p>
+                    <p>Il existe 3 niveaux différents avec une difficulté croissante, nous présenterons les niveaux dans la partie "Graphisme"</p>
+                </div>
+                <div class="resume-date text-md-right">
+                    <img class="text-primary" src="src/medias/images/rapport/jeuRedimTest.PNG" alt="">
+                    <p></p>
+                    <img class="text-primary" src="src/medias/images/rapport/deroulementDialogueNiveau.PNG" alt="">
+                </div>
             </div>
         </div>
     </section>
 
     <hr class="m-0">
 
-    <section class="resume-section p-3 p-lg-5 d-flex justify-content-center" id="experience">
+    <section class="resume-section p-3 p-lg-5 d-flex justify-content-center" id="techno">
         <div class="w-100">
-            <h2 class="mb-5">Experience</h2>
-
-            <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
-                <div class="resume-content">
-                    <h3 class="mb-0">Senior Web Developer</h3>
-                    <div class="subheading mb-3">Intelitec Solutions</div>
-                    <p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.</p>
-                </div>
-                <div class="resume-date text-md-right">
-                    <span class="text-primary">March 2013 - Present</span>
-                </div>
-            </div>
-
-            <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
-                <div class="resume-content">
-                    <h3 class="mb-0">Web Developer</h3>
-                    <div class="subheading mb-3">Intelitec Solutions</div>
-                    <p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.</p>
-                </div>
-                <div class="resume-date text-md-right">
-                    <span class="text-primary">December 2011 - March 2013</span>
-                </div>
-            </div>
-
-            <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
-                <div class="resume-content">
-                    <h3 class="mb-0">Junior Web Designer</h3>
-                    <div class="subheading mb-3">Shout! Media Productions</div>
-                    <p>Podcasting operational change management inside of workflows to establish a framework. Taking seamless key performance indicators offline to maximise the long tail. Keeping your eye on the ball while performing a deep dive on the start-up mentality to derive convergence on cross-platform integration.</p>
-                </div>
-                <div class="resume-date text-md-right">
-                    <span class="text-primary">July 2010 - December 2011</span>
-                </div>
-            </div>
-
-            <div class="resume-item d-flex flex-column flex-md-row justify-content-between">
-                <div class="resume-content">
-                    <h3 class="mb-0">Web Design Intern</h3>
-                    <div class="subheading mb-3">Shout! Media Productions</div>
-                    <p>Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer directed convergence without revolutionary ROI.</p>
-                </div>
-                <div class="resume-date text-md-right">
-                    <span class="text-primary">September 2008 - June 2010</span>
-                </div>
-            </div>
-
-        </div>
-
-    </section>
-
-    <hr class="m-0">
-
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="education">
-        <div class="w-100">
-            <h2 class="mb-5">Education</h2>
-
-            <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
-                <div class="resume-content">
-                    <h3 class="mb-0">University of Colorado Boulder</h3>
-                    <div class="subheading mb-3">Bachelor of Science</div>
-                    <div>Computer Science - Web Development Track</div>
-                    <p>GPA: 3.23</p>
-                </div>
-                <div class="resume-date text-md-right">
-                    <span class="text-primary">August 2006 - May 2010</span>
-                </div>
-            </div>
-
-            <div class="resume-item d-flex flex-column flex-md-row justify-content-between">
-                <div class="resume-content">
-                    <h3 class="mb-0">James Buchanan High School</h3>
-                    <div class="subheading mb-3">Technology Magnet Program</div>
-                    <p>GPA: 3.56</p>
-                </div>
-                <div class="resume-date text-md-right">
-                    <span class="text-primary">August 2002 - May 2006</span>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <hr class="m-0">
-
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="skills">
-        <div class="w-100">
-            <h2 class="mb-5">Skills</h2>
-
-            <div class="subheading mb-3">Programming Languages &amp; Tools</div>
+            <h2 class="mb-5">Technologies Logicielles</h2>
+            <div class="subheading mb-3">Langages utilisés</div>
             <ul class="list-inline dev-icons">
                 <li class="list-inline-item">
                     <i class="fab fa-html5"></i>
@@ -213,99 +146,323 @@
                 <li class="list-inline-item">
                     <i class="fab fa-js-square"></i>
                 </li>
-                <li class="list-inline-item">
-                    <i class="fab fa-angular"></i>
-                </li>
-                <li class="list-inline-item">
-                    <i class="fab fa-react"></i>
-                </li>
-                <li class="list-inline-item">
-                    <i class="fab fa-node-js"></i>
-                </li>
-                <li class="list-inline-item">
-                    <i class="fab fa-sass"></i>
-                </li>
-                <li class="list-inline-item">
-                    <i class="fab fa-less"></i>
-                </li>
-                <li class="list-inline-item">
-                    <i class="fab fa-wordpress"></i>
-                </li>
-                <li class="list-inline-item">
-                    <i class="fab fa-gulp"></i>
-                </li>
-                <li class="list-inline-item">
-                    <i class="fab fa-grunt"></i>
-                </li>
-                <li class="list-inline-item">
-                    <i class="fab fa-npm"></i>
-                </li>
             </ul>
-
-            <div class="subheading mb-3">Workflow</div>
+            <div class="resume-date text-md-right">
+                <img class="text-primary" src="src/medias/images/rapport/technologieLibraries.PNG" alt="">
+            </div>
+            <div class="subheading mb-3">Librairies</div>
             <ul class="fa-ul mb-0">
                 <li>
                     <i class="fa-li fa fa-check"></i>
-                    Mobile-First, Responsive Design</li>
+                    WebGL</li>
                 <li>
                     <i class="fa-li fa fa-check"></i>
-                    Cross Browser Testing &amp; Debugging</li>
+                    THREE.js (+dépendances)</li>
                 <li>
                     <i class="fa-li fa fa-check"></i>
-                    Cross Functional Teams</li>
+                    </li>
                 <li>
                     <i class="fa-li fa fa-check"></i>
-                    Agile Development &amp; Scrum</li>
+                    THREEx (extension de Three.js)</li>
             </ul>
+        </div>
+    </section>
+
+    <section class="resume-section p-3 p-lg-5 d-flex justify-content-center" id="fenetre">
+        <div class="w-100">
+            <h2 class="mb-5">Fenêtre graphique 3D</h2>
+            <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                <div class="resume-content">
+                    <h3 class="mb-0">But du jeu</h3>
+                    <div class="subheading mb-3">Contexte</div>
+                    <p>La fenêtre de jeu possède certaines caractéristiques.</p>
+                    <p>Pour cela nous avons ajouté des listener sur la fenêtre.</p>
+                    <p>Peu importe la façon dont elle est redimensionnée le jeu reste jouable.</p>
+                    <p>Il est possible de passer la fenêtre en plein écran en appuyant sur la touche "F".</p>
+                    <p>En appuyant sur "P", on obtient une capture d'écran.</p>
+                </div>
+                <div class="resume-date text-md-right">
+                    <img class="text-primary" src="src/medias/images/rapport/fenetreResize.PNG" alt="">
+                    <p></p>
+                    <img class="text-primary" src="src/medias/images/rapport/fenetreScreen.PNG" alt="">
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="graphisme">
+        <div class="w-100">
+            <h2 class="mb-5">Graphisme</h2>
+            <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                <div class="resume-content">
+                    <h3 class="mb-0">Environnement</h3>
+                    <div class="subheading mb-3">Décor</div>
+                    <p>La scène 3D entre dans un ciel (skybox). Cet environnement simule une ambiance au milieu de l'océan.</p>
+                    <p>Nous avons ajouté l'eau pour avoir l'impression que chaque objet se situe dans l'eau (les scores et les bateaux qui flottent).</p>
+                    <div class="subheading mb-3">Modélisation adversaires</div>
+                    <p>Il existe 3 représentations différentes de l'adversaire. Chaque pirate représente un niveau (de gauche à droite du plus faible au plus fort)</p>
+                    <p>Chaque Pirate est sur un bateau qui se détruit et coule lorsque le Joueur le détruit (en marquant 3 points).</p>
+                    <div class="subheading mb-3">Ambiance générale</div>
+                    <p>Nous tenons à souligner les graphismes, les décors, les modèles et les textures choisis. Le but était de créer un environnement cohérent et beau visuellement. Une fois le jeu lancé nous sommes transportés dans une ambiance pirate au milieu de l'océan à se battre contre des pirates. La vue du joueur est fait de façon à bien voir les scores, avoir un environnement simple pas trop chargé mais qui permet de rentrer totalemnt dans le jeu.</p>
+                    <p>Pour l'ambiance nous avons ajouté une île avec quelques décorations rappelant l'ère de la piraterie. Il y a aussi la musique dont nous reparlerons dans la partie "Musique et sons" qui est le thème du film Pirate des Caraïbes.</p>
+                    <p>On peut voir un requin se balader dans l'eau derrière la scène de combat.</p>
+                    <p>A partir du niveau 2, des canons entrent en jeu, la balle peut entrer en collisions avec eux, mais attention les canons tirent des boulets qui eux aussi peuvent entrer en collision avec la balle !</p>
+
+
+                </div>
+                <div class="resume-date text-md-right">
+                    <img class="text-primary" src="src/medias/images/rapport/graphismeSky.PNG" alt="">
+                    <p></p>
+                    <img class="text-primary" src="src/medias/images/rapport/graphismePirate1.PNG" alt="">
+                    <img class="text-primary" src="src/medias/images/rapport/graphismePirate2.PNG" alt="">
+                    <img class="text-primary" src="src/medias/images/rapport/graphismePirate3.PNG" alt="">
+                    <p></p>
+                    <img class="text-primary" src="src/medias/images/rapport/graphismeBrokenShip.PNG" alt="">
+                    <p></p>
+                    <img class="text-primary" src="src/medias/images/rapport/graphismeNiveau2.PNG" alt="">
+                </div>
+            </div>
         </div>
     </section>
 
     <hr class="m-0">
 
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="interests">
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="dialogues">
         <div class="w-100">
-            <h2 class="mb-5">Interests</h2>
-            <p>Apart from being a web developer, I enjoy most of my time being outdoors. In the winter, I am an avid skier and novice ice climber. During the warmer months here in Colorado, I enjoy mountain biking, free climbing, and kayaking.</p>
-            <p class="mb-0">When forced indoors, I follow a number of sci-fi and fantasy genre movies and television shows, I am an aspiring chef, and I spend a large amount of my free time exploring the latest technology advancements in the front-end web development world.</p>
+            <h2 class="mb-5">Dialogues avec l'utilisateur</h2>
+            <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                <div class="resume-content">
+                    <h3 class="mb-0">Caméra et transitions</h3>
+                    <div class="subheading mb-3">Touche "H" Help</div>
+                    <p>La touche "H" permet, à n'importe quel moment du jeu, au joueur de voir tous les raccourcis du jeu, comment se déplacer, les boutons liés à la fenêtre, les boutons de triche... Elle indique aussi ce que font les Jokers.</p>
+                    <div class="subheading mb-3">Transitions</div>
+                    <p>Chaque niveau est introduit par un dialogue.</p>
+                    <p>Lorsque l'adversaire marque 3 points, le jeu se termine et l'indique à l'utilisateur.</p>
+                    <p>Lorsque le joueur marque 3 points il y a une transition avant l'affichage du niveau suivant qui félicite le joueur.</p>
+                    <p>Enfin, il existe un dialogue pour les plus grands pirates qui réussissent à vaincre le niveau 3.</p>
+                </div>
+                <div class="resume-date text-md-right">
+                    <img class="text-primary" src="src/medias/images/rapport/dialogueH.PNG" alt="">
+                    <p></p>
+                    <img class="text-primary" src="src/medias/images/rapport/deroulementDialogueNiveau.PNG" alt="">
+                    <p></p>
+                    <img class="text-primary" src="src/medias/images/rapport/dialoguePerdu.PNG" alt="">
+                    <p></p>
+                    <img class="text-primary" src="src/medias/images/rapport/dialoguePoint.PNG" alt="">
+                    <p></p>
+                    <img class="text-primary" src="src/medias/images/rapport/dialogueFin.PNG" alt="">
+                </div>
+            </div>
         </div>
     </section>
 
     <hr class="m-0">
 
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="awards">
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="pdv">
         <div class="w-100">
-            <h2 class="mb-5">Awards &amp; Certifications</h2>
-            <ul class="fa-ul mb-0">
-                <li>
-                    <i class="fa-li fa fa-trophy text-warning"></i>
-                    Google Analytics Certified Developer</li>
-                <li>
-                    <i class="fa-li fa fa-trophy text-warning"></i>
-                    Mobile Web Specialist - Google Certification</li>
-                <li>
-                    <i class="fa-li fa fa-trophy text-warning"></i>
-                    1<sup>st</sup>
-                    Place - University of Colorado Boulder - Emerging Tech Competition 2009</li>
-                <li>
-                    <i class="fa-li fa fa-trophy text-warning"></i>
-                    1<sup>st</sup>
-                    Place - University of Colorado Boulder - Adobe Creative Jam 2008 (UI Design Category)</li>
-                <li>
-                    <i class="fa-li fa fa-trophy text-warning"></i>
-                    2<sup>nd</sup>
-                    Place - University of Colorado Boulder - Emerging Tech Competition 2008</li>
-                <li>
-                    <i class="fa-li fa fa-trophy text-warning"></i>
-                    1<sup>st</sup>
-                    Place - James Buchanan High School - Hackathon 2006</li>
-                <li>
-                    <i class="fa-li fa fa-trophy text-warning"></i>
-                    3<sup>rd</sup>
-                    Place - James Buchanan High School - Hackathon 2005</li>
-            </ul>
+            <h2 class="mb-5">Points de vue caméra</h2>
+            <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                <div class="resume-content">
+                    <h3 class="mb-0">Deux caméras proposées</h3>
+                    <p>Il existe deux points de vue différents : </p>
+                    <p>Le premier en appuyant sur "0" on obtient la vue de base du jeu.</p>
+                    <p>Le second en appuyant sur "1", le joueur se retrouve à la place du pad et suit le moindre de ses mouvements.</p>
+                </div>
+                <div class="resume-date text-md-right">
+                    <img class="text-primary" src="src/medias/images/rapport/graphismeNiveau2.PNG" alt="">
+                    <p></p>
+                    <img class="text-primary" src="src/medias/images/rapport/vueFPS.PNG" alt="">
+                </div>
+            </div>
         </div>
     </section>
 
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="gdc">
+        <div class="w-100">
+            <h2 class="mb-5">Gestion des collisions</h2>
+            <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                <div class="resume-content">
+                    <p>Ce procédé fonctionne de la manière suivante : on prend notre objet "balle" qui est un cube, on trace 8 vecteurs tout autour de la balle (pour que les vecteurs entourent la balle dans une scène 3D).</p>
+                    <p>On créé ensuite un tableau "collisionGroup[]" et on lui insère tous les objets de la scène avec lesquels on souhaite que la balle entre en collision. On utilise un tableau différent avec les jokers "jokerGroup[]" car on ne veut pas que la balle rebondisse dessus mais qu'ils disparaîssent et active leur effet au contact avec eux.</p>
+                    <p>On calcule ensuite la distance entre un objet avec lequel on souhaite une collision et les vecteurs de la balle. Si la distance est égale à certains nombre on simule une collision (l'idée est de choisir une distance avec laquelle le rebond est le plus réaliste possible.</p>
+                    <p>Il suffit alors de décider en fonction du vecteur la direction que devra prendre la balle.</p>
+                    <p>Nous avons aussi pris en considération le fait que si la balle touche un certains endroit d'un pad elle par dans une certaine direction.</p>
+                    <p>Grâce à notre façon de gérer les collisions il est très simple pour nous d'ajouter ou retirer un objet dans la scène qui subira oui ou non des collisions avec la balle.</p>
+                    <p>Concernant les Jokers, lorsque un vecteur de la balle entre en contact avec un Joker, le Joker disparaît et appelle la fonction du Joker correspondant pour qu'il active son effet.</p>
+                </div>
+                <div class="resume-date text-md-right">
+                    <img class="text-primary" src="src/medias/images/rapport/deroulementRaycasterTest.PNG" alt="">
+                    <p></p>
+                    <img class="text-primary" src="src/medias/images/rapport/deroulementCollisionGroupTest.PNG" alt="">
+                    <p></p>
+                    <img class="text-primary" src="src/medias/images/rapport/deroulementCollisionVecteur.PNG" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="dyn">
+        <div class="w-100">
+            <h2 class="mb-5">Dynamique</h2>
+            <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                <div class="resume-content">
+                    <h3 class="mb-0">Balle</h3>
+                    <p>La vitesse de la balle augmente au cours des échanges et des niveaux. Chaque rebond augmente la vitesse de la balle jusqu'à une vitesse maximale pour permettre le jeu toujours jouable pour un humain.</p>
+                    <p>Comme nous avons vu précédemment la balle rebondit sur les objets que l'on souhaite. Lorsque la balle entre en collision avec une des raquette, nous verifions l'endroit où la balle frappe pour diriger son rebond. En effet, si la balle frappe le centre de la raquette, la balle s'en ira tout droit, si elle frappe légèrement sur la gauche de la raquette elle partira légèrement à droite ou gauche en fonction de la provenance et si elle frappe sur le bout de la raquette elle rebondira fortement sur les côtés.</p>
+                    <h3 class="mb-0">Raquettes</h3>
+                    <p>Lorsque le joueur va vers la droite sa vitesse augmente exponentiellement. Cette vitesse se réinitialise lorsqu'il touche le mur de droite ou qu'il parte vers la gauche. Ceci est vrai aussi pour la gauche. Ces paramètres sont facilement modifiables.</p>
+                </div>
+                <div class="resume-date text-md-right">
+                    <img class="text-primary" src="src/medias/images/rapport/dynamiqueBalle.PNG" alt="">
+                    <p></p>
+                    <img class="text-primary" src="src/medias/images/rapport/dynamiquePad.PNG" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="jok">
+        <div class="w-100">
+            <h2 class="mb-5">Jokers</h2>
+            <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                <div class="resume-content">
+                    <h3 class="mb-0">Mécanisme</h3>
+                    <p>Comme nous l'avons expliqué dans la gestion des collisions, les jokers sont dans un tableau qui permet à la balle d'entrer en contact avec eux. Lorsque la balle entre en contact avec un Joker, elle fait disparaître sont modèle et active son effet.</p>
+                    <p>Un joker apparaît toutes les 5 secondes sur le terrain et disparaît au bout de 10 secondes si aucun des joueurs ne l'a touché avec la balle.</p>
+                    <p>Tous les jokers ont été pensé pour entrer dans le thème des pirates, ils sont tous modéliser par un model 3D.</p>
+                    <h3 class="mb-0">Les différents Jokers</h3>
+                    <p>Il existe 4 Jokers différents dans le Pirate Pong (et 1 bonus pour survivre au Corona)</p>
+                    <h4 class="mb-0">La Bouteille de Rhum</h4>
+                    <p>Le rhum permet au joueur qui touche le joker de récupérer son bouclier. Il est bien connu que les pirates survivent grâce au rhum !</p>
+                    <h4 class="mb-0">L'épée Pirate</h4>
+                    <p>L'épée est un bonnus offensif, il permet d'attaquer l'ennemi et détruire son bouclier</p>
+                    <h4 class="mb-0">La Bombe</h4>
+                    <p>La bombe est votre meilleur élément pour gagner une partie, elle explose la raquette de l'adversaire et la réduit de taille pendant quelques secondes.</p>
+                    <h4 class="mb-0">Bonus : Le Corona sous la forme d'un poisson</h4>
+                    <p>Le poisson est un poisson malade, ayant mangé du pangolin il est infincté par le covid-19. Vous devez absolument éviter ce joker qui apparaît que de votre côté du terrain. Il vous met en confinement jusqu'à que vous attrapez la Chloroquine.</p>
+                    <h4 class="mb-0">Bonus : La Chloroquine sous la forme d'un rhum ambré</h4>
+                    <p>La chloroquine n'apparaît que lorsque vous êtes en confinement, si vous arrivez à l'attrapez vous relevez ce mur qui représente le confinement.</p>
+                    <p>La photo suivante montre un joueur qui a mangé un poisson contaminé, il est actuellement en confinement.</p>
+
+                </div>
+                <div class="resume-date text-md-right">
+                    <img class="text-primary" src="src/medias/images/rapport/jokerRhum.PNG" alt="">
+                    <img class="text-primary" src="src/medias/images/rapport/jokerEpee.PNG" alt="">
+                    <img class="text-primary" src="src/medias/images/rapport/jokerBombTest.png.PNG" alt="">
+                    <img class="text-primary" src="src/medias/images/rapport/jokerChloroquine.PNG" alt="">
+                    <p></p>
+                    <img class="text-primary" src="src/medias/images/rapport/jokerCorona.PNG" alt="">
+                    <p></p>
+                    <img class="text-primary" src="src/medias/images/rapport/jokerJoueurConfinement.PNG" alt="">
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="ia">
+        <div class="w-100">
+            <h2 class="mb-5">Intelligence artificielle de l'adversaire</h2>
+            <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                <div class="resume-content">
+                    <h3 class="mb-0">IA</h3>
+                    <p>L'intelligence Artificielle de l'adverse est créé autour de sa vitesse de déplacement. L'IA est en continu entrain de suivre la balle, sa vitesse est plus ou moins rapide en fonction des niveaux.</p>
+                    <p>L'adversaire devient très coriaces au niveau 3, l'utilsation des Joker est presque indispensable pour vaincre ce pirate.</p>
+                </div>
+                <div class="resume-date text-md-right">
+                    <img class="text-primary" src="src/medias/images/rapport/ia.PNG" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="musique">
+        <div class="w-100">
+            <h2 class="mb-5">Musique et sons</h2>
+            <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                <div class="resume-content">
+                    <h3 class="mb-0">Musique Générale</h3>
+                    <p>La musique de fond est évidemment celle de Pirate des Caraïbes, elle permet au joueur de se sentir dans une ambiance explosive et de vouloir se battre jusqu'à la mort contre les pirates.</p>
+                    <p>La technologie utilisée est l'audioListener proposée par Three.js</p>
+                    <p>On lance le son du jeu lorsque le joueur pénètre dans l'arène de combat (Au niveau 1). Si la musique se termine elle se répète (il est presque impossible qu'elle se termine de part sa durée).</p>
+                    <h3 class="mb-0">Son Rebonds</h3>
+                    <p>A chaque rebond un son de rebond apparaît. Ce son est plutot doux et permet de contraster avec l'explosivité de la musique générale.</p>
+                </div>
+                <div class="resume-date text-md-right">
+                    <img class="text-primary" src="src/medias/images/rapport/audioCaraibes.PNG" alt="">
+                    <p></p>
+                    <img class="text-primary" src="src/medias/images/rapport/audioPlay.PNG" alt="">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="triche">
+        <div class="w-100">
+            <h2 class="mb-5">Triche</h2>
+            <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                <div class="resume-content">
+                    <h3 class="mb-0">Il existe 4 boutons de triche</h3>
+                    <p>Si l'utilisateur appuie sur :</p>
+                    <p>K: détruit le bouclier de l'adversaire</p>
+                    <p>i: fait apparaître un bouclier doré de votre côté du terrain qui est incassable</p>
+                    <p>J: fais apparaître le prochain joker</p>
+                    <p>N: permet de passer au niveau suivant</p>
+                </div>
+                <div class="resume-date text-md-right">
+                    <img class="text-primary" src="src/medias/images/rapport/triche.PNG" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="plus">
+        <div class="w-100">
+            <h2 class="mb-5">Les petits plus</h2>
+            <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                <div class="resume-content">
+                    <h3 class="mb-0">Les graphismes</h3>
+                    <p>Chaque objet ou model est accompagné d'une texture détailée et cohérente avec le thème et l'environnement.</p>
+                    <p>La skybox et l'eau permettent une impression de flottaison dans le jeu, les scores et les bateaux sont dans l'eau.</p>
+                    <p>Chaque pirate est différent et propose une tenue adéquate à sont niveau, le niveau 1 est un simple marin d'eau douce alors que le niveau 3 est un capitaine pirate.</p>
+                    <p>Les pirates sur les bateaux simule une bataille navale.</p>
+                    <p>La balle sous forme de TNT permet une cohérence dans le jeu, il faut envoyer la TNT dans le bateau adverse pour le détruire.</p>
+                    <p>L'île et ses objets permettent d'habiller la scène et renforce l'immersion.</p>
+                    <h3 class="mb-0">La physique</h3>
+                    <p>La balle rebondit bien entre chaque obstacles et la vitesse est progressive.</p>
+                    <p>Les raquettes sont fluides et leur accélération ne suprend pas.</p>
+                    <p>Les canons ajoutés à partir du niveau 2 augmente la difficulté et entre parfaitement dans la scène du jeu. Les rebonds répondent parfaitement sur ces nouveaux modèles.</p>
+                    <p>Les jokers sont présent assez souvent pour être drôles et ne pas ruiner le jeu. Le corona est très fun, le joueur veut absolument l'éviter.</p>
+                    <h3 class="mb-0">Les animations</h3>
+                    <p>Il existe plusieurs animations pour rendre le jeu immersif.</p>
+                    <p>Un requin se balade derrière la scène. Il dissuade les pirates de tomber à l'eau !</p>
+                    <p>Lorsque le jour détruit un bateau, celui-ci coule accompagné de son pirate. Un capitaine ne quitte jamais son navire et coule avec lui.</p>
+                </div>
+                <div class="resume-date text-md-right">
+                    <img src="https://media.giphy.com/media/fSM8whgjfKzYZpuRo7/giphy.gif">
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
 
 <!-- Bootstrap core JavaScript -->
