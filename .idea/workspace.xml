@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e40b87fb-0349-4446-82f4-92fc1956b093" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rapport.html" beforeDir="false" afterPath="$PROJECT_DIR$/rapport.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,14 +69,7 @@
       <workItem from="1588162728332" duration="28281000" />
       <workItem from="1588237248030" duration="9671000" />
       <workItem from="1588257249411" duration="30415000" />
-      <workItem from="1588319577881" duration="2431000" />
-    </task>
-    <task id="LOCAL-00017" summary="Test sol 4">
-      <created>1583249929174</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1583249929174</updated>
+      <workItem from="1588319577881" duration="2478000" />
     </task>
     <task id="LOCAL-00018" summary="Test sol 4">
       <created>1583249940441</created>
@@ -415,14 +407,20 @@
       <option name="project" value="LOCAL" />
       <updated>1588321873532</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="Debut rapport">
+      <created>1588325927121</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1588325927121</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Environnement : Ship Light" />
     <MESSAGE value="Environnement : ile avancée" />
     <MESSAGE value="Environnement : Requin Ok&#10;Jeu : Boucliers ok" />
     <MESSAGE value="Jeu : Boucliers terminés&#10;Tableau pour choisir quels objets font partis des collisions" />
@@ -447,13 +445,14 @@
     <MESSAGE value="Jeu beta" />
     <MESSAGE value="Musique Git OK" />
     <MESSAGE value="Musique Git test" />
-    <option name="LAST_COMMIT_MESSAGE" value="Musique Git test" />
+    <MESSAGE value="Debut rapport" />
+    <option name="LAST_COMMIT_MESSAGE" value="Debut rapport" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1588321872003">
+    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1588325925837">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588321872003" />
+    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588325925837" />
     <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1588286354266">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -462,10 +461,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1581672701148" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588321874961">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588325928628">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588321874961" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588325928628" />
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586263898043">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
