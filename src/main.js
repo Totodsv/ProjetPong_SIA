@@ -1329,7 +1329,7 @@ function init() {
     //audioLoader.load( 'src/medias/musiques/pirateCaraibes.mp3', function( buffer ) {
     sound.setBuffer( buffer );
     sound.setLoop( true );
-    sound.setVolume( 0.3 );
+    sound.setVolume( 0.2 );
     sound.name = "Caraibes";
     scene.add(sound);
   });
@@ -1342,7 +1342,7 @@ function init() {
   audioLoader2.load( 'https://raw.githubusercontent.com/Thomcarena/ProjetPong_SIA/Projet_DASILVA_Thomas/src/medias/musiques/sonRebond.mp3', function( buffer2 ) {
     sound2.setBuffer( buffer2 );
     sound2.setLoop( false );
-    sound2.setVolume( 0.3 );
+    sound2.setVolume( 0.2 );
     sound2.name = "Rebond";
     scene.add(sound2);
     rebondSon= scene.getObjectByName("Rebond");
